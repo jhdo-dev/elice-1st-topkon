@@ -1,5 +1,6 @@
 import 'package:alarm_front/presentation/pages/my/my_page.dart';
 import 'package:alarm_front/presentation/pages/room_chat/room_chat_page.dart';
+import 'package:alarm_front/presentation/pages/room_create/room_create_page.dart';
 import 'package:alarm_front/presentation/pages/room_filter/room_filter_page.dart';
 import 'package:alarm_front/presentation/pages/room_list/room_list_page.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,16 @@ final routers = GoRouter(
       pageBuilder: (context, state) => NoTransitionPage(
         key: state.pageKey,
         child: const RoomFilterPage(),
+      ),
+    ),
+
+    //? 룸 생성 화면
+    GoRoute(
+      path: "/roomCreate",
+      name: "roomCreate",
+      pageBuilder: (context, state) => NoTransitionPage(
+        key: state.pageKey,
+        child: const RoomCreatePage(),
       ),
     ),
 
