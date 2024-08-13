@@ -84,9 +84,9 @@ class _ChatInputFieldState extends State<ChatInputField> {
 
             // 테두리 색상
             decoration: const InputDecoration(
-              focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.bottomNavColor)),
               enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.bottomNavColor)),
+              focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.bottomNavColor)),
             ),
             onChanged: (value) => setState(() {
