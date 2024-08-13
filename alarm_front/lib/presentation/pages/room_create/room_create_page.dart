@@ -1,4 +1,7 @@
+import 'package:alarm_front/presentation/bloc/test_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:alarm_front/config/text_styles.dart';
+import 'package:alarm_front/config/colors.dart';
 
 class RoomCreatePage extends StatelessWidget {
   const RoomCreatePage({super.key});
@@ -7,21 +10,32 @@ class RoomCreatePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text(
+          '방 생성',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.check),
+            icon: const Icon(
+              Icons.check,
+              color: Colors.white,
+            ),
             onPressed: () {
               // 체크 버튼 클릭 시 처리할 코드 (추가 기능 필요 시 여기에 작성)
             },
           ),
         ],
       ),
-      body: RoomCreateForm(),
+      body: const RoomCreateForm(),
     );
   }
 }
 
 class RoomCreateForm extends StatefulWidget {
+  const RoomCreateForm({super.key});
+
   @override
   _RoomCreateFormState createState() => _RoomCreateFormState();
 }
@@ -30,30 +44,45 @@ class _RoomCreateFormState extends State<RoomCreateForm> {
   DateTime? selectedStartDateTime;
   DateTime? selectedEndDateTime;
   String? selectedTopic;
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
             '방 이름',
-            style: TextStyle(fontSize: 10),
+            style: TextStyle(
+              fontSize: 25,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(height: 10),
           TextField(
+            controller: _controller,
+            style: TextStyles.mediumText,
             decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.never,
-              labelText: '방 이름 입력',
-              border: OutlineInputBorder(),
+              labelText: '',
+              border: const OutlineInputBorder(),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: AppColors.bottomNavColor.withOpacity(0.5))),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: AppColors.bottomNavColor.withOpacity(0.5))),
             ),
           ),
           const SizedBox(height: 30),
           const Text(
             '주제 선택',
-            style: TextStyle(fontSize: 10),
+            style: TextStyle(
+              fontSize: 25,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(height: 10),
           Center(
@@ -61,22 +90,36 @@ class _RoomCreateFormState extends State<RoomCreateForm> {
               onPressed: () {
                 _showTopicDialog(context);
               },
-              child: Text(
-                selectedTopic ?? '선택하기',
-                style: const TextStyle(fontSize: 10),
-              ),
               style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.focusColor,
+                foregroundColor: Colors.white,
                 fixedSize: Size(
                     MediaQuery.of(context).size.width * 0.9, 40), // 너비를 80%로 설정
+              ),
+              child: Text(
+                selectedTopic ?? '선택하기',
+                style: TextStyle(
+                  fontSize: 16,
+                  shadows: [
+                    Shadow(
+                      offset: const Offset(1.0, 1.0), // 그림자의 위치
+                      blurRadius: 5.0, // 그림자의 흐림 정도
+                      color: Colors.black.withOpacity(0.5), // 그림자의 색상
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
           const SizedBox(height: 30),
           const Align(
-            alignment: Alignment.centerLeft, // 왼쪽 정렬
+            alignment: Alignment.center, // 왼쪽 정렬
             child: Text(
               '시작 일시',
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(
+                fontSize: 25,
+                color: Colors.white,
+              ),
             ),
           ),
           const SizedBox(height: 10),
@@ -85,32 +128,43 @@ class _RoomCreateFormState extends State<RoomCreateForm> {
               onPressed: () {
                 _selectStartDateTime(context);
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.focusColor,
+                foregroundColor: Colors.white,
+                fixedSize: Size(
+                    MediaQuery.of(context).size.width * 0.9, 40), // 너비를 80%로 설정
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     selectedStartDateTime != null
-                        ? "${selectedStartDateTime!.toLocal()}".split(' ')[0] +
-                            ' ' +
-                            TimeOfDay.fromDateTime(selectedStartDateTime!)
-                                .format(context)
+                        ? '${"${selectedStartDateTime!.toLocal()}".split(' ')[0]} ${TimeOfDay.fromDateTime(selectedStartDateTime!).format(context)}'
                         : '선택하기',
-                    style: const TextStyle(fontSize: 10),
+                    style: TextStyle(
+                      fontSize: 16,
+                      shadows: [
+                        Shadow(
+                          offset: const Offset(1.0, 1.0), // 그림자의 위치
+                          blurRadius: 5.0, // 그림자의 흐림 정도
+                          color: Colors.black.withOpacity(0.5), // 그림자의 색상
+                        ),
+                      ],
+                    ),
                   ),
                 ],
-              ),
-              style: ElevatedButton.styleFrom(
-                fixedSize: Size(
-                    MediaQuery.of(context).size.width * 0.9, 40), // 너비를 80%로 설정
               ),
             ),
           ),
           const SizedBox(height: 30),
           const Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: Text(
               '종료 일시',
-              style: TextStyle(fontSize: 10),
+              style: TextStyle(
+                fontSize: 25,
+                color: Colors.white,
+              ),
             ),
           ),
           const SizedBox(height: 10),
@@ -119,23 +173,31 @@ class _RoomCreateFormState extends State<RoomCreateForm> {
               onPressed: () {
                 _selectEndDateTime(context);
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.focusColor,
+                foregroundColor: Colors.white,
+                fixedSize: Size(
+                    MediaQuery.of(context).size.width * 0.9, 40), // 너비를 80%로 설정
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     selectedEndDateTime != null
-                        ? "${selectedEndDateTime!.toLocal()}".split(' ')[0] +
-                            ' ' +
-                            TimeOfDay.fromDateTime(selectedEndDateTime!)
-                                .format(context)
+                        ? '${"${selectedEndDateTime!.toLocal()}".split(' ')[0]} ${TimeOfDay.fromDateTime(selectedEndDateTime!).format(context)}'
                         : '선택하기',
-                    style: const TextStyle(fontSize: 10),
+                    style: TextStyle(
+                      shadows: [
+                        Shadow(
+                          offset: const Offset(1.0, 1.0), // 그림자의 위치
+                          blurRadius: 5.0, // 그림자의 흐림 정도
+                          color: Colors.black.withOpacity(0.5), // 그림자의 색상
+                        ),
+                      ],
+                      fontSize: 16,
+                    ),
                   ),
                 ],
-              ),
-              style: ElevatedButton.styleFrom(
-                fixedSize: Size(
-                    MediaQuery.of(context).size.width * 0.9, 40), // 너비를 80%로 설정
               ),
             ),
           ),
@@ -149,53 +211,104 @@ class _RoomCreateFormState extends State<RoomCreateForm> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: Row(
-            mainAxisSize: MainAxisSize.min,
+          backgroundColor: AppColors.backgroundColor,
+          content: Column(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 0.5), // 테두리 설정
-                  borderRadius: BorderRadius.circular(8), // 모서리 둥글기
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedTopic = '주제 2'; // 선택한 주제를 설정
-                    });
-                    Navigator.of(context).pop(); // 다이얼로그 닫기
-                  },
-                  child: Text('주제 2'),
+              const Text(
+                '주제를 선택하세요.',
+                style: TextStyle(
+                  fontSize: 20,
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 0.5), // 테두리 설정
-                  borderRadius: BorderRadius.circular(8), // 모서리 둥글기
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedTopic = '주제 2'; // 선택한 주제를 설정
-                    });
-                    Navigator.of(context).pop(); // 다이얼로그 닫기
-                  },
-                  child: Text('주제 2'),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 0.5), // 테두리 설정
-                  borderRadius: BorderRadius.circular(8), // 모서리 둥글기
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedTopic = '주제 2'; // 선택한 주제를 설정
-                    });
-                    Navigator.of(context).pop(); // 다이얼로그 닫기
-                  },
-                  child: Text('주제 2'),
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.focusColor,
+                      border:
+                          Border.all(color: Colors.black, width: 0.5), // 테두리 설정
+                      borderRadius: BorderRadius.circular(8), // 모서리 둥글기
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedTopic = '주제 2'; // 선택한 주제를 설정
+                        });
+                        Navigator.of(context).pop(); // 다이얼로그 닫기
+                      },
+                      child: Text(
+                        '주제 1',
+                        style: TextStyle(
+                          color: Colors.black,
+                          shadows: [
+                            Shadow(
+                              offset: const Offset(1.0, 1.0), // 그림자의 위치
+                              blurRadius: 5.0, // 그림자의 흐림 정도
+                              color: Colors.black.withOpacity(0.5), // 그림자의 색상
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: Colors.black, width: 0.5), // 테두리 설정
+                      borderRadius: BorderRadius.circular(8), // 모서리 둥글기
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedTopic = '선택하기'; // 선택한 주제를 설정
+                        });
+                        Navigator.of(context).pop(); // 다이얼로그 닫기
+                      },
+                      child: Text(
+                        '주제 2',
+                        style: TextStyle(
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              offset: const Offset(1.0, 1.0), // 그림자의 위치
+                              blurRadius: 5.0, // 그림자의 흐림 정도
+                              color: Colors.black.withOpacity(0.5), // 그림자의 색상
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: Colors.black, width: 0.5), // 테두리 설정
+                      borderRadius: BorderRadius.circular(8), // 모서리 둥글기
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedTopic = '주제 2'; // 선택한 주제를 설정
+                        });
+                        Navigator.of(context).pop(); // 다이얼로그 닫기
+                      },
+                      child: Text(
+                        '주제 3',
+                        style: TextStyle(
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              offset: const Offset(1.0, 1.0), // 그림자의 위치
+                              blurRadius: 5.0, // 그림자의 흐림 정도
+                              color: Colors.black.withOpacity(0.5), // 그림자의 색상
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -204,7 +317,13 @@ class _RoomCreateFormState extends State<RoomCreateForm> {
               onPressed: () {
                 Navigator.of(context).pop(); // 다이얼로그 닫기
               },
-              child: Text('취소'),
+              child: const Text(
+                '취소',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: AppColors.focusColor,
+                ),
+              ),
             ),
           ],
         );
