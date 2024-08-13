@@ -8,10 +8,14 @@ class FilterBox extends StatelessWidget {
     super.key,
     required this.boxIndex,
     required this.isClickBox,
+    required this.topicName,
+    required this.topicCount,
   });
 
   final int boxIndex;
   final int isClickBox;
+  final String topicName;
+  final String topicCount;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,7 @@ class FilterBox extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.w),
               child: Text(
-                "샘플 주제",
+                topicName,
                 style: TextStyles.mediumTitle,
               ),
             ),
@@ -58,7 +62,7 @@ class FilterBox extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                "2",
+                topicCount,
                 style: TextStyles.smallText.copyWith(
                   height: 1,
                   fontWeight: FontWeight.bold,
