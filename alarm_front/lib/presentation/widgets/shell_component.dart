@@ -29,22 +29,25 @@ class ShellComponent extends StatelessWidget {
                   onTap: () {
                     context.pushNamed("roomFilter");
                   },
-                  child: Stack(children: [
-                    Positioned(
-                      top: 2.0.h,
-                      left: 2.0.w,
-                      child: Icon(
-                        Icons.filter_list_alt,
-                        color: AppColors.appbarColor.withOpacity(0.3),
-                        size: 30.w,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(children: [
+                      Positioned(
+                        top: 1.0.h,
+                        left: 1.0.w,
+                        child: Icon(
+                          Icons.filter_list_alt,
+                          color: AppColors.appbarColor.withOpacity(0.3),
+                          size: 30.w,
+                        ),
                       ),
-                    ),
-                    Icon(
-                      Icons.filter_list_alt,
-                      color: AppColors.appbarColor,
-                      size: 30.w,
-                    )
-                  ]),
+                      Icon(
+                        Icons.filter_list_alt,
+                        color: AppColors.appbarColor,
+                        size: 28.w,
+                      )
+                    ]),
+                  ),
                 ),
                 SizedBox(
                   width: 10.w,
