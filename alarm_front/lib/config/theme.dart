@@ -7,6 +7,9 @@ final ThemeData appTheme = ThemeData(
     color: AppColors.backgroundColor,
     scrolledUnderElevation: 0,
   ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: AppColors.focusColor,
+  ),
   splashColor: AppColors.focusColor.withOpacity(0.1),
   highlightColor: Colors.transparent,
   // 다른 테마 설정들을 여기에 추가
