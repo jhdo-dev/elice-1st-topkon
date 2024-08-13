@@ -5,6 +5,7 @@ final ThemeData appTheme = ThemeData(
   scaffoldBackgroundColor: AppColors.backgroundColor,
   appBarTheme: const AppBarTheme(
     color: AppColors.backgroundColor,
+    scrolledUnderElevation: 0,
   ),
   splashColor: AppColors.focusColor.withOpacity(0.1),
   highlightColor: Colors.transparent,

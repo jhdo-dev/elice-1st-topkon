@@ -14,6 +14,12 @@ class TextStyles {
   static TextStyle get largeText =>
       _font1.copyWith(fontSize: 16.sp, color: Colors.white);
 
+  static TextStyle get mediumTitle => _font1.copyWith(
+        fontSize: 19.sp,
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
+      );
+
   static TextStyle get appbar => _font2.copyWith(
         fontSize: 30.sp,
         color: AppColors.appbarColor,

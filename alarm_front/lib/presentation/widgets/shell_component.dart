@@ -1,8 +1,11 @@
+import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/presentation/bloc/bottom_nav/bottom_nav_bloc.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:alarm_front/presentation/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class ShellComponent extends StatelessWidget {
   const ShellComponent({
@@ -14,12 +17,40 @@ class ShellComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectedIndex = context.watch<BottomNavBloc>().state.selectedIndex;
+
     return Scaffold(
       //? 앱바
       appBar: AppbarWidget(
-        title: context.watch<BottomNavBloc>().state.selectedIndex == 0
-            ? 'ROOM LIST'
-            : "MY",
+        title: selectedIndex == 0 ? 'ROOM LIST' : "MY",
+        actions: selectedIndex == 0
+            ? [
+                GestureDetector(
+                  onTap: () {
+                    context.pushNamed("roomFilter");
+                  },
+                  child: Stack(children: [
+                    Positioned(
+                      top: 2.0.h,
+                      left: 2.0.w,
+                      child: Icon(
+                        Icons.filter_list_alt,
+                        color: AppColors.appbarColor.withOpacity(0.3),
+                        size: 30.w,
+                      ),
+                    ),
+                    Icon(
+                      Icons.filter_list_alt,
+                      color: AppColors.appbarColor,
+                      size: 30.w,
+                    )
+                  ]),
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+              ]
+            : [],
       ),
 
       //? 바디

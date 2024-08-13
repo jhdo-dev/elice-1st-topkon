@@ -14,6 +14,7 @@ final routers = GoRouter(
   initialLocation: "/roomList",
   navigatorKey: rootNavigatorKey,
   routes: [
+    //? 공통 화면(앱바 및 바텀네비)
     ShellRoute(
       navigatorKey: shellNavigatorKey,
       pageBuilder: (context, state, child) {
@@ -60,9 +61,8 @@ final routers = GoRouter(
     GoRoute(
       path: "/roomFilter",
       name: "roomFilter",
-      pageBuilder: (context, state) => NoTransitionPage(
+      builder: (context, state) => RoomFilterPage(
         key: state.pageKey,
-        child: const RoomFilterPage(),
       ),
     ),
 
