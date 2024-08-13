@@ -1,5 +1,6 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/presentation/pages/room_filter/widgets/filter_box.dart';
+import 'package:alarm_front/presentation/pages/room_filter/widgets/topic_create_dialog.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +22,35 @@ class _RoomFilterPageState extends State<RoomFilterPage> {
         title: 'ROOM FILTER',
         isBackIcon: true,
         actions: [
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return TopicCreateDialog();
+                },
+              );
+            },
+            child: Stack(children: [
+              Positioned(
+                top: 2.0.h,
+                left: 2.0.w,
+                child: Icon(
+                  Icons.add_box,
+                  color: AppColors.focusColor.withOpacity(0.3),
+                  size: 30.w,
+                ),
+              ),
+              Icon(
+                Icons.add_box,
+                color: AppColors.focusColor,
+                size: 30.w,
+              )
+            ]),
+          ),
+          SizedBox(
+            width: 5.w,
+          ),
           GestureDetector(
             onTap: () {},
             child: Stack(children: [
