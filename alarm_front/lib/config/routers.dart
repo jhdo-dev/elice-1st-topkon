@@ -31,7 +31,7 @@ final routers = GoRouter(
           name: "roomList",
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const RoomListPage(),
+            child: RoomListPage(),
           ),
         ),
 

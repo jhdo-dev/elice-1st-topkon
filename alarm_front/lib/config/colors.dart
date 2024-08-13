@@ -12,4 +12,6 @@ abstract class AppColors {
   static const sendMsgBurbleColor = Color(0xFF1E90FF);
   static const receiveMsgBurbleColor = Color(0xFF383838);
   static const roomListTileColor = Color(0xFF383838);
+
+  static const hintColor = Color(0xFFA9A9A9);
 }
