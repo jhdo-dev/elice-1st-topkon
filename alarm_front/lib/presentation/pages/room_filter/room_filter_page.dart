@@ -18,39 +18,33 @@ class _RoomFilterPageState extends State<RoomFilterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //? 룸 생성 버튼
+      floatingActionButton: SizedBox(
+        width: 50.w,
+        height: 50.w,
+        child: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25.h),
+          ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return TopicCreateDialog();
+              },
+            );
+          },
+          child: Icon(
+            Icons.add_rounded,
+            size: 30.w,
+            color: Colors.white,
+          ),
+        ),
+      ),
       appBar: AppbarWidget(
         title: 'ROOM FILTER',
         isBackIcon: true,
         actions: [
-          GestureDetector(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return TopicCreateDialog();
-                },
-              );
-            },
-            child: Stack(children: [
-              Positioned(
-                top: 2.0.h,
-                left: 2.0.w,
-                child: Icon(
-                  Icons.add_box,
-                  color: AppColors.focusColor.withOpacity(0.3),
-                  size: 30.w,
-                ),
-              ),
-              Icon(
-                Icons.add_box,
-                color: AppColors.focusColor,
-                size: 30.w,
-              )
-            ]),
-          ),
-          SizedBox(
-            width: 5.w,
-          ),
           GestureDetector(
             onTap: () {},
             child: Stack(children: [
