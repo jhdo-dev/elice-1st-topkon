@@ -1,41 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: RoomListPage(), // 첫 번째 페이지로 RoomListPage 설정
-    );
-  }
-}
-
-class RoomListPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('방 목록'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // RoomCreatePage로 이동
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => RoomCreatePage()),
-            );
-          },
-          child: Text('방 생성 페이지로 가기'),
-        ),
-      ),
-    );
-  }
-}
-
 class RoomCreatePage extends StatelessWidget {
   const RoomCreatePage({super.key});
 
