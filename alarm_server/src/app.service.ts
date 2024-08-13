@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { RoomRepository } from './repository/room.repository';
-import { TopicRepository } from './repository/topic.repository';
 import { Room } from './dto/room.entity';
 import { PlayerRepository } from './repository/player.repository';
+import { RoomRepository } from './repository/room.repository';
+import { TopicRepository } from './repository/topic.repository';
 
 @Injectable()
 export class AppService {
@@ -42,6 +42,11 @@ export class AppService {
       cursorId,
       limit,
     );
+
+    console.log(topicId);
+    console.log(cursorId);
+    console.log(limit);
+    console.log(res);
 
     if (!res) {
       return {
