@@ -4,8 +4,15 @@ import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class RoomFilterPage extends StatelessWidget {
+class RoomFilterPage extends StatefulWidget {
   const RoomFilterPage({super.key});
+
+  @override
+  State<RoomFilterPage> createState() => _RoomFilterPageState();
+}
+
+class _RoomFilterPageState extends State<RoomFilterPage> {
+  int isClickBox = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +59,16 @@ class RoomFilterPage extends StatelessWidget {
                   childAspectRatio: 1.5,
                 ),
                 itemBuilder: (context, index) {
-                  return FilterBox(
-                    boxIndex: index,
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isClickBox = index;
+                      });
+                    },
+                    child: FilterBox(
+                      boxIndex: index,
+                      isClickBox: isClickBox,
+                    ),
                   );
                 },
               ),
