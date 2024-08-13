@@ -7,15 +7,19 @@ class FilterBox extends StatelessWidget {
   const FilterBox({
     super.key,
     required this.boxIndex,
+    required this.isClickBox,
   });
 
   final int boxIndex;
+  final int isClickBox;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        color: AppColors.cardColor,
+        color:
+            isClickBox == boxIndex ? AppColors.focusColor : AppColors.cardColor,
         borderRadius: BorderRadius.circular(20.w),
         boxShadow: [
           BoxShadow(
