@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -21,6 +21,7 @@ export class AppController {
 
     return await this.appService.getOrCratePlayer(uuid);
   }
+  //! uuid (string)
 
   @Post('/room/list')
   async getRoomList(@Body() body): Promise<any> {
@@ -30,6 +31,7 @@ export class AppController {
 
     return await this.appService.getRoomList(topicId, cursorId, limit);
   }
+  //! limit(int), cursorId(string), topicId(int)
 
   @Post('/room/create')
   async createRoom(@Body() body): Promise<any> {
@@ -53,13 +55,16 @@ export class AppController {
     } catch (e) {
       return {
         success: false,
+        error: e,
       };
     }
   }
+  //! topicId(int), roomName(string), playerId(int), startTime(datetime), endTime(datetime)
 
   @Post('/room/ids')
   async getRooms(@Body() body): Promise<any> {
     const roomIds = body.roomIds;
     return await this.appService.getRoomListByIds(roomIds);
   }
+  //! roomIds(int)
 }
