@@ -58,6 +58,22 @@ class ShellComponent extends StatelessWidget {
 
       //? 바텀네비게이션
       bottomNavigationBar: BottomNav(),
+
+      //? 룸 생성 버튼
+      floatingActionButton: Container(
+        width: 50.w,
+        height: 50.w,
+        child: FloatingActionButton(
+          onPressed: () {
+            context.pushNamed("roomCreate");
+          },
+          child: Icon(
+            Icons.add_rounded,
+            size: 30.w,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }
