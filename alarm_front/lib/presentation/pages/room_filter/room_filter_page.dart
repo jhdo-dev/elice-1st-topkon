@@ -118,10 +118,11 @@ class _RoomFilterPageState extends State<RoomFilterPage> {
             );
           } else if (state is TopicError) {
             return Center(
-                child: Text(
-              'Error: ${state.message}',
-              style: TextStyles.mediumText,
-            ));
+              child: Text(
+                'Error: ${state.message}',
+                style: TextStyles.mediumText,
+              ),
+            );
           } else {
             return SizedBox();
           }
