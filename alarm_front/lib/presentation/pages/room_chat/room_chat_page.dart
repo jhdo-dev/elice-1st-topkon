@@ -20,13 +20,13 @@ class _RoomChatPageState extends State<RoomChatPage> {
         },
         child: Scaffold(
             backgroundColor: AppColors.backgroundColor,
-            appBar: AppbarWidget(
+            appBar: const AppbarWidget(
               title: 'ROOM CHAT',
               isBackIcon: true,
             ),
             // 중앙 채팅화면(+말풍선)과 하단 입력창
             body: Container(
-              child: Column(
+              child: const Column(
                 children: [
                   Expanded(child: ChatMessageField()),
                   ChatInputField(),
@@ -81,8 +81,9 @@ class _ChatInputFieldState extends State<ChatInputField> {
             controller: _controller,
             // 폰트 색상
             style: TextStyles.mediumText,
+
             // 테두리 색상
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: AppColors.bottomNavColor)),
               enabledBorder: OutlineInputBorder(
@@ -95,7 +96,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
           SizedBox(width: 15.w),
           ElevatedButton(
             onPressed: _sendMessage,
-            child: Text('Send'),
+            child: const Text('Send'),
           ),
         ],
       ),

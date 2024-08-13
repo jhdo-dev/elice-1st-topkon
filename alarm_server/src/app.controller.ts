@@ -15,6 +15,25 @@ export class AppController {
     return await this.appService.getRoomCountByTopic();
   }
 
+  @Post('/topic/create')
+  async createTopic(@Body() body): Promise<any> {
+    const topicName: string = body.topicName;
+
+    try {
+      const topic = await this.appService.createTopic(topicName);
+      return {
+        success: true,
+        topic,
+      };
+    } catch (e) {
+      return {
+        success: false,
+        error: e,
+      };
+    }
+  }
+  //! topicName(string)
+
   @Post('/player')
   async getOrCreatePlayer(@Body() body): Promise<any> {
     const uuid: string = body.uuid;
