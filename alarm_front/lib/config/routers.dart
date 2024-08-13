@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
+final shellNavigatorKey = GlobalKey<NavigatorState>();
 
 final routers = GoRouter(
   initialLocation: "/roomList",
   navigatorKey: rootNavigatorKey,
   routes: [
     ShellRoute(
+      navigatorKey: shellNavigatorKey,
       pageBuilder: (context, state, child) {
         return NoTransitionPage(
           child: ShellComponent(
