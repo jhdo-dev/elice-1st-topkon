@@ -9,7 +9,6 @@ final class TopicLoading extends TopicState {}
 
 final class TopicLoaded extends TopicState {
   final List<Topic> topics;
-
   TopicLoaded(this.topics);
 }
 

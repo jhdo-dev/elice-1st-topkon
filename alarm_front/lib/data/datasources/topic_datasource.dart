@@ -4,12 +4,10 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 class TopicDatasource {
-  // final Dio dio;
-  // TopicDatasource({
-  //   required this.dio,
-  // });
-
-  final dio = Dio();
+  final Dio dio;
+  TopicDatasource({
+    required this.dio,
+  });
 
   Future<Either<String, List<TopicModel>>> getAllTopic() async {
     try {
@@ -24,7 +22,7 @@ class TopicDatasource {
         return Left('${response.statusCode} :: 데이터를 불러오는데 실패했습니다.');
       }
     } catch (e) {
-      return Left('Error :: ${e.toString()}');
+      return Left('${e.toString()}');
     }
   }
 }

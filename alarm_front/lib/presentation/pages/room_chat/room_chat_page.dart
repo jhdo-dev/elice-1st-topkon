@@ -1,7 +1,7 @@
 import 'package:alarm_front/config/colors.dart';
+import 'package:alarm_front/config/text_styles.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:alarm_front/config/text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RoomChatPage extends StatefulWidget {
