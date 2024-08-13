@@ -12,33 +12,37 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: AppColors.backgroundColor,
       centerTitle: true,
       title: Text(
         title,
         style: TextStyles.appbar,
       ),
       actions: [
-        Stack(children: [
-          Positioned(
-            top: 2.0.h,
-            left: 2.0.w,
-            child: Icon(
-              Icons.filter_list_alt,
-              color: AppColors.appbarColor.withOpacity(0.3),
-              size: 30.w,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Stack(children: [
+            Positioned(
+              top: 1.0.h,
+              left: 1.0.w,
+              child: Icon(
+                Icons.filter_list_alt,
+                color: AppColors.appbarColor.withOpacity(0.3),
+                size: 28.w,
+              ),
             ),
-          ),
-          Icon(
-            Icons.filter_list_alt,
-            color: AppColors.appbarColor,
-            size: 30.w,
-          )
-        ]),
+            Icon(
+              Icons.filter_list_alt,
+              color: AppColors.appbarColor,
+              size: 28.w,
+            )
+          ]),
+        ),
         SizedBox(
           width: 10.w,
         ),

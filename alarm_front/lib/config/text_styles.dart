@@ -15,12 +15,12 @@ class TextStyles {
       _font1.copyWith(fontSize: 16.sp, color: Colors.white);
 
   static TextStyle get appbar => _font2.copyWith(
-        fontSize: 30.sp,
+        fontSize: 28.sp,
         color: AppColors.appbarColor,
         fontWeight: FontWeight.w900,
         shadows: [
           Shadow(
-            offset: Offset(2.w, 2.h),
+            offset: Offset(1.w, 1.h),
             blurRadius: 3.0,
             color: AppColors.appbarColor.withOpacity(0.3),
           ),
