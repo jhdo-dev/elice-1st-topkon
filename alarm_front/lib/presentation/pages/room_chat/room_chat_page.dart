@@ -18,13 +18,13 @@ class _RoomChatPageState extends State<RoomChatPage> {
         },
         child: Scaffold(
             backgroundColor: AppColors.backgroundColor,
-            appBar: AppbarWidget(
+            appBar: const AppbarWidget(
               title: 'ROOM CHAT',
               isBackIcon: true,
             ),
             // 중앙 채팅화면(+말풍선)과 하단 입력창
             body: Container(
-              child: Column(
+              child: const Column(
                 children: [
                   Expanded(child: ChatMessageField()),
                   ChatInputField(),
@@ -70,8 +70,8 @@ class _ChatInputFieldState extends State<ChatInputField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.only(top: 5),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(top: 5),
       child: Row(
         children: [
           Expanded(
@@ -79,9 +79,9 @@ class _ChatInputFieldState extends State<ChatInputField> {
             maxLines: null,
             controller: _controller,
             // 폰트 색상
-            style: TextStyle(color: AppColors.appbarColor),
+            style: const TextStyle(color: AppColors.appbarColor),
             // 테두리 색상
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: AppColors.appbarColor)),
               enabledBorder: OutlineInputBorder(
@@ -91,10 +91,10 @@ class _ChatInputFieldState extends State<ChatInputField> {
               _userEnterMessage = value;
             }),
           )),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           ElevatedButton(
             onPressed: _sendMessage,
-            child: Text('Send'),
+            child: const Text('Send'),
           ),
         ],
       ),
@@ -113,17 +113,17 @@ class Message extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           // 유저이름 스타일
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Text(
               isMe ? 'me' : 'other',
-              style: TextStyle(color: AppColors.appbarColor),
+              style: const TextStyle(color: AppColors.appbarColor),
             ),
           ),
           // 말풍선 스타일
@@ -136,10 +136,10 @@ class Message extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             width: 145, // 말풍선 최대넓이
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Text(
               message,
-              style: TextStyle(color: AppColors.appbarColor),
+              style: const TextStyle(color: AppColors.appbarColor),
             ),
           ),
         ],
