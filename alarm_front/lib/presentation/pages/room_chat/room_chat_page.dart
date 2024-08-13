@@ -1,3 +1,5 @@
+import 'package:alarm_front/config/colors.dart';
+import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class RoomChatPage extends StatefulWidget {
@@ -11,9 +13,10 @@ class _RoomChatPageState extends State<RoomChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('RoomChatPage'),
-          centerTitle: true,
+        backgroundColor: Colors.white,
+        appBar: AppbarWidget(
+          title: 'ROOM CHAT',
+          isBackIcon: true,
         ),
         body: Container(
           child: Column(
