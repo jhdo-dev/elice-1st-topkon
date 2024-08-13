@@ -42,8 +42,8 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
                 child: Stack(
                   children: [
                     Positioned(
-                      top: 1.9.h,
-                      left: 1.9.w,
+                      top: 1.7.h,
+                      left: 1.7.w,
                       child: Icon(
                         Icons.arrow_back_ios_new_rounded,
                         color: AppColors.appbarColor.withOpacity(0.3),

@@ -124,7 +124,7 @@ class ChatRoom extends StatelessWidget {
                 height: 50,
                 child: ClipRect(
                   child: Image.asset(
-                    '/Users/jhdo/Developer/team2/alarm_front/assets/images/chat_room_default_profile.png',
+                    'assets/images/chat_room_default_profile.png',
                     fit: BoxFit.fill,
                   ),
                 ),
