@@ -83,11 +83,13 @@ class _ChatInputFieldState extends State<ChatInputField> {
             style: TextStyles.mediumText,
 
             // 테두리 색상
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.bottomNavColor)),
+                  borderSide: BorderSide(
+                      color: AppColors.bottomNavColor.withOpacity(0.5))),
               focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.bottomNavColor)),
+                  borderSide: BorderSide(
+                      color: AppColors.bottomNavColor.withOpacity(0.5))),
             ),
             onChanged: (value) => setState(() {
               _userEnterMessage = value;
