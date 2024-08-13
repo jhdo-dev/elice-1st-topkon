@@ -67,6 +67,9 @@ class ShellComponent extends StatelessWidget {
         width: 50.w,
         height: 50.w,
         child: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25.h),
+          ),
           onPressed: () {
             context.pushNamed("roomCreate");
           },

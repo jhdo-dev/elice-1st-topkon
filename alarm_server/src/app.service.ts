@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Room } from './dto/room.entity';
+import { Topic } from './dto/topic.entity';
 import { PlayerRepository } from './repository/player.repository';
 import { RoomRepository } from './repository/room.repository';
 import { TopicRepository } from './repository/topic.repository';
@@ -26,6 +27,10 @@ export class AppService {
 
   async getRoomCountByTopic(): Promise<any> {
     return await this.topicRepository.getTopicListWithCount();
+  }
+
+  async createTopic(topicName: string): Promise<Topic> {
+    return await this.topicRepository.createTopic(topicName);
   }
 
   async getRoomListByIds(ids: number[]): Promise<Room[]> {
