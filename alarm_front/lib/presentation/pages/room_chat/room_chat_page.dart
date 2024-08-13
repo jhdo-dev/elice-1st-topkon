@@ -12,20 +12,25 @@ class RoomChatPage extends StatefulWidget {
 class _RoomChatPageState extends State<RoomChatPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppbarWidget(
-          title: 'ROOM CHAT',
-          isBackIcon: true,
-        ),
-        body: Container(
-          child: Column(
-            children: [
-              Expanded(child: ChatMessageField()),
-              ChatInputField(),
-            ],
-          ),
-        ));
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus(); // 빈공간 터치시 입력창 내려감
+        },
+        child: Scaffold(
+            backgroundColor: AppColors.backgroundColor,
+            appBar: AppbarWidget(
+              title: 'ROOM CHAT',
+              isBackIcon: true,
+            ),
+            // 중앙 채팅화면(+말풍선)과 하단 입력창
+            body: Container(
+              child: Column(
+                children: [
+                  Expanded(child: ChatMessageField()),
+                  ChatInputField(),
+                ],
+              ),
+            )));
   }
 }
 
@@ -73,8 +78,14 @@ class _ChatInputFieldState extends State<ChatInputField> {
               child: TextField(
             maxLines: null,
             controller: _controller,
+            // 폰트 색상
+            style: TextStyle(color: AppColors.appbarColor),
+            // 테두리 색상
             decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(),
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.appbarColor)),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.appbarColor)),
             ),
             onChanged: (value) => setState(() {
               _userEnterMessage = value;
@@ -93,8 +104,9 @@ class _ChatInputFieldState extends State<ChatInputField> {
 
 // 메시지(말풍선) 스타일
 class Message extends StatelessWidget {
+  // 나중에 final String/bool로 바꾸기
   var message;
-  var isMe;
+  var isMe; // 말풍선이 사용자(me) 또는 상대방 두가지 상태를 가짐
 
   Message(this.message, this.isMe, {super.key});
 
@@ -106,20 +118,28 @@ class Message extends StatelessWidget {
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
+          // 유저이름 스타일
           Container(
             margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: isMe ? Text('me') : Text('other'),
+            child: Text(
+              isMe ? 'me' : 'other',
+              style: TextStyle(color: AppColors.appbarColor),
+            ),
           ),
+          // 말풍선 스타일
           Container(
             decoration: BoxDecoration(
-              color: isMe ? Colors.blue : Colors.grey,
+              // 말풍선 색깔 설정
+              color: isMe
+                  ? AppColors.sendMsgBurbleColor
+                  : AppColors.receiveMsgBurbleColor,
               borderRadius: BorderRadius.circular(12),
             ),
             width: 145, // 말풍선 최대넓이
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Text(
               message,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: AppColors.appbarColor),
             ),
           ),
         ],
