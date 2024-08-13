@@ -1,6 +1,8 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:alarm_front/config/text_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RoomChatPage extends StatefulWidget {
   const RoomChatPage({super.key});
@@ -70,8 +72,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.only(top: 5),
+      margin: EdgeInsets.symmetric(vertical: 20.w, horizontal: 20.h),
       child: Row(
         children: [
           Expanded(
@@ -79,19 +80,19 @@ class _ChatInputFieldState extends State<ChatInputField> {
             maxLines: null,
             controller: _controller,
             // 폰트 색상
-            style: TextStyle(color: AppColors.appbarColor),
+            style: TextStyles.mediumText,
             // 테두리 색상
             decoration: InputDecoration(
               focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.appbarColor)),
+                  borderSide: BorderSide(color: AppColors.bottomNavColor)),
               enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.appbarColor)),
+                  borderSide: BorderSide(color: AppColors.bottomNavColor)),
             ),
             onChanged: (value) => setState(() {
               _userEnterMessage = value;
             }),
           )),
-          SizedBox(width: 8),
+          SizedBox(width: 15.w),
           ElevatedButton(
             onPressed: _sendMessage,
             child: Text('Send'),
@@ -113,17 +114,17 @@ class Message extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
       child: Column(
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           // 유저이름 스타일
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
             child: Text(
               isMe ? 'me' : 'other',
-              style: TextStyle(color: AppColors.appbarColor),
+              style: TextStyles.mediumText,
             ),
           ),
           // 말풍선 스타일
@@ -133,13 +134,13 @@ class Message extends StatelessWidget {
               color: isMe
                   ? AppColors.sendMsgBurbleColor
                   : AppColors.receiveMsgBurbleColor,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
             ),
             width: 145, // 말풍선 최대넓이
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
             child: Text(
               message,
-              style: TextStyle(color: AppColors.appbarColor),
+              style: TextStyles.mediumText,
             ),
           ),
         ],
@@ -168,6 +169,26 @@ final testMessageList = [
   },
   {
     'text': 'text5dfdsfsdfsdfsfsdfsdfsdfds',
+    'isMe': false,
+  },
+  {
+    'text': 'text6',
+    'isMe': true,
+  },
+  {
+    'text': 'text7',
+    'isMe': false,
+  },
+  {
+    'text': 'text8',
+    'isMe': false,
+  },
+  {
+    'text': 'text9',
+    'isMe': true,
+  },
+  {
+    'text': 'text10sadaadaasdasdadfdsfsdfsdfsfsdfsdfsdfds',
     'isMe': false,
   },
 ];
