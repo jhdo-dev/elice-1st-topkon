@@ -15,52 +15,52 @@ class RoomListPage extends StatelessWidget {
 class ChatRoomListPage extends StatelessWidget {
   // 예시로 채팅방 목록 데이터를 생성
   final List<ChatRoom> chatRooms = [
-    const ChatRoom(
+    ChatRoom(
         subjectName: 'Flutter 스터디',
         roomName: '스터디하실 분 모집합니다!',
         roomStartDate: '2024-08-01 09:24',
         roomEndDate: '2024-08-24 18:48'),
-    const ChatRoom(
+    ChatRoom(
         subjectName: 'Dart 스터디',
         roomName: 'dart 공부하실분~',
         roomStartDate: '2024-08-01 09:24',
         roomEndDate: '2024-08-24 18:48'),
-    const ChatRoom(
+    ChatRoom(
         subjectName: '배드민턴 치실 분',
         roomName: '배드민턴 치실 분 구함',
         roomStartDate: '2024-08-01 09:24',
         roomEndDate: '2024-08-24 18:48'),
-    const ChatRoom(
+    ChatRoom(
         subjectName: '앱 개발 공부 모입',
         roomName: '아무나 들어오십쇼',
         roomStartDate: '2024-08-01 09:24',
         roomEndDate: '2024-08-24 18:48'),
-    const ChatRoom(
+    ChatRoom(
         subjectName: '테스트 스터디',
         roomName: '스터디하실 분 모집합니다!',
         roomStartDate: '2024-08-01 09:24',
         roomEndDate: '2024-08-24 18:48'),
-    const ChatRoom(
+    ChatRoom(
         subjectName: '테스트 스터디',
         roomName: '스터디하실 분 모집합니다!',
         roomStartDate: '2024-08-01 09:24',
         roomEndDate: '2024-08-24 18:48'),
-    const ChatRoom(
+    ChatRoom(
         subjectName: '테스트 스터디',
         roomName: '스터디하실 분 모집합니다!',
         roomStartDate: '2024-08-01 09:24',
         roomEndDate: '2024-08-24 18:48'),
-    const ChatRoom(
+    ChatRoom(
         subjectName: '프로그래밍 스터디',
         roomName: '스터디하실 분 모집합니다!',
         roomStartDate: '2024-08-01 09:24',
         roomEndDate: '2024-08-24 18:48'),
-    const ChatRoom(
+    ChatRoom(
         subjectName: '프로그래밍 스터디',
         roomName: '스터디하실 분 모집합니다!',
         roomStartDate: '2024-08-01 09:24',
         roomEndDate: '2024-08-24 18:48'),
-    const ChatRoom(
+    ChatRoom(
         subjectName: '프로그래밍 스터디',
         roomName: '스터디하실 분 모집합니다!',
         roomStartDate: '2024-08-01 09:24',
@@ -88,8 +88,9 @@ class ChatRoom extends StatelessWidget {
   final String roomName;
   final String roomStartDate;
   final String roomEndDate;
+  bool isRoomActive = true;
 
-  const ChatRoom({
+  ChatRoom({
     super.key,
     required this.subjectName,
     required this.roomName,
@@ -120,8 +121,8 @@ class ChatRoom extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                width: 50,
-                height: 50,
+                width: 65,
+                height: 65,
                 child: ClipRect(
                   child: Image.asset(
                     'assets/images/chat_room_default_profile.png',
@@ -137,17 +138,18 @@ class ChatRoom extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '주제: $subjectName',
+                  '[$subjectName]',
                   style: const TextStyle(
                     fontSize: 18.0,
+                    fontWeight: FontWeight.w900,
                     color: Colors.white,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  '방 이름: $roomName',
+                  roomName,
                   style: const TextStyle(
                     fontSize: 16.0,
+                    fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),
                 ),
@@ -160,7 +162,7 @@ class ChatRoom extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '종료: $roomStartDate',
+                  '종료: $roomEndDate',
                   style: const TextStyle(
                     fontSize: 14.0,
                     color: Colors.grey,
@@ -172,18 +174,45 @@ class ChatRoom extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    // fixedSize: const Size(60, 40),
+              isRoomActive
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.sendMsgBurbleColor,
+                            foregroundColor: Colors.white,
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            '참여',
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            // backgroundColor: Colors.red,
+                            foregroundColor: Colors.red,
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            '취소',
+                          ),
+                        ),
+                      ],
+                    )
+                  : ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          // fixedSize: const Size(60, 40),
+                          // backgroundBuilder: Colors.blue,
+                          ),
+                      onPressed: () {},
+                      child: const Text(
+                        '예약',
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
                     ),
-                onPressed: () {},
-                child: const Text(
-                  '예약',
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
-              ),
             ],
           ),
         ],
