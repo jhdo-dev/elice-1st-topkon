@@ -17,12 +17,13 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   final bool isBackIcon;
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
+      backgroundColor: AppColors.backgroundColor,
       centerTitle: true,
       title: Text(
         title,
