@@ -60,13 +60,16 @@ class ShellComponent extends StatelessWidget {
       body: child,
 
       //? 바텀네비게이션
-      bottomNavigationBar: BottomNav(),
+      bottomNavigationBar: const BottomNav(),
 
       //? 룸 생성 버튼
-      floatingActionButton: Container(
+      floatingActionButton: SizedBox(
         width: 50.w,
         height: 50.w,
         child: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25.h),
+          ),
           onPressed: () {
             context.pushNamed("roomCreate");
           },
