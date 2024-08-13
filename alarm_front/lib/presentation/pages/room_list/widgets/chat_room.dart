@@ -1,5 +1,6 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ChatRoom extends StatefulWidget {
   final String subjectName;
@@ -107,7 +108,9 @@ class _ChatRoomState extends State<ChatRoom> {
                             backgroundColor: AppColors.sendMsgBurbleColor,
                             foregroundColor: Colors.white,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            context.pushNamed("roomChat");
+                          },
                           child: const Text(
                             '참여',
                           ),
