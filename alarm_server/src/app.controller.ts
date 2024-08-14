@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -33,6 +33,24 @@ export class AppController {
     }
   }
   //! topicName(string)
+
+  @Delete('/topic/delete')
+  async deleteTopic(@Body() body): Promise<any> {
+    const topicId: number = body.topicId;
+
+    try {
+      await this.appService.deleteTopic(topicId);
+      return {
+        success: true,
+      };
+    } catch (e) {
+      return {
+        success: false,
+        error: e.message,
+      };
+    }
+  }
+  //! topicId(int)
 
   @Post('/player')
   async getOrCreatePlayer(@Body() body): Promise<any> {

@@ -19,7 +19,45 @@ class TopicDatasource {
         final topics = data.map((item) => TopicModel.fromJson(item)).toList();
         return Right(topics);
       } else {
-        return Left('${response.statusCode} :: 데이터를 불러오는데 실패했습니다.');
+        return Left('${response.statusCode} :: topic 데이터를 불러오는데 실패했습니다.');
+      }
+    } catch (e) {
+      return Left('${e.toString()}');
+    }
+  }
+
+  Future<Either<String, Unit>> createTopic({required String topicName}) async {
+    try {
+      final response = await dio.post(
+        "${Constants.baseUrl}/topic/create",
+        data: {
+          "topicName": topicName,
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(unit);
+      } else {
+        return Left('${response.statusCode} :: topic 데이터를 추가하는데 실패했습니다.');
+      }
+    } catch (e) {
+      return Left('${e.toString()}');
+    }
+  }
+
+  Future<Either<String, Unit>> deleteTopic({required int topicId}) async {
+    try {
+      final response = await dio.delete(
+        "${Constants.baseUrl}/topic/delete",
+        data: {
+          "topicId": topicId,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return Right(unit);
+      } else {
+        return Left('${response.statusCode} :: topic 데이터를 삭제하는데 실패했습니다.');
       }
     } catch (e) {
       return Left('${e.toString()}');

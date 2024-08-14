@@ -33,6 +33,10 @@ export class AppService {
     return await this.topicRepository.createTopic(topicName);
   }
 
+  async deleteTopic(topicId: number): Promise<void> {
+    await this.topicRepository.deleteTopic(topicId);
+  }
+
   async getRoomListByIds(ids: number[]): Promise<Room[]> {
     return await this.roomRepository.getRoomsByIds(ids);
   }
