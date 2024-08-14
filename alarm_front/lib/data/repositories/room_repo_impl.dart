@@ -15,7 +15,7 @@ class RoomRepoImpl extends RoomRepo {
     required String startTime,
     required String endTime,
   }) async {
-    final result = await datasource.cerateRoom(
+    final result = await datasource.createRoom(
       topicId: topicId,
       roomName: roomName,
       playerId: playerId,

@@ -6,7 +6,7 @@ class RoomDatasource {
   final Dio dio;
   RoomDatasource({required this.dio});
 
-  Future<Either<String, Unit>> cerateRoom({
+  Future<Either<String, Unit>> createRoom({
     required int topicId,
     required String roomName,
     required int playerId,
