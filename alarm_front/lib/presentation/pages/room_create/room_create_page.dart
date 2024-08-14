@@ -302,6 +302,12 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
       TimeOfDay? pickedTime = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: customDarkTheme,
+            child: child!,
+          );
+        },
       );
 
       if (pickedTime != null) {
@@ -337,6 +343,12 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
       TimeOfDay? pickedTime = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: customDarkTheme,
+            child: child!,
+          );
+        },
       );
 
       if (pickedTime != null) {
