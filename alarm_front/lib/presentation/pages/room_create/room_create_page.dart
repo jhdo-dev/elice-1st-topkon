@@ -1,5 +1,6 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/config/text_styles.dart';
+import 'package:alarm_front/presentation/bloc/bottom_nav/bottom_nav_bloc.dart';
 import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:alarm_front/presentation/bloc/topic/topic_bloc.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
@@ -23,6 +24,16 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
   int? selectedTopic;
   final TextEditingController _controller = TextEditingController();
 
+  final ThemeData customDarkTheme = ThemeData(
+    brightness: Brightness.dark,
+    colorScheme: ColorScheme.dark(
+      primary: AppColors.sendMsgBurbleColor, // 주요 색상
+      onPrimary: AppColors.appbarColor, // 주요 색상 위의 글자색
+      surface: AppColors.cardColor, // 대화상자 배경색
+      onSurface: AppColors.appbarColor, // 대화상자 위의 글자색
+    ),
+  );
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +48,8 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<BottomNavBloc>().state.selectedIndex;
+
     return Scaffold(
       appBar: AppbarWidget(
         title: "ROOM CREATE",
@@ -277,6 +290,12 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
       initialDate: now,
       firstDate: now,
       lastDate: DateTime(now.year + 1),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: customDarkTheme,
+          child: child!,
+        );
+      },
     );
 
     if (pickedDate != null) {
@@ -306,6 +325,12 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
       initialDate: now,
       firstDate: now,
       lastDate: DateTime(now.year + 1),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: customDarkTheme,
+          child: child!,
+        );
+      },
     );
 
     if (pickedDate != null) {
