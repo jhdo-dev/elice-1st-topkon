@@ -5,6 +5,7 @@ import 'package:alarm_front/presentation/pages/room_filter/widgets/topic_create_
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:alarm_front/presentation/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -81,9 +82,13 @@ class _RoomFilterPageState extends State<RoomFilterPage> {
       body: BlocConsumer<TopicBloc, TopicState>(
         listener: (context, state) {
           if (state is DeleteTopicSuccess) {
-            showCustomSnackbar(context, "삭제되었습니다.");
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              showCustomSnackbar(context, "삭제되었습니다.");
+            });
           } else if (state is DeleteTopicError) {
-            showCustomSnackbar(context, "삭제하는데 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              showCustomSnackbar(context, "삭제하는데 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+            });
           }
         },
         builder: (context, state) {
@@ -125,7 +130,9 @@ class _RoomFilterPageState extends State<RoomFilterPage> {
               ),
             );
           } else if (state is GetTopicError) {
-            showCustomSnackbar(context, "문제가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              showCustomSnackbar(context, "문제가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+            });
             return SizedBox();
           } else {
             return SizedBox();
