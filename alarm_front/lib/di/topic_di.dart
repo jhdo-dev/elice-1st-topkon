@@ -27,13 +27,11 @@ class TopicDi {
     ];
   }
 
-  static List<BlocProvider> getBlocProvider() {
-    return [
-      BlocProvider<TopicBloc>(
-        create: (context) => TopicBloc(
-          topicUsecases: RepositoryProvider.of(context),
-        ),
-      )
-    ];
+  static BlocProvider getBlocProvider() {
+    return BlocProvider<TopicBloc>(
+      create: (context) => TopicBloc(
+        topicUsecases: RepositoryProvider.of(context),
+      ),
+    );
   }
 }

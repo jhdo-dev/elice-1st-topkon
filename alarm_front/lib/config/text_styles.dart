@@ -20,6 +20,12 @@ class TextStyles {
         fontWeight: FontWeight.w500,
       );
 
+  static TextStyle get largeTitle => _font1.copyWith(
+        fontSize: 21.sp,
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
+      );
+
   static TextStyle get appbar => _font2.copyWith(
         fontSize: 28.sp,
         color: AppColors.appbarColor,
