@@ -27,11 +27,25 @@ class TopicDi {
     ];
   }
 
-  static BlocProvider getBlocProvider() {
-    return BlocProvider<TopicBloc>(
-      create: (context) => TopicBloc(
-        topicUsecases: RepositoryProvider.of(context),
+  static List<BlocProvider> getBlocProvider() {
+    return [
+      BlocProvider<LoadTopicBloc>(
+        create: (context) => LoadTopicBloc(
+          topicUsecases: RepositoryProvider.of(context),
+        ),
       ),
-    );
+      BlocProvider<CreateTopicBloc>(
+        create: (context) => CreateTopicBloc(
+          topicUsecases: RepositoryProvider.of(context),
+          loadTopicBloc: BlocProvider.of<LoadTopicBloc>(context),
+        ),
+      ),
+      BlocProvider<DeleteTopicBloc>(
+        create: (context) => DeleteTopicBloc(
+          topicUsecases: RepositoryProvider.of(context),
+          loadTopicBloc: BlocProvider.of<LoadTopicBloc>(context),
+        ),
+      ),
+    ];
   }
 }

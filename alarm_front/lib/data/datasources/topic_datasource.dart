@@ -26,7 +26,8 @@ class TopicDatasource {
     }
   }
 
-  Future<Either<String, Unit>> createTopic({required String topicName}) async {
+  Future<Either<String, TopicModel>> createTopic(
+      {required String topicName}) async {
     try {
       final response = await dio.post(
         "${Constants.baseUrl}/topic/create",
@@ -36,7 +37,11 @@ class TopicDatasource {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return Right(unit);
+        final data = response.data['topic'] as Map<String, dynamic>;
+
+        final topic = TopicModel.fromJson(data);
+
+        return Right(topic);
       } else {
         return Left('${response.statusCode} :: topic 데이터를 추가하는데 실패했습니다.');
       }

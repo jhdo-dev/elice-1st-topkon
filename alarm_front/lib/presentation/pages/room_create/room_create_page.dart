@@ -1,6 +1,5 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/config/text_styles.dart';
-import 'package:alarm_front/presentation/bloc/bottom_nav/bottom_nav_bloc.dart';
 import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:alarm_front/presentation/bloc/topic/topic_bloc.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
@@ -37,7 +36,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
   @override
   void initState() {
     super.initState();
-    context.read<TopicBloc>().add(LoadTopicsEvent());
+    context.read<LoadTopicBloc>().add(LoadTopicsEvent());
   }
 
   @override
@@ -48,8 +47,6 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<BottomNavBloc>().state.selectedIndex;
-
     return Scaffold(
       appBar: AppbarWidget(
         title: "ROOM CREATE",
@@ -158,7 +155,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
               ),
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: DropdownButtonHideUnderline(
-                child: BlocBuilder<TopicBloc, TopicState>(
+                child: BlocBuilder<LoadTopicBloc, TopicState>(
                   builder: (context, state) {
                     return DropdownButton<int>(
                       dropdownColor: AppColors.dropDownColor,

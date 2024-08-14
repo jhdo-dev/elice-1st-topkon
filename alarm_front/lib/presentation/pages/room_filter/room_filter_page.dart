@@ -22,7 +22,7 @@ class _RoomFilterPageState extends State<RoomFilterPage> {
   @override
   void initState() {
     super.initState();
-    context.read<TopicBloc>().add(LoadTopicsEvent());
+    context.read<LoadTopicBloc>().add(LoadTopicsEvent());
   }
 
   @override
@@ -79,7 +79,7 @@ class _RoomFilterPageState extends State<RoomFilterPage> {
           ),
         ],
       ),
-      body: BlocConsumer<TopicBloc, TopicState>(
+      body: BlocListener<DeleteTopicBloc, TopicState>(
         listener: (context, state) {
           if (state is DeleteTopicSuccess) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -91,53 +91,55 @@ class _RoomFilterPageState extends State<RoomFilterPage> {
             });
           }
         },
-        builder: (context, state) {
-          if (state is GetTopicLoading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is GetTopicLoaded) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: GridView.builder(
-                      itemCount: state.topics.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 20.w,
-                        mainAxisSpacing: 20.h,
-                        childAspectRatio: 1.5,
+        child: BlocBuilder<LoadTopicBloc, TopicState>(
+          builder: (context, state) {
+            if (state is GetTopicLoading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is GetTopicLoaded) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: GridView.builder(
+                        itemCount: state.topics.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 20.w,
+                          mainAxisSpacing: 20.h,
+                          childAspectRatio: 1.5,
+                        ),
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isClickBox = index;
+                              });
+                            },
+                            child: FilterBox(
+                              id: state.topics[index].id,
+                              boxIndex: index,
+                              isClickBox: isClickBox,
+                              topicCount: state.topics[index].roomCount,
+                              topicName: state.topics[index].name,
+                            ),
+                          );
+                        },
                       ),
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isClickBox = index;
-                            });
-                          },
-                          child: FilterBox(
-                            id: state.topics[index].id,
-                            boxIndex: index,
-                            isClickBox: isClickBox,
-                            topicCount: state.topics[index].roomCount,
-                            topicName: state.topics[index].name,
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                ],
-              ),
-            );
-          } else if (state is GetTopicError) {
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              showCustomSnackbar(context, "문제가 발생했습니다. 잠시 후 다시 시도해 주세요.");
-            });
-            return SizedBox();
-          } else {
-            return SizedBox();
-          }
-        },
+                    )
+                  ],
+                ),
+              );
+            } else if (state is GetTopicError) {
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                showCustomSnackbar(context, "문제가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+              });
+              return SizedBox();
+            } else {
+              return SizedBox();
+            }
+          },
+        ),
       ),
     );
   }

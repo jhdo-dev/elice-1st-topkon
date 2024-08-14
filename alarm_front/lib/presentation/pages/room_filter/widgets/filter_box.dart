@@ -52,7 +52,9 @@ class FilterBox extends StatelessWidget {
             right: 0,
             child: GestureDetector(
               onTap: () {
-                context.read<TopicBloc>().add(DeleteTopicsEvent(topicId: id));
+                context
+                    .read<DeleteTopicBloc>()
+                    .add(DeleteTopicsEvent(topicId: id));
               },
               child: Container(
                 width: 25.w,

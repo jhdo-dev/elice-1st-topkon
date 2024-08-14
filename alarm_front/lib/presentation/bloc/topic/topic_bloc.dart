@@ -8,56 +8,87 @@ import 'package:meta/meta.dart';
 part 'topic_event.dart';
 part 'topic_state.dart';
 
-class TopicBloc extends Bloc<TopicEvent, TopicState> {
+class LoadTopicBloc extends Bloc<TopicEvent, TopicState> {
   final TopicUsecases topicUsecases;
 
-  TopicBloc({required this.topicUsecases}) : super(TopicInitial()) {
-    on<LoadTopicsEvent>(_onLoadTopics);
-    on<CreateTopicsEvent>(_onCreateTopic);
-    on<DeleteTopicsEvent>(_onDeleteTopic);
-  }
+  LoadTopicBloc({required this.topicUsecases}) : super(GetTopicInitial()) {
+    on<LoadTopicsEvent>(
+      (event, emit) async {
+        emit(GetTopicLoading());
 
-  Future<void> _onLoadTopics(
-      LoadTopicsEvent event, Emitter<TopicState> emit) async {
-    emit(GetTopicLoading());
-
-    final Either<String, List<Topic>> result =
-        await topicUsecases.getTopicUsecase();
-    print("get topic -> $result");
-    result.fold(
-      (failure) => emit(GetTopicError(failure)),
-      (topics) => emit(GetTopicLoaded(topics)),
-    );
-  }
-
-  Future<void> _onCreateTopic(
-      CreateTopicsEvent event, Emitter<TopicState> emit) async {
-    emit(GetTopicLoading());
-
-    final Either<String, Unit> result =
-        await topicUsecases.createTopicUsecase(topicName: event.topicName);
-    print("create topic -> $result");
-    result.fold(
-      (failure) => emit(CreateTopicError(failure)),
-      (_) {
-        emit(CreateTopicSuccess());
-        add(LoadTopicsEvent());
+        final Either<String, List<Topic>> result =
+            await topicUsecases.getTopicUsecase();
+        print("get topic -> $result");
+        result.fold(
+          (failure) => emit(GetTopicError(failure)),
+          (topics) => emit(GetTopicLoaded(topics)),
+        );
       },
     );
   }
+}
 
-  Future<void> _onDeleteTopic(
-      DeleteTopicsEvent event, Emitter<TopicState> emit) async {
-    emit(DeleteTopicLoading());
+class CreateTopicBloc extends Bloc<TopicEvent, TopicState> {
+  final TopicUsecases topicUsecases;
+  final LoadTopicBloc loadTopicBloc;
 
-    final Either<String, Unit> result =
-        await topicUsecases.deleteTopicUsecase(topicId: event.topicId);
-    print("delete topic -> $result");
-    result.fold(
-      (failure) => emit(DeleteTopicError(failure)),
-      (_) {
-        emit(DeleteTopicSuccess());
-        add(LoadTopicsEvent());
+  CreateTopicBloc({
+    required this.topicUsecases,
+    required this.loadTopicBloc,
+  }) : super(CreateTopicInitial()) {
+    on<CreateTopicsEvent>(
+      (event, emit) async {
+        emit(CreateTopicLoading());
+
+        final Either<String, Topic> result =
+            await topicUsecases.createTopicUsecase(topicName: event.topicName);
+        print("create topic -> $result");
+        result.fold(
+          (failure) => emit(CreateTopicError(failure)),
+          (topic) {
+            if (loadTopicBloc.state is GetTopicLoaded) {
+              final currentState = loadTopicBloc.state as GetTopicLoaded;
+              final updatedTopics = List<Topic>.from(currentState.topics)
+                ..add(topic);
+              loadTopicBloc.emit(GetTopicLoaded(updatedTopics));
+            }
+
+            emit(CreateTopicSuccess(topic: topic));
+          },
+        );
+      },
+    );
+  }
+}
+
+class DeleteTopicBloc extends Bloc<TopicEvent, TopicState> {
+  final TopicUsecases topicUsecases;
+  final LoadTopicBloc loadTopicBloc;
+
+  DeleteTopicBloc({
+    required this.topicUsecases,
+    required this.loadTopicBloc,
+  }) : super(DeleteTopicInitial()) {
+    on<DeleteTopicsEvent>(
+      (event, emit) async {
+        emit(DeleteTopicLoading());
+
+        final Either<String, Unit> result =
+            await topicUsecases.deleteTopicUsecase(topicId: event.topicId);
+        print("delete topic -> $result");
+        result.fold(
+          (failure) => emit(DeleteTopicError(failure)),
+          (_) {
+            if (loadTopicBloc.state is GetTopicLoaded) {
+              final currentState = loadTopicBloc.state as GetTopicLoaded;
+              final updatedTopics = currentState.topics
+                  .where((topic) => topic.id != event.topicId)
+                  .toList();
+              loadTopicBloc.emit(GetTopicLoaded(updatedTopics));
+            }
+            emit(DeleteTopicSuccess());
+          },
+        );
       },
     );
   }
