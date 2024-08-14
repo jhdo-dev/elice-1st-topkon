@@ -17,4 +17,24 @@ class TopicRepoImpl implements TopicRepo {
       (topics) => Right(topics.map((model) => model.toEntity()).toList()),
     );
   }
+
+  @override
+  Future<Either<String, Unit>> createTopic({required String topicName}) async {
+    final result = await datasource.createTopic(topicName: topicName);
+
+    return result.fold(
+      (error) => Left(error),
+      (unit) => Right(unit),
+    );
+  }
+
+  @override
+  Future<Either<String, Unit>> deleteTopic({required int topicId}) async {
+    final result = await datasource.deleteTopic(topicId: topicId);
+
+    return result.fold(
+      (error) => Left(error),
+      (unit) => Right(unit),
+    );
+  }
 }

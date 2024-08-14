@@ -46,4 +46,8 @@ export class TopicRepository extends Repository<Topic> {
     topic.name = topicName;
     return await this.save(topic);
   }
+
+  async deleteTopic(topicId: number): Promise<void> {
+    await this.delete({ id: topicId });
+  }
 }
