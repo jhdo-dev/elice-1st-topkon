@@ -24,10 +24,8 @@ class UserDi {
 
   static BlocProvider getBlocProvider() {
     return BlocProvider<UserBloc>(
-      create: (context) => UserBloc(
-          userUsecases: RepositoryProvider.of(
-        context,
-      )),
+      create: (context) =>
+          UserBloc(userUsecases: RepositoryProvider.of(context)),
     );
   }
 }
