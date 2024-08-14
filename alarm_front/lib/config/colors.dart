@@ -14,4 +14,5 @@ abstract class AppColors {
   static const roomListTileColor = Color(0xFF383838);
 
   static const hintColor = Color(0xFFA9A9A9);
+  static const dropDownColor = Color(0xFF1F1F1F);
 }

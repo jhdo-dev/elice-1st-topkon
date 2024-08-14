@@ -1,6 +1,10 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/config/text_styles.dart';
+import 'package:alarm_front/presentation/bloc/topic/topic_bloc.dart';
+import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RoomCreatePage extends StatelessWidget {
   const RoomCreatePage({super.key});
@@ -8,22 +12,31 @@ class RoomCreatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          '방 생성',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
+      appBar: AppbarWidget(
+        title: "ROOM CREATE",
+        isBackIcon: true,
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.check,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              // 체크 버튼 클릭 시 처리할 코드 (추가 기능 필요 시 여기에 작성)
-            },
+          GestureDetector(
+            onTap: () {},
+            child: Stack(children: [
+              Positioned(
+                top: 2.0.h,
+                left: 2.0.w,
+                child: Icon(
+                  Icons.check_circle_rounded,
+                  color: AppColors.focusColor.withOpacity(0.3),
+                  size: 30.w,
+                ),
+              ),
+              Icon(
+                Icons.check_circle_rounded,
+                color: AppColors.focusColor,
+                size: 30.w,
+              )
+            ]),
+          ),
+          SizedBox(
+            width: 15.w,
           ),
         ],
       ),
@@ -42,68 +55,140 @@ class RoomCreateForm extends StatefulWidget {
 class _RoomCreateFormState extends State<RoomCreateForm> {
   DateTime? selectedStartDateTime;
   DateTime? selectedEndDateTime;
-  String? selectedTopic;
+  int? selectedTopic;
   final TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<TopicBloc>().add(LoadTopicsEvent());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.only(top: 50.h, left: 50.w, right: 50.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
-            '방 이름',
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.white,
-            ),
+          Text(
+            'ROOM NAME',
+            style: TextStyles.largeTitle,
           ),
           const SizedBox(height: 10),
-          TextField(
-            controller: _controller,
-            style: TextStyles.mediumText,
-            decoration: InputDecoration(
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              labelText: '',
-              border: const OutlineInputBorder(),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: AppColors.bottomNavColor.withOpacity(0.5))),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: AppColors.bottomNavColor.withOpacity(0.5))),
+          Container(
+            height: 50.h,
+            child: TextField(
+              controller: _controller,
+              style: TextStyles.mediumText,
+              decoration: InputDecoration(
+                hintText: "방 이름을 입력해 주세요.",
+                hintStyle:
+                    TextStyles.mediumText.copyWith(color: AppColors.hintColor),
+                border: const OutlineInputBorder(),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: AppColors.bottomNavColor.withOpacity(0.5))),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: AppColors.focusColor.withOpacity(0.5))),
+              ),
             ),
           ),
           const SizedBox(height: 30),
-          const Text(
-            '주제 선택',
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.white,
+          Text(
+            'SELECT TOPIC',
+            style: TextStyles.largeTitle,
+          ),
+          const SizedBox(height: 10),
+          Container(
+            width: double.maxFinite,
+            height: 50.h,
+            decoration: BoxDecoration(
+              border:
+                  Border.all(color: AppColors.bottomNavColor.withOpacity(0.5)),
+              borderRadius: BorderRadius.circular(5.h),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: DropdownButtonHideUnderline(
+              child: BlocBuilder<TopicBloc, TopicState>(
+                builder: (context, state) {
+                  return DropdownButton<int>(
+                    dropdownColor: AppColors.dropDownColor,
+                    hint: Text(
+                      '주제를 선택해 주세요.',
+                      style: TextStyles.mediumText
+                          .copyWith(color: AppColors.hintColor),
+                    ),
+                    style: TextStyles.mediumText,
+                    isExpanded: true,
+                    value: selectedTopic,
+                    items: state is GetTopicLoaded
+                        ? state.topics
+                            .map(
+                              (e) => DropdownMenuItem<int>(
+                                child: Text(
+                                  e.name,
+                                  style: TextStyles.mediumText,
+                                ),
+                                value: e.id,
+                              ),
+                            )
+                            .toList()
+                        : [],
+                    onChanged: (int? value) {
+                      if (value != null) {
+                        setState(() {
+                          selectedTopic = value;
+                        });
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          Align(
+            alignment: Alignment.center, // 왼쪽 정렬
+            child: Text(
+              'START DATE',
+              style: TextStyles.largeTitle,
             ),
           ),
           const SizedBox(height: 10),
           Center(
-            child: ElevatedButton(
-              onPressed: () {
-                _showTopicDialog(context);
+            child: GestureDetector(
+              onTap: () {
+                _selectStartDateTime(context);
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.focusColor,
-                foregroundColor: Colors.white,
-                fixedSize: Size(
-                    MediaQuery.of(context).size.width * 0.9, 40), // 너비를 80%로 설정
-              ),
-              child: Text(
-                selectedTopic ?? '선택하기',
-                style: TextStyle(
-                  fontSize: 16,
-                  shadows: [
-                    Shadow(
-                      offset: const Offset(1.0, 1.0), // 그림자의 위치
-                      blurRadius: 5.0, // 그림자의 흐림 정도
-                      color: Colors.black.withOpacity(0.5), // 그림자의 색상
+              child: Container(
+                height: 50.h,
+                decoration: BoxDecoration(
+                  color: AppColors.cardColor,
+                  borderRadius: BorderRadius.circular(5.h),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 3,
+                      color: Colors.black.withOpacity(0.3),
+                      offset: Offset(0, 5),
+                    )
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      selectedStartDateTime != null
+                          ? '${"${selectedStartDateTime!.toLocal()}".split(' ')[0]} ${TimeOfDay.fromDateTime(selectedStartDateTime!).format(context)}'
+                          : 'SELECT',
+                      style: TextStyles.largeText,
                     ),
                   ],
                 ),
@@ -111,222 +196,48 @@ class _RoomCreateFormState extends State<RoomCreateForm> {
             ),
           ),
           const SizedBox(height: 30),
-          const Align(
-            alignment: Alignment.center, // 왼쪽 정렬
-            child: Text(
-              '시작 일시',
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                _selectStartDateTime(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.focusColor,
-                foregroundColor: Colors.white,
-                fixedSize: Size(
-                    MediaQuery.of(context).size.width * 0.9, 40), // 너비를 80%로 설정
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    selectedStartDateTime != null
-                        ? '${"${selectedStartDateTime!.toLocal()}".split(' ')[0]} ${TimeOfDay.fromDateTime(selectedStartDateTime!).format(context)}'
-                        : '선택하기',
-                    style: TextStyle(
-                      fontSize: 16,
-                      shadows: [
-                        Shadow(
-                          offset: const Offset(1.0, 1.0), // 그림자의 위치
-                          blurRadius: 5.0, // 그림자의 흐림 정도
-                          color: Colors.black.withOpacity(0.5), // 그림자의 색상
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 30),
-          const Align(
+          Align(
             alignment: Alignment.center,
             child: Text(
-              '종료 일시',
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              'END DATE',
+              style: TextStyles.largeTitle,
             ),
           ),
           const SizedBox(height: 10),
           Center(
-            child: ElevatedButton(
-              onPressed: () {
+            child: GestureDetector(
+              onTap: () {
                 _selectEndDateTime(context);
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.focusColor,
-                foregroundColor: Colors.white,
-                fixedSize: Size(
-                    MediaQuery.of(context).size.width * 0.9, 40), // 너비를 80%로 설정
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    selectedEndDateTime != null
-                        ? '${"${selectedEndDateTime!.toLocal()}".split(' ')[0]} ${TimeOfDay.fromDateTime(selectedEndDateTime!).format(context)}'
-                        : '선택하기',
-                    style: TextStyle(
-                      shadows: [
-                        Shadow(
-                          offset: const Offset(1.0, 1.0), // 그림자의 위치
-                          blurRadius: 5.0, // 그림자의 흐림 정도
-                          color: Colors.black.withOpacity(0.5), // 그림자의 색상
-                        ),
-                      ],
-                      fontSize: 16,
+              child: Container(
+                height: 50.h,
+                decoration: BoxDecoration(
+                  color: AppColors.cardColor,
+                  borderRadius: BorderRadius.circular(5.h),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 3,
+                      color: Colors.black.withOpacity(0.3),
+                      offset: Offset(0, 5),
+                    )
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      selectedEndDateTime != null
+                          ? '${"${selectedEndDateTime!.toLocal()}".split(' ')[0]} ${TimeOfDay.fromDateTime(selectedEndDateTime!).format(context)}'
+                          : 'SELECT',
+                      style: TextStyles.largeText,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  void _showTopicDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: AppColors.backgroundColor,
-          content: Column(
-            children: [
-              const Text(
-                '주제를 선택하세요.',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.focusColor,
-                      border:
-                          Border.all(color: Colors.black, width: 0.5), // 테두리 설정
-                      borderRadius: BorderRadius.circular(8), // 모서리 둥글기
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedTopic = '주제 2'; // 선택한 주제를 설정
-                        });
-                        Navigator.of(context).pop(); // 다이얼로그 닫기
-                      },
-                      child: Text(
-                        '주제 1',
-                        style: TextStyle(
-                          color: Colors.black,
-                          shadows: [
-                            Shadow(
-                              offset: const Offset(1.0, 1.0), // 그림자의 위치
-                              blurRadius: 5.0, // 그림자의 흐림 정도
-                              color: Colors.black.withOpacity(0.5), // 그림자의 색상
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border:
-                          Border.all(color: Colors.black, width: 0.5), // 테두리 설정
-                      borderRadius: BorderRadius.circular(8), // 모서리 둥글기
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedTopic = '선택하기'; // 선택한 주제를 설정
-                        });
-                        Navigator.of(context).pop(); // 다이얼로그 닫기
-                      },
-                      child: Text(
-                        '주제 2',
-                        style: TextStyle(
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              offset: const Offset(1.0, 1.0), // 그림자의 위치
-                              blurRadius: 5.0, // 그림자의 흐림 정도
-                              color: Colors.black.withOpacity(0.5), // 그림자의 색상
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border:
-                          Border.all(color: Colors.black, width: 0.5), // 테두리 설정
-                      borderRadius: BorderRadius.circular(8), // 모서리 둥글기
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedTopic = '주제 2'; // 선택한 주제를 설정
-                        });
-                        Navigator.of(context).pop(); // 다이얼로그 닫기
-                      },
-                      child: Text(
-                        '주제 3',
-                        style: TextStyle(
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              offset: const Offset(1.0, 1.0), // 그림자의 위치
-                              blurRadius: 5.0, // 그림자의 흐림 정도
-                              color: Colors.black.withOpacity(0.5), // 그림자의 색상
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // 다이얼로그 닫기
-              },
-              child: const Text(
-                '취소',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: AppColors.focusColor,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 

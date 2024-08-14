@@ -11,7 +11,7 @@ part 'topic_state.dart';
 class TopicBloc extends Bloc<TopicEvent, TopicState> {
   final TopicUsecases topicUsecases;
 
-  TopicBloc({required this.topicUsecases}) : super(GetTopicInitial()) {
+  TopicBloc({required this.topicUsecases}) : super(TopicInitial()) {
     on<LoadTopicsEvent>(_onLoadTopics);
     on<CreateTopicsEvent>(_onCreateTopic);
     on<DeleteTopicsEvent>(_onDeleteTopic);
