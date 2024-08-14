@@ -25,7 +25,7 @@ class _TopicCreateDialogState extends State<TopicCreateDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<TopicBloc, TopicState>(
+    return BlocListener<CreateTopicBloc, TopicState>(
       listener: (context, state) {
         if (state is CreateTopicSuccess) {
           showCustomSnackbar(context, "생성되었습니다.");
@@ -63,7 +63,7 @@ class _TopicCreateDialogState extends State<TopicCreateDialog> {
                 showCustomSnackbar(context, "주제를 입력해 주세요.");
               } else {
                 context
-                    .read<TopicBloc>()
+                    .read<CreateTopicBloc>()
                     .add(CreateTopicsEvent(topicName: _controller.text));
               }
             },

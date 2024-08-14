@@ -19,12 +19,12 @@ class TopicRepoImpl implements TopicRepo {
   }
 
   @override
-  Future<Either<String, Unit>> createTopic({required String topicName}) async {
+  Future<Either<String, Topic>> createTopic({required String topicName}) async {
     final result = await datasource.createTopic(topicName: topicName);
 
     return result.fold(
       (error) => Left(error),
-      (unit) => Right(unit),
+      (unit) => Right(unit.toEntity()),
     );
   }
 

@@ -26,7 +26,7 @@ class MainDi {
   static List<BlocProvider> getBlocProvider() {
     return [
       BottomNavDi.getBlocProvider(),
-      TopicDi.getBlocProvider(),
+      ...TopicDi.getBlocProvider(),
       UserDi.getBlocProvider(),
       RoomDi.getBlocProvider(),
     ];

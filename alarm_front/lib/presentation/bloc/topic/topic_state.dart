@@ -3,7 +3,7 @@ part of 'topic_bloc.dart';
 @immutable
 sealed class TopicState {}
 
-final class TopicInitial extends TopicState {}
+final class GetTopicInitial extends TopicState {}
 
 final class GetTopicLoading extends TopicState {}
 
@@ -18,15 +18,23 @@ final class GetTopicError extends TopicState {
   GetTopicError(this.message);
 }
 
+final class CreateTopicInitial extends TopicState {}
+
 final class CreateTopicLoading extends TopicState {}
 
-final class CreateTopicSuccess extends TopicState {}
+final class CreateTopicSuccess extends TopicState {
+  final Topic topic;
+
+  CreateTopicSuccess({required this.topic});
+}
 
 final class CreateTopicError extends TopicState {
   final String message;
 
   CreateTopicError(this.message);
 }
+
+final class DeleteTopicInitial extends TopicState {}
 
 final class DeleteTopicLoading extends TopicState {}
 

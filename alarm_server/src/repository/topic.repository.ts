@@ -41,10 +41,27 @@ export class TopicRepository extends Repository<Topic> {
     `);
   }
 
-  async createTopic(topicName: string): Promise<Topic> {
+  async createTopic(topicName: string): Promise<any> {
     const topic = new Topic();
     topic.name = topicName;
-    return await this.save(topic);
+    const savedTopic = await this.save(topic);
+
+    const roomCountResult = await this.query(
+      `
+      SELECT COALESCE(COUNT(id), 0) AS room_count
+      FROM room
+      WHERE topic_id = ?
+        AND end_time > NOW()
+    `,
+      [savedTopic.id],
+    );
+
+    const roomCount = roomCountResult[0]?.room_count || 0;
+
+    return {
+      ...savedTopic,
+      room_count: roomCount,
+    };
   }
 
   async deleteTopic(topicId: number): Promise<void> {
