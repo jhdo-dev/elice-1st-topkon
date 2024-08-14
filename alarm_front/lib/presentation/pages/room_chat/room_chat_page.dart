@@ -90,6 +90,6 @@ final testMessageList = [
   },
   {
     'text': 'text10sadaadaasdasdadfdsfsdfsdfsfsdfsdfsdfds',
-    'isMe': false,
+    'isMe': true,
   },
 ];
