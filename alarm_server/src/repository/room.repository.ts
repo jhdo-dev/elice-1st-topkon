@@ -22,16 +22,24 @@ export class RoomRepository extends Repository<Room> {
     topicId: number | undefined,
     cursorId: string | undefined,
     limit: number,
-  ): Promise<Room[] | undefined> {
-    let query = `SELECT * FROM room`;
-    query += ` WHERE end_time > NOW()`;
+  ): Promise<any> {
+    let query = `
+      SELECT room.*, topic.name as topic_name 
+      FROM room 
+      JOIN topic ON room.topic_id = topic.id
+      WHERE room.end_time > NOW()
+    `;
+
     if (topicId) {
-      query += ` AND topic_id = ${topicId}`;
+      query += ` AND room.topic_id = ${topicId}`;
     }
+
     if (cursorId) {
-      query += ` AND id < ${cursorId}`;
+      query += ` AND room.id < ${cursorId}`;
     }
-    query += ` ORDER BY created_at DESC LIMIT ${limit}`;
+
+    query += ` ORDER BY room.created_at DESC LIMIT ${limit}`;
+
     return await this.query(query);
   }
 }

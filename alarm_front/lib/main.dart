@@ -54,12 +54,12 @@ class AlarmApp extends StatelessWidget {
 
   Future<void> _initializeUuid(UserBloc userBloc) async {
     final prefs = await SharedPreferences.getInstance();
-    String? uuid = prefs.getString('uuid');
+    String? uuid = prefs.getString('user_uuid');
 
     if (uuid == null || uuid.isEmpty) {
       //* UUID가 없다면 생성하고 로컬에 저장한 후 이벤트 디스패치
       uuid = UuidGenerator.generateUuid();
-      await prefs.setString('uuid', uuid);
+      await prefs.setString('user_uuid', uuid);
       userBloc.add(CreateUserEvent(uuid: uuid));
     } else {
       //* UUID가 이미 존재하면 이벤트를 실행하지 않음

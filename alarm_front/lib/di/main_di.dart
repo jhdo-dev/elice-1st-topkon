@@ -1,4 +1,5 @@
 import 'package:alarm_front/di/bottom_nav_di.dart';
+import 'package:alarm_front/di/room_di.dart';
 import 'package:alarm_front/di/topic_di.dart';
 import 'package:alarm_front/di/user_di.dart';
 import 'package:dio/dio.dart';
@@ -12,10 +13,13 @@ class MainDi {
         await TopicDi.getRepositoryProvider(dio: dio);
     List<RepositoryProvider> userRepositoryProvider =
         await UserDi.getRepositoryProvider(dio: dio);
+    List<RepositoryProvider> roomRepositoryProvider =
+        await RoomDi.getRepositoryProvider(dio: dio);
 
     return [
       ...topicRepositoryProvider,
       ...userRepositoryProvider,
+      ...roomRepositoryProvider,
     ];
   }
 
@@ -24,6 +28,7 @@ class MainDi {
       BottomNavDi.getBlocProvider(),
       TopicDi.getBlocProvider(),
       UserDi.getBlocProvider(),
+      RoomDi.getBlocProvider(),
     ];
   }
 }
