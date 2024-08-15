@@ -16,9 +16,13 @@ class UserRepoImpl implements UserRepo {
       (error) => Left(error),
       (user) async {
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('user_uuid', user.uuid);
-        await prefs.setInt('user_id', user.id);
 
+        if (user.uuid != null) {
+          await prefs.setString('user_uuid', user.uuid!);
+        }
+        if (user.id != null) {
+          await prefs.setInt('user_id', user.id!);
+        }
         return Right(user.toEntity());
       },
     );

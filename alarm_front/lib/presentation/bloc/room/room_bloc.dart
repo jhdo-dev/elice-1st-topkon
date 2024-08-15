@@ -25,7 +25,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
       startTime: event.startTime,
       topicId: event.topicId,
     );
-    print("create room -> $result");
 
     result.fold(
       (failure) => emit(CreateRoomError(errorMsg: failure)),

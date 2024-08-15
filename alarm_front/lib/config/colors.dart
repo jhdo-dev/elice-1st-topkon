@@ -15,4 +15,7 @@ abstract class AppColors {
 
   static const hintColor = Color(0xFFA9A9A9);
   static const dropDownColor = Color(0xFF1F1F1F);
+
+  static const kakaoColor = Color(0xFFF1DC04);
+  static const naverColor = Color(0xFF20C801);
 }

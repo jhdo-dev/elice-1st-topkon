@@ -21,7 +21,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     final Either<String, User> result =
         await userUsecases.createUserUsecase(uuid: event.uuid);
-    print("create user -> $result");
     result.fold((error) => emit(CreateUserError(error)), (_) {
       emit(CreateUserSuccess());
     });
