@@ -81,26 +81,29 @@ class FilterBox extends StatelessWidget {
           ),
           Positioned(
             left: 0,
-            child: Container(
-              width: 25.w,
-              height: 25.h,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.sendMsgBurbleColor,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 2,
-                    color: Colors.black.withOpacity(0.3),
-                    offset: Offset(0, 2.h),
-                  )
-                ],
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                topicCount,
-                style: TextStyles.smallText.copyWith(
-                  height: 1,
-                  fontWeight: FontWeight.bold,
+            child: GestureDetector(
+              onTap: () {},
+              child: Container(
+                width: 25.w,
+                height: 25.h,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.sendMsgBurbleColor,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 2,
+                      color: Colors.black.withOpacity(0.3),
+                      offset: Offset(0, 2.h),
+                    )
+                  ],
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  topicCount,
+                  style: TextStyles.smallText.copyWith(
+                    height: 1,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

@@ -46,6 +46,9 @@ class TopicDi {
           loadTopicBloc: BlocProvider.of<LoadTopicBloc>(context),
         ),
       ),
+      BlocProvider<SelectTopicBloc>(
+        create: (context) => SelectTopicBloc(),
+      ),
     ];
   }
 }

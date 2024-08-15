@@ -1,5 +1,7 @@
 import 'package:alarm_front/config/colors.dart';
+import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -142,7 +144,11 @@ class _ChatRoomState extends State<ChatRoom> {
                             // backgroundColor: Colors.red,
                             foregroundColor: Colors.red,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            context
+                                .read<ReloadRoomBloc>()
+                                .add(ReloadRoomEvent(28));
+                          },
                           child: const Text(
                             '취소',
                           ),
