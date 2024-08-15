@@ -24,12 +24,6 @@ class _RoomListPageState extends State<RoomListPage> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    context.read<LoadRoomBloc>().add(LoadRoomEvent(28));
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoadRoomBloc, RoomState>(
       listener: (context, state) {

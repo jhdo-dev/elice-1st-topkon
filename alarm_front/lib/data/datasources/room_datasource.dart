@@ -34,7 +34,7 @@ class RoomDatasource {
     }
   }
 
-  Future<Either<String, List<RoomModel>>> getRoom(int topicId) async {
+  Future<Either<String, List<RoomModel>>> getRoom(int? topicId) async {
     try {
       final response = await dio.post("${Constants.baseUrl}/room/list", data: {
         "limit": 10, // 추후 수정
