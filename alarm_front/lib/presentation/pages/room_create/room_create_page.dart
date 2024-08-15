@@ -52,7 +52,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
         title: "ROOM CREATE",
         isBackIcon: true,
         actions: [
-          BlocListener<RoomBloc, RoomState>(
+          BlocListener<CreateRoomBloc, RoomState>(
             listener: (context, state) {
               if (state is CreateRoomError) {
                 showCustomSnackbar(context, "문제가 생겨서 방이 생성되지 않았습니다.");
@@ -77,7 +77,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
                 } else if (selectedEndDateTime == null) {
                   showCustomSnackbar(context, "종료 일자를 선택해 주세요.");
                 } else
-                  context.read<RoomBloc>().add(
+                  context.read<CreateRoomBloc>().add(
                         CreateRoomEvent(
                           topicId: selectedTopic!,
                           roomName: _controller.text,
