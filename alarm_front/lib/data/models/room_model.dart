@@ -1,0 +1,89 @@
+import 'dart:convert';
+
+import 'package:alarm_front/domain/entities/room.dart';
+import 'package:equatable/equatable.dart';
+
+class RoomModel extends Equatable {
+  final int id;
+  final int topic_id;
+  final int player_id;
+  final String name;
+  final String start_time;
+  final String end_time;
+
+  RoomModel({
+    required this.id,
+    required this.topic_id,
+    required this.player_id,
+    required this.name,
+    required this.start_time,
+    required this.end_time,
+  });
+
+  @override
+  List<Object> get props {
+    return [
+      id,
+      topic_id,
+      player_id,
+      name,
+      start_time,
+      end_time,
+    ];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'topic_id': topic_id,
+      'player_id': player_id,
+      'name': name,
+      'start_time': start_time,
+      'end_time': end_time,
+    };
+  }
+
+  factory RoomModel.fromJson(Map<String, dynamic> map) {
+    return RoomModel(
+      id: map['id']?.toInt() ?? 0,
+      topic_id: map['topic_id']?.toInt() ?? 0,
+      player_id: map['player_id']?.toInt() ?? 0,
+      name: map['name'] ?? '',
+      start_time: map['start_time'] ?? '',
+      end_time: map['end_time'] ?? '',
+    );
+  }
+
+  @override
+  String toString() {
+    return 'RoomModel(id: $id, topic_id: $topic_id, player_id: $player_id, name: $name, start_time: $start_time, end_time: $end_time)';
+  }
+
+  RoomModel copyWith({
+    int? id,
+    int? topic_id,
+    int? player_id,
+    String? name,
+    String? start_time,
+    String? end_time,
+  }) {
+    return RoomModel(
+      id: id ?? this.id,
+      topic_id: topic_id ?? this.topic_id,
+      player_id: player_id ?? this.player_id,
+      name: name ?? this.name,
+      start_time: start_time ?? this.start_time,
+      end_time: end_time ?? this.end_time,
+    );
+  }
+
+  Room toEntity() {
+    return Room(
+        topicId: topic_id,
+        id: id,
+        roomName: name,
+        playerId: player_id,
+        startTime: start_time,
+        endTime: end_time);
+  }
+}
