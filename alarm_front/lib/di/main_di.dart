@@ -34,8 +34,8 @@ class MainDi {
       BottomNavDi.getBlocProvider(),
       ...TopicDi.getBlocProvider(),
       UserDi.getBlocProvider(),
-      RoomDi.getBlocProvider(),
       LoginDi.getBlocProvider(),
+      ...RoomDi.getBlocProvider(),
     ];
   }
 }

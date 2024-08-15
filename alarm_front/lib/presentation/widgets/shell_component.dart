@@ -1,5 +1,6 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/presentation/bloc/bottom_nav/bottom_nav_bloc.dart';
+import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:alarm_front/presentation/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
@@ -7,13 +8,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class ShellComponent extends StatelessWidget {
+class ShellComponent extends StatefulWidget {
   const ShellComponent({
     super.key,
     required this.child,
   });
 
   final Widget child;
+
+  @override
+  State<ShellComponent> createState() => _ShellComponentState();
+}
+
+class _ShellComponentState extends State<ShellComponent> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<LoadRoomBloc>().add(LoadRoomEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +69,7 @@ class ShellComponent extends StatelessWidget {
       ),
 
       //? 바디
-      body: child,
+      body: widget.child,
 
       //? 바텀네비게이션
       bottomNavigationBar: const BottomNav(),
