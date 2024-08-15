@@ -31,7 +31,7 @@ class RoomRepoImpl extends RoomRepo {
   }
 
   @override
-  Future<Either<String, List<Room>>> getRoom(int topicId) async {
+  Future<Either<String, List<Room>>> getRoom(int? topicId) async {
     final result = await datasource.getRoom(topicId);
     return result.fold(
       (error) => Left(error),
