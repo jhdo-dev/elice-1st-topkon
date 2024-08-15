@@ -18,7 +18,6 @@ class LoadTopicBloc extends Bloc<TopicEvent, TopicState> {
 
         final Either<String, List<Topic>> result =
             await topicUsecases.getTopicUsecase();
-        print("get topic -> $result");
         result.fold(
           (failure) => emit(GetTopicError(failure)),
           (topics) => emit(GetTopicLoaded(topics)),
@@ -42,7 +41,6 @@ class CreateTopicBloc extends Bloc<TopicEvent, TopicState> {
 
         final Either<String, Topic> result =
             await topicUsecases.createTopicUsecase(topicName: event.topicName);
-        print("create topic -> $result");
         result.fold(
           (failure) => emit(CreateTopicError(failure)),
           (topic) {
@@ -75,7 +73,6 @@ class DeleteTopicBloc extends Bloc<TopicEvent, TopicState> {
 
         final Either<String, Unit> result =
             await topicUsecases.deleteTopicUsecase(topicId: event.topicId);
-        print("delete topic -> $result");
         result.fold(
           (failure) => emit(DeleteTopicError(failure)),
           (_) {

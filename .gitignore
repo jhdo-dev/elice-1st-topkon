@@ -67,3 +67,6 @@
 
 /alarm_front/.vscode/
 
+/alarm_front/android/app/team2androiddebug.keystore
+/alarm_front/android/app/src/google-service.json
+/alarm_front/ios/Runner/GoogleService-Info.plist

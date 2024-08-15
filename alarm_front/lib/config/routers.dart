@@ -1,3 +1,4 @@
+import 'package:alarm_front/presentation/pages/login/login_page.dart';
 import 'package:alarm_front/presentation/pages/my/my_page.dart';
 import 'package:alarm_front/presentation/pages/room_chat/room_chat_page.dart';
 import 'package:alarm_front/presentation/pages/room_create/room_create_page.dart';
@@ -11,9 +12,19 @@ final rootNavigatorKey = GlobalKey<NavigatorState>();
 final shellNavigatorKey = GlobalKey<NavigatorState>();
 
 final routers = GoRouter(
-  initialLocation: "/roomList",
+  initialLocation: "/login",
   navigatorKey: rootNavigatorKey,
   routes: [
+    //? 로그인 화면
+    GoRoute(
+      path: "/login",
+      name: "login",
+      pageBuilder: (context, state) => NoTransitionPage(
+        key: state.pageKey,
+        child: LoginPage(),
+      ),
+    ),
+
     //? 공통 화면(앱바 및 바텀네비)
     ShellRoute(
       navigatorKey: shellNavigatorKey,
