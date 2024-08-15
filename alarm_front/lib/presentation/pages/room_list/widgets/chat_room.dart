@@ -1,6 +1,9 @@
 import 'package:alarm_front/config/colors.dart';
+import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatRoom extends StatefulWidget {
   final String subjectName;
@@ -22,6 +25,16 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> {
   bool isRoomActive = true;
+
+  Future<void> _saveReservation() async {
+    final prefs = await SharedPreferences.getInstance();
+    // 예약 정보를 저장합니다. 예: 방 이름과 시작일, 종료일
+    await prefs.setString('roomName', widget.roomName);
+    await prefs.setString('roomStartDate', widget.roomStartDate);
+    await prefs.setString('roomEndDate', widget.roomEndDate);
+    // 필요에 따라 다른 정보를 저장할 수 있습니다.
+    print('예약 정보가 저장되었습니다.');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,19 +58,30 @@ class _ChatRoomState extends State<ChatRoom> {
         children: [
           Column(
             children: [
-              SizedBox(
-                width: 65,
-                height: 65,
-                child: ClipRect(
-                  child: Image.asset(
-                    'assets/images/chat_room_default_profile.png',
-                    fit: BoxFit.fill,
+              ClipOval(
+                child: Container(
+                  decoration: BoxDecoration(color: Colors.grey.shade900),
+                  child: SizedBox(
+                    width: 70,
+                    height: 70,
+                    child: ClipRect(
+                      child: Image.asset(
+                        'assets/images/chat_room_default_profile.png',
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(width: 16.0),
+          const SizedBox(width: 14.0),
+          Container(
+            width: 1, // 선의 두께
+            height: 75, // 선의 높이
+            color: AppColors.focusColor, // 선의 색상
+          ),
+          const SizedBox(width: 14.0),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +144,11 @@ class _ChatRoomState extends State<ChatRoom> {
                             // backgroundColor: Colors.red,
                             foregroundColor: Colors.red,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            context
+                                .read<ReloadRoomBloc>()
+                                .add(ReloadRoomEvent(28));
+                          },
                           child: const Text(
                             '취소',
                           ),
