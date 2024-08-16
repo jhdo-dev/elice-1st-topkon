@@ -11,14 +11,24 @@ class UserRepoImpl implements UserRepo {
 
   @override
   Future<Either<String, User>> authenticateUser(User user) async {
-    try {
-      final userModel = UserModel.fromEntity(user);
+    final userModel = UserModel.fromEntity(user);
 
-      final result = await datasource.authenticateUser(userModel);
+    final result = await datasource.authenticateUser(userModel);
 
-      return result.map((userModel) => userModel.toEntity());
-    } catch (e) {
-      return Left('유저 인증 실패: $e');
-    }
+    return result.fold(
+      (l) => Left(l),
+      (r) => Right(r.toEntity()),
+    );
+  }
+
+  @override
+  Future<Either<String, User>> updateUser(
+      {required String uuid, required String name}) async {
+    final result = await datasource.updateUser(uuid: uuid, name: name);
+
+    return result.fold(
+      (l) => Left(l),
+      (r) => Right(r.toEntity()),
+    );
   }
 }

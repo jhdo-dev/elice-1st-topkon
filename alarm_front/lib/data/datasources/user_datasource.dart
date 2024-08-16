@@ -26,4 +26,26 @@ class UserDatasource {
       return Left('회원 인증 실패: $e');
     }
   }
+
+  Future<Either<String, UserModel>> updateUser(
+      {required String uuid, required String name}) async {
+    try {
+      final response = await dio.patch(
+        '${Constants.baseUrl}/player/update',
+        data: {
+          "uuid": uuid,
+          "displayName": name,
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final userModel = UserModel.fromJson(response.data);
+        return Right(userModel);
+      } else {
+        return Left('회원 수정 실패: ${response.statusCode}');
+      }
+    } catch (e) {
+      return Left('회원 수정 실패: $e');
+    }
+  }
 }

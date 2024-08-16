@@ -13,14 +13,7 @@ class BottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BottomNavBloc, BottomNavState>(
-      listener: (context, state) {
-        if (state.selectedIndex == 0) {
-          context.goNamed("roomList");
-        } else {
-          context.goNamed("my");
-        }
-      },
+    return BlocBuilder<BottomNavBloc, BottomNavState>(
       builder: (context, state) {
         return BottomNavigationBar(
           backgroundColor: AppColors.backgroundColor,
@@ -39,6 +32,11 @@ class BottomNav extends StatelessWidget {
           currentIndex: state.selectedIndex,
           onTap: (value) {
             context.read<BottomNavBloc>().add(SelectItem(selectedIndex: value));
+            if (value == 0) {
+              context.goNamed("roomList");
+            } else {
+              context.goNamed("my");
+            }
           },
           items: [
             BottomNavigationBarItem(

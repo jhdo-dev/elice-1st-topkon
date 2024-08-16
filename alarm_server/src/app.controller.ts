@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Player } from './dto/player.entity';
 
@@ -57,6 +57,13 @@ export class AppController {
   async getOrCreatePlayer(@Body() body): Promise<Player> {
     return await this.appService.getOrCratePlayer(body);
   }
+
+  @Patch('/player/update')
+  async updatePlayerDisplayName(@Body() body): Promise<Player> {
+    const { uuid, displayName } = body;
+    return await this.appService.updatePlayerDisplayName(uuid, displayName);
+  }
+
   //! uuid (string)
 
   @Post('/room/list')

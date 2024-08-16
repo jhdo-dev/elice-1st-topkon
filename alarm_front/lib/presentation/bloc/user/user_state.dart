@@ -27,3 +27,18 @@ class GetUserError extends UserState {
   @override
   List<Object> get props => [message];
 }
+
+class UpdateUserInitial extends UserState {}
+
+class UpdateUserLoading extends UserState {}
+
+class UpdateUserSuccess extends UserState {}
+
+class UpdateUserError extends UserState {
+  final String message;
+
+  UpdateUserError({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
