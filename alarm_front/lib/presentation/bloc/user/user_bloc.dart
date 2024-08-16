@@ -35,5 +35,38 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(GetUserSuccess(user: user));
       }
     });
+
+    on<UserLoggedOut>((event, emit) async {
+      emit(GetUserInitial());
+      await LocalDatasource.clearUserInfo();
+    });
+  }
+}
+
+class UpdateUserBloc extends Bloc<UserEvent, UserState> {
+  final UserUsecases userUsecases;
+  final UserBloc userBloc;
+
+  UpdateUserBloc({
+    required this.userUsecases,
+    required this.userBloc,
+  }) : super(UpdateUserInitial()) {
+    on<UserUpdateEvent>((event, emit) async {
+      emit(UpdateUserLoading());
+
+      final Either<String, User> result = await userUsecases.updateUserUsecase(
+          name: event.name, uuid: event.uuid);
+
+      result.fold((failure) => emit(UpdateUserError(message: failure)),
+          (user) async {
+        if (userBloc.state is GetUserSuccess) {
+          userBloc.emit(GetUserSuccess(user: user));
+        }
+
+        emit(UpdateUserSuccess());
+
+        await LocalDatasource.saveUserInfo(user);
+      });
+    });
   }
 }

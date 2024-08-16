@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { Player } from '../dto/player.entity';
 
@@ -20,6 +20,18 @@ export class PlayerRepository extends Repository<Player> {
     player.photoUrl = userModel.photoUrl;
     player.loginType = userModel.loginType;
 
+    return await this.save(player);
+  }
+
+  async updatePlayerDisplayName(
+    uuid: string,
+    displayName: string,
+  ): Promise<Player> {
+    const player = await this.getPlayerByUuid(uuid);
+    if (!player) {
+      throw new NotFoundException('Player not found');
+    }
+    player.displayName = displayName;
     return await this.save(player);
   }
 }

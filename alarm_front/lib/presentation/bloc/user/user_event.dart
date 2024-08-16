@@ -16,3 +16,15 @@ class UserAuthenticated extends UserEvent {
 }
 
 class GetLocalUserEvent extends UserEvent {}
+
+class UserLoggedOut extends UserEvent {}
+
+class UserUpdateEvent extends UserEvent {
+  final String uuid;
+  final String name;
+
+  UserUpdateEvent({required this.uuid, required this.name});
+
+  @override
+  List<Object> get props => [uuid, name];
+}

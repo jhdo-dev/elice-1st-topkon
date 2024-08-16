@@ -26,6 +26,16 @@ export class AppService {
     return player;
   }
 
+  async updatePlayerDisplayName(
+    uuid: string,
+    displayName: string,
+  ): Promise<Player> {
+    return await this.playerRepository.updatePlayerDisplayName(
+      uuid,
+      displayName,
+    );
+  }
+
   async getTopicList(): Promise<any> {
     return await this.topicRepository.getTopicList();
   }

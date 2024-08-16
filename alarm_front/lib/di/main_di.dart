@@ -33,7 +33,7 @@ class MainDi {
     return [
       BottomNavDi.getBlocProvider(),
       ...TopicDi.getBlocProvider(),
-      UserDi.getBlocProvider(),
+      ...UserDi.getBlocProvider(),
       LoginDi.getBlocProvider(),
       ...RoomDi.getBlocProvider(),
     ];
