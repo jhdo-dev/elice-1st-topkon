@@ -1,4 +1,5 @@
 import 'package:alarm_front/config/colors.dart';
+import 'package:alarm_front/config/text_styles.dart';
 import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -103,20 +104,10 @@ class _ChatRoomState extends State<ChatRoom> {
                   ),
                 ),
                 const SizedBox(height: 5.0),
-                Text(
-                  '시작: ${widget.roomStartDate}',
-                  style: const TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.grey,
-                  ),
-                ),
-                Text(
-                  '종료: ${widget.roomEndDate}',
-                  style: const TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.grey,
-                  ),
-                ),
+                Text('시작: ${widget.roomStartDate}',
+                    style: TextStyles.smallText.copyWith(color: Colors.grey)),
+                Text('종료: ${widget.roomEndDate}',
+                    style: TextStyles.smallText.copyWith(color: Colors.grey)),
               ],
             ),
           ),
