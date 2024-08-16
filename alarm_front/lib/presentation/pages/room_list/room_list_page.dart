@@ -42,7 +42,7 @@ class _RoomListPageState extends State<RoomListPage> {
             itemCount: state.rooms.length,
             itemBuilder: (context, index) {
               return ChatRoom(
-                subjectName: 'flutter study',
+                subjectName: state.rooms[index].topicName,
                 roomName: state.rooms[index].roomName,
                 roomStartDate: state.rooms[index].getFormattedStartTime(),
                 roomEndDate: state.rooms[index].getFormattedEndTime(),

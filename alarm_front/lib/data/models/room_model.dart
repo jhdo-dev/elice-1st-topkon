@@ -8,6 +8,7 @@ class RoomModel extends Equatable {
   final int topic_id;
   final int player_id;
   final String name;
+  final String topic_name;
   final String start_time;
   final String end_time;
 
@@ -16,6 +17,7 @@ class RoomModel extends Equatable {
     required this.topic_id,
     required this.player_id,
     required this.name,
+    required this.topic_name,
     required this.start_time,
     required this.end_time,
   });
@@ -49,6 +51,7 @@ class RoomModel extends Equatable {
       topic_id: map['topic_id']?.toInt() ?? 0,
       player_id: map['player_id']?.toInt() ?? 0,
       name: map['name'] ?? '',
+      topic_name: map['topic_name'] ?? '',
       start_time: map['start_time'] ?? '',
       end_time: map['end_time'] ?? '',
     );
@@ -64,6 +67,7 @@ class RoomModel extends Equatable {
     int? topic_id,
     int? player_id,
     String? name,
+    String? topic_name,
     String? start_time,
     String? end_time,
   }) {
@@ -72,6 +76,7 @@ class RoomModel extends Equatable {
       topic_id: topic_id ?? this.topic_id,
       player_id: player_id ?? this.player_id,
       name: name ?? this.name,
+      topic_name: topic_name ?? this.topic_name,
       start_time: start_time ?? this.start_time,
       end_time: end_time ?? this.end_time,
     );
@@ -82,6 +87,7 @@ class RoomModel extends Equatable {
         topicId: topic_id,
         id: id,
         roomName: name,
+        topicName: topic_name,
         playerId: player_id,
         startTime: start_time,
         endTime: end_time);
