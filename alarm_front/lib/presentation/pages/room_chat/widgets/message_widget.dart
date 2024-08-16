@@ -12,8 +12,10 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
+    return Container(
+      padding: isMe
+          ? EdgeInsets.fromLTRB(100.w, 5.w, 15.w, 5.w)
+          : EdgeInsets.fromLTRB(15.w, 5.w, 100.w, 5.w),
       child: Column(
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -33,9 +35,13 @@ class MessageWidget extends StatelessWidget {
               color: isMe
                   ? AppColors.sendMsgBurbleColor
                   : AppColors.receiveMsgBurbleColor,
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(15.r),
+                bottomLeft: Radius.circular(15.r),
+                topRight: isMe ? Radius.circular(0.r) : Radius.circular(15.r),
+                topLeft: isMe ? Radius.circular(15.r) : Radius.circular(0.r),
+              ),
             ),
-            width: 145, // 말풍선 최대넓이
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
             child: Text(
               message,
