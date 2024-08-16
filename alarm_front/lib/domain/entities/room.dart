@@ -4,6 +4,7 @@ class Room extends Equatable {
   final int topicId;
   final int id;
   final String roomName;
+  final String topicName;
   final int playerId;
   final String startTime;
   final String endTime;
@@ -12,6 +13,7 @@ class Room extends Equatable {
     required this.topicId,
     required this.id,
     required this.roomName,
+    required this.topicName,
     required this.playerId,
     required this.startTime,
     required this.endTime,
