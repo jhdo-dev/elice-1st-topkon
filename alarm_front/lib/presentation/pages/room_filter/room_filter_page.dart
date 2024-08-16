@@ -1,4 +1,3 @@
-import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/presentation/bloc/topic/topic_bloc.dart';
 import 'package:alarm_front/presentation/pages/room_filter/widgets/filter_box.dart';
 import 'package:alarm_front/presentation/pages/room_filter/widgets/topic_create_dialog.dart';
@@ -54,30 +53,6 @@ class _RoomFilterPageState extends State<RoomFilterPage> {
       appBar: AppbarWidget(
         title: 'ROOM FILTER',
         isBackIcon: true,
-        actions: [
-          GestureDetector(
-            onTap: () {},
-            child: Stack(children: [
-              Positioned(
-                top: 2.0.h,
-                left: 2.0.w,
-                child: Icon(
-                  Icons.check_circle_rounded,
-                  color: AppColors.focusColor.withOpacity(0.3),
-                  size: 30.w,
-                ),
-              ),
-              Icon(
-                Icons.check_circle_rounded,
-                color: AppColors.focusColor,
-                size: 30.w,
-              )
-            ]),
-          ),
-          SizedBox(
-            width: 15.w,
-          ),
-        ],
       ),
       body: BlocListener<DeleteTopicBloc, TopicState>(
         listener: (context, state) {
