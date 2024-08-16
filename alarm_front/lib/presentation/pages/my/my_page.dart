@@ -5,17 +5,6 @@ class MyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('MyPage'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'MyPage is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
-    );
+    return Column();
   }
 }
