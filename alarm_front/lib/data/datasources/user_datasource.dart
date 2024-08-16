@@ -9,23 +9,21 @@ class UserDatasource {
     required this.dio,
   });
 
-  Future<Either<String, UserModel>> createUser({required String uuid}) async {
+  Future<Either<String, UserModel>> authenticateUser(UserModel user) async {
     try {
       final response = await dio.post(
-        "${Constants.baseUrl}/player",
-        data: {"uuid": uuid},
+        '${Constants.baseUrl}/player',
+        data: user.toJson(),
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final data = response.data as Map<String, dynamic>;
-        final user = UserModel.fromJson(data);
-        ;
-        return Right(user);
+        final userModel = UserModel.fromJson(response.data);
+        return Right(userModel);
       } else {
-        return Left('${response.statusCode} :: 유저를 생성하는데 실패했습니다.');
+        return Left('회원 인증 실패: ${response.statusCode}');
       }
     } catch (e) {
-      return Left('${e.toString()}');
+      return Left('회원 인증 실패: $e');
     }
   }
 }

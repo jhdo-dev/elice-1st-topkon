@@ -8,83 +8,78 @@ import 'package:alarm_front/presentation/widgets/shell_component.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-final rootNavigatorKey = GlobalKey<NavigatorState>();
 final shellNavigatorKey = GlobalKey<NavigatorState>();
 
-final routers = GoRouter(
-  initialLocation: "/login",
-  navigatorKey: rootNavigatorKey,
-  routes: [
-    //? 로그인 화면
-    GoRoute(
-      path: "/login",
-      name: "login",
-      pageBuilder: (context, state) => NoTransitionPage(
-        key: state.pageKey,
-        child: LoginPage(),
-      ),
+final appRoutes = [
+  //? 로그인 화면
+  GoRoute(
+    path: "/login",
+    name: "login",
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: LoginPage(),
     ),
+  ),
 
-    //? 공통 화면(앱바 및 바텀네비)
-    ShellRoute(
-      navigatorKey: shellNavigatorKey,
-      pageBuilder: (context, state, child) {
-        return NoTransitionPage(
-          child: ShellComponent(
-            child: child,
-          ),
-        );
-      },
-      routes: [
-        //? 룸 목록 화면
-        GoRoute(
-          path: "/roomList",
-          name: "roomList",
-          pageBuilder: (context, state) => NoTransitionPage(
-            key: state.pageKey,
-            child: RoomListPage(),
-          ),
+  //? 공통 화면(앱바 및 바텀네비)
+  ShellRoute(
+    navigatorKey: shellNavigatorKey,
+    pageBuilder: (context, state, child) {
+      return NoTransitionPage(
+        child: ShellComponent(
+          child: child,
         ),
-
-        //? 마이 화면
-        GoRoute(
-          path: "/my",
-          name: "my",
-          pageBuilder: (context, state) => NoTransitionPage(
-            key: state.pageKey,
-            child: const MyPage(),
-          ),
+      );
+    },
+    routes: [
+      //? 룸 목록 화면
+      GoRoute(
+        path: "/roomList",
+        name: "roomList",
+        pageBuilder: (context, state) => NoTransitionPage(
+          key: state.pageKey,
+          child: RoomListPage(),
         ),
-      ],
-    ),
-
-    //? 룸 채팅 화면
-    GoRoute(
-      path: "/roomChat",
-      name: "roomChat",
-      pageBuilder: (context, state) => NoTransitionPage(
-        key: state.pageKey,
-        child: const RoomChatPage(),
       ),
-    ),
 
-    //? 룸 필터 화면
-    GoRoute(
-      path: "/roomFilter",
-      name: "roomFilter",
-      builder: (context, state) => RoomFilterPage(
-        key: state.pageKey,
+      //? 마이 화면
+      GoRoute(
+        path: "/my",
+        name: "my",
+        pageBuilder: (context, state) => NoTransitionPage(
+          key: state.pageKey,
+          child: const MyPage(),
+        ),
       ),
-    ),
+    ],
+  ),
 
-    //? 룸 생성 화면
-    GoRoute(
-      path: "/roomCreate",
-      name: "roomCreate",
-      pageBuilder: (context, state) => NoTransitionPage(
-        key: state.pageKey,
-        child: const RoomCreatePage(),
-      ),
+  //? 룸 채팅 화면
+  GoRoute(
+    path: "/roomChat",
+    name: "roomChat",
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const RoomChatPage(),
     ),
-  ],
-);
+  ),
+
+  //? 룸 필터 화면
+  GoRoute(
+    path: "/roomFilter",
+    name: "roomFilter",
+    builder: (context, state) => RoomFilterPage(
+      key: state.pageKey,
+    ),
+  ),
+
+  //? 룸 생성 화면
+  GoRoute(
+    path: "/roomCreate",
+    name: "roomCreate",
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const RoomCreatePage(),
+    ),
+  ),
+];

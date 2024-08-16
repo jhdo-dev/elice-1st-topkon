@@ -2,13 +2,13 @@ import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/config/text_styles.dart';
 import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:alarm_front/presentation/bloc/topic/topic_bloc.dart';
+import 'package:alarm_front/presentation/bloc/user/user_bloc.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:alarm_front/presentation/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomCreatePage extends StatefulWidget {
   const RoomCreatePage({super.key});
@@ -63,46 +63,50 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
                 context.pop();
               }
             },
-            child: GestureDetector(
-              onTap: () async {
-                final prefs = await SharedPreferences.getInstance();
-                int? id = prefs.getInt('user_id');
-
-                if (_controller.text.isEmpty) {
-                  showCustomSnackbar(context, "방 이름을 입력해 주세요.");
-                } else if (selectedTopic == null) {
-                  showCustomSnackbar(context, "주제를 선택해 주세요.");
-                } else if (selectedStartDateTime == null) {
-                  showCustomSnackbar(context, "시작 일자를 선택해 주세요.");
-                } else if (selectedEndDateTime == null) {
-                  showCustomSnackbar(context, "종료 일자를 선택해 주세요.");
-                } else
-                  context.read<CreateRoomBloc>().add(
-                        CreateRoomEvent(
-                          topicId: selectedTopic!,
-                          roomName: _controller.text,
-                          playerId: id!,
-                          startTime: selectedStartDateTime!.toIso8601String(),
-                          endTime: selectedEndDateTime!.toIso8601String(),
-                        ),
-                      );
+            child: BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                return GestureDetector(
+                  onTap: () async {
+                    if (_controller.text.isEmpty) {
+                      showCustomSnackbar(context, "방 이름을 입력해 주세요.");
+                    } else if (selectedTopic == null) {
+                      showCustomSnackbar(context, "주제를 선택해 주세요.");
+                    } else if (selectedStartDateTime == null) {
+                      showCustomSnackbar(context, "시작 일자를 선택해 주세요.");
+                    } else if (selectedEndDateTime == null) {
+                      showCustomSnackbar(context, "종료 일자를 선택해 주세요.");
+                    } else if (state is GetUserSuccess &&
+                        state.user.id != null) {
+                      context.read<CreateRoomBloc>().add(
+                            CreateRoomEvent(
+                              topicId: selectedTopic!,
+                              roomName: _controller.text,
+                              playerId: state.user.id!,
+                              startTime:
+                                  selectedStartDateTime!.toIso8601String(),
+                              endTime: selectedEndDateTime!.toIso8601String(),
+                            ),
+                          );
+                    }
+                  },
+                  child: Stack(children: [
+                    Positioned(
+                      top: 2.0.h,
+                      left: 2.0.w,
+                      child: Icon(
+                        Icons.check_circle_rounded,
+                        color: AppColors.focusColor.withOpacity(0.3),
+                        size: 30.w,
+                      ),
+                    ),
+                    Icon(
+                      Icons.check_circle_rounded,
+                      color: AppColors.focusColor,
+                      size: 30.w,
+                    )
+                  ]),
+                );
               },
-              child: Stack(children: [
-                Positioned(
-                  top: 2.0.h,
-                  left: 2.0.w,
-                  child: Icon(
-                    Icons.check_circle_rounded,
-                    color: AppColors.focusColor.withOpacity(0.3),
-                    size: 30.w,
-                  ),
-                ),
-                Icon(
-                  Icons.check_circle_rounded,
-                  color: AppColors.focusColor,
-                  size: 30.w,
-                )
-              ]),
             ),
           ),
           SizedBox(

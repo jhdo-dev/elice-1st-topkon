@@ -15,6 +15,18 @@ export class Player extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   uuid: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  displayName: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  email: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  photoUrl: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  loginType: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

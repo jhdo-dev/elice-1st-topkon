@@ -1,3 +1,4 @@
+import 'package:alarm_front/data/datasources/local_datasource.dart';
 import 'package:alarm_front/domain/entities/user.dart';
 import 'package:alarm_front/domain/usecases/user/user_usecases.dart';
 import 'package:bloc/bloc.dart';
@@ -11,18 +12,28 @@ part 'user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserUsecases userUsecases;
 
-  UserBloc({required this.userUsecases}) : super(UserInitial()) {
-    on<CreateUserEvent>(_onCreateUser);
-  }
+  UserBloc({
+    required this.userUsecases,
+  }) : super(GetUserInitial()) {
+    on<UserAuthenticated>((event, emit) async {
+      emit(GetUserLoading());
 
-  Future<void> _onCreateUser(
-      CreateUserEvent event, Emitter<UserState> emit) async {
-    emit(CreateUserLoading());
+      final Either<String, User> result =
+          await userUsecases.authenticateUsecase(event.user);
 
-    final Either<String, User> result =
-        await userUsecases.createUserUsecase(uuid: event.uuid);
-    result.fold((error) => emit(CreateUserError(error)), (_) {
-      emit(CreateUserSuccess());
+      result.fold((failure) => emit(GetUserError(message: failure)),
+          (user) async {
+        emit(GetUserSuccess(user: user));
+
+        await LocalDatasource.saveUserInfo(user);
+      });
+    });
+
+    on<GetLocalUserEvent>((event, emit) async {
+      final user = await LocalDatasource.getUserInfo();
+      if (user != null) {
+        emit(GetUserSuccess(user: user));
+      }
     });
   }
 }
