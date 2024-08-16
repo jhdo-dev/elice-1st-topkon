@@ -35,30 +35,26 @@ class _RoomChatPageState extends State<RoomChatPage> {
 
     socket.connect();
 
-    // 연결 성공 시
     socket.on('connect', (_) {
-      print('nisuuuuuuuuuuuuu');
+      print('connected');
     });
 
-    // 서버에서 보낸 메시지를 수신합니다. 채널명 "message"
     socket.on('message', (data) {
       setState(() {
-        messages.insert(0, data + 'ohmygosh');
+        messages.insert(0, data);
         isMe.insert(0, false);
       });
     });
 
-    // 메시지가 성공적으로 전송되었음을 확인하는 메시지를 수신합니다. 채널명 "message_received"
     socket.on('message_received', (data) {
       setState(() {
-        messages.insert(0, data['message'] + 'hello');
+        messages.insert(0, data['message']);
         isMe.insert(0, true);
       });
     });
 
-    // 연결 끊김 시
     socket.on('disconnect', (_) {
-      print('disconnecttt');
+      print('disconnect');
     });
   }
 
