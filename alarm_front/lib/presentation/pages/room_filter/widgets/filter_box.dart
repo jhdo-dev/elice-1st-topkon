@@ -24,7 +24,11 @@ class FilterBox extends StatelessWidget {
       builder: (context, state) {
         return GestureDetector(
           onTap: () {
-            context.read<FilterBloc>().add(SelectTopic(selectedId: id));
+            if (state.selectedIndex == id) {
+              context.read<FilterBloc>().add(SelectTopic(selectedId: -1));
+            } else {
+              context.read<FilterBloc>().add(SelectTopic(selectedId: id));
+            }
           },
           child: AnimatedContainer(
             duration: Duration(milliseconds: 200),
