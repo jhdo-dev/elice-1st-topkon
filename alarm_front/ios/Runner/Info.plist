@@ -22,10 +22,6 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleURLSchemes</key>
-	<array>
-		<string>com.googleusercontent.apps.979138195122-1a8uuhc8u77kvuskk4ofea8dqkdnirf7</string>
-	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -33,7 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.979138195122-1a8uuhc8u77kvuskk4ofea8dqkdnirf7</string>
+				<string>${GOOGLE_IOS_KEY}</string>
 			</array>
 		</dict>
 	</array>

@@ -494,6 +494,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = UVLA4SSP66;
 				ENABLE_BITCODE = NO;
+				GOOGLE_IOS_KEY = "com.googleusercontent.apps.979138195122-1a8uuhc8u77kvuskk4ofea8dqkdnirf7";
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -677,6 +678,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = UVLA4SSP66;
 				ENABLE_BITCODE = NO;
+				GOOGLE_IOS_KEY = "com.googleusercontent.apps.979138195122-1a8uuhc8u77kvuskk4ofea8dqkdnirf7";
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -700,6 +702,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = UVLA4SSP66;
 				ENABLE_BITCODE = NO;
+				GOOGLE_IOS_KEY = "com.googleusercontent.apps.979138195122-1a8uuhc8u77kvuskk4ofea8dqkdnirf7";
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
