@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Player } from './dto/player.entity';
 import { Room } from './dto/room.entity';
 import { Topic } from './dto/topic.entity';
 import { PlayerRepository } from './repository/player.repository';
@@ -13,11 +14,15 @@ export class AppService {
     private playerRepository: PlayerRepository,
   ) {}
 
-  async getOrCratePlayer(uuid: string): Promise<any> {
+  async getOrCratePlayer(userModel: any): Promise<Player> {
+    const uuid: string = userModel.uuid;
+
     let player = await this.playerRepository.getPlayerByUuid(uuid);
+
     if (!player) {
-      player = await this.playerRepository.createPlayer(uuid);
+      player = await this.playerRepository.createPlayer(userModel);
     }
+
     return player;
   }
 

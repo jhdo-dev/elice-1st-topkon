@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Player } from './dto/player.entity';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(private readonly appService: AppService) {}
 
   @Get('/topic/list')
   async getTopicList(): Promise<any> {
@@ -53,10 +54,8 @@ export class AppController {
   //! topicId(int)
 
   @Post('/player')
-  async getOrCreatePlayer(@Body() body): Promise<any> {
-    const uuid: string = body.uuid;
-
-    return await this.appService.getOrCratePlayer(uuid);
+  async getOrCreatePlayer(@Body() body): Promise<Player> {
+    return await this.appService.getOrCratePlayer(body);
   }
   //! uuid (string)
 

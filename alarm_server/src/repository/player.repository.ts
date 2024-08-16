@@ -12,9 +12,14 @@ export class PlayerRepository extends Repository<Player> {
     return await this.findOneBy({ uuid });
   }
 
-  async createPlayer(uuid: string): Promise<Player> {
+  async createPlayer(userModel: any): Promise<Player> {
     const player = new Player();
-    player.uuid = uuid;
+    player.uuid = userModel.uuid;
+    player.displayName = userModel.displayName;
+    player.email = userModel.email;
+    player.photoUrl = userModel.photoUrl;
+    player.loginType = userModel.loginType;
+
     return await this.save(player);
   }
 }

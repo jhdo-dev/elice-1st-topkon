@@ -11,7 +11,9 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUseCases loginUseCases;
 
-  LoginBloc({required this.loginUseCases}) : super(LoginInitial()) {
+  LoginBloc({
+    required this.loginUseCases,
+  }) : super(LoginInitial()) {
     on<GoogleLoginEvent>((event, emit) async {
       emit(LoginLoading());
 

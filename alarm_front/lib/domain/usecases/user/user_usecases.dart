@@ -1,8 +1,8 @@
-import 'package:alarm_front/domain/usecases/user/create_user_usecase.dart';
+import 'package:alarm_front/domain/usecases/user/authenticate_usecase.dart';
 
 class UserUsecases {
-  final CreateUserUsecase createUserUsecase;
+  final AuthenticateUsecase authenticateUsecase;
   UserUsecases({
-    required this.createUserUsecase,
+    required this.authenticateUsecase,
   });
 }

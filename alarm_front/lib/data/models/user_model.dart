@@ -64,6 +64,17 @@ class UserModel extends Equatable {
     );
   }
 
+  factory UserModel.fromEntity(User user) {
+    return UserModel(
+      id: user.id,
+      uuid: user.uuid,
+      displayName: user.displayName,
+      email: user.email,
+      photoUrl: user.photoUrl,
+      loginType: user.loginType,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
