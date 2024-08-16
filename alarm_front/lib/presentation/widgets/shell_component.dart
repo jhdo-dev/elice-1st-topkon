@@ -75,23 +75,25 @@ class _ShellComponentState extends State<ShellComponent> {
       bottomNavigationBar: const BottomNav(),
 
       //? 룸 생성 버튼
-      floatingActionButton: SizedBox(
-        width: 50.w,
-        height: 50.w,
-        child: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25.h),
-          ),
-          onPressed: () {
-            context.pushNamed("roomCreate");
-          },
-          child: Icon(
-            Icons.add_rounded,
-            size: 30.w,
-            color: Colors.white,
-          ),
-        ),
-      ),
+      floatingActionButton: selectedIndex == 0
+          ? SizedBox(
+              width: 50.w,
+              height: 50.w,
+              child: FloatingActionButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.h),
+                ),
+                onPressed: () {
+                  context.pushNamed("roomCreate");
+                },
+                child: Icon(
+                  Icons.add_rounded,
+                  size: 30.w,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          : null,
     );
   }
 }

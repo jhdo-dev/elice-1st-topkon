@@ -5,6 +5,7 @@ import 'package:alarm_front/domain/usecases/topic/create_topic_usecase.dart';
 import 'package:alarm_front/domain/usecases/topic/delete_topic_usecase.dart';
 import 'package:alarm_front/domain/usecases/topic/get_topic_usecase.dart';
 import 'package:alarm_front/domain/usecases/topic/topic_usecases.dart';
+import 'package:alarm_front/presentation/bloc/filter/filter_bloc.dart';
 import 'package:alarm_front/presentation/bloc/topic/topic_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,6 +50,9 @@ class TopicDi {
       BlocProvider<SelectTopicBloc>(
         create: (context) => SelectTopicBloc(),
       ),
+      BlocProvider<FilterBloc>(
+        create: (context) => FilterBloc(),
+      )
     ];
   }
 }

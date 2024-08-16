@@ -77,9 +77,8 @@ final appRoutes = [
   GoRoute(
     path: "/roomCreate",
     name: "roomCreate",
-    pageBuilder: (context, state) => NoTransitionPage(
+    builder: (context, state) => RoomCreatePage(
       key: state.pageKey,
-      child: const RoomCreatePage(),
     ),
   ),
 ];

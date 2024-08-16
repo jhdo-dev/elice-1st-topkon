@@ -110,19 +110,10 @@ class _RoomFilterPageState extends State<RoomFilterPage> {
                           childAspectRatio: 1.5,
                         ),
                         itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isClickBox = index;
-                              });
-                            },
-                            child: FilterBox(
-                              id: state.topics[index].id,
-                              boxIndex: index,
-                              isClickBox: isClickBox,
-                              topicCount: state.topics[index].roomCount,
-                              topicName: state.topics[index].name,
-                            ),
+                          return FilterBox(
+                            id: state.topics[index].id,
+                            topicCount: state.topics[index].roomCount,
+                            topicName: state.topics[index].name,
                           );
                         },
                       ),
