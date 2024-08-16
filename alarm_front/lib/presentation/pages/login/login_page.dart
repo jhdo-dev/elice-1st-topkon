@@ -2,6 +2,7 @@ import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/presentation/bloc/login/login_bloc.dart';
 import 'package:alarm_front/presentation/bloc/user/user_bloc.dart';
 import 'package:alarm_front/presentation/pages/login/widget/login_button.dart';
+import 'package:alarm_front/presentation/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,12 +29,22 @@ class LoginPage extends StatelessWidget {
                         .read<UserBloc>()
                         .add(UserAuthenticated(user: state.user));
                   }
+                  if (state is LoginFailure) {
+                    showCustomSnackbar(context, "로그인을 다시 해주세요.");
+                  }
                 },
               ),
               BlocListener<UserBloc, UserState>(
                 listener: (context, state) async {
                   if (state is GetUserSuccess) {
                     context.goNamed("roomList");
+                  }
+
+                  if (state is GetUserError) {
+                    showCustomSnackbar(
+                      context,
+                      "잠시 후에 다시 시도해 주세요.",
+                    );
                   }
                 },
               ),
