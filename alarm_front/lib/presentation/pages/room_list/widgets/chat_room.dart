@@ -1,8 +1,8 @@
 import 'package:alarm_front/config/colors.dart';
-import 'package:alarm_front/config/text_styles.dart';
 import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -104,10 +104,20 @@ class _ChatRoomState extends State<ChatRoom> {
                   ),
                 ),
                 const SizedBox(height: 5.0),
-                Text('시작: ${widget.roomStartDate}',
-                    style: TextStyles.smallText.copyWith(color: Colors.grey)),
-                Text('종료: ${widget.roomEndDate}',
-                    style: TextStyles.smallText.copyWith(color: Colors.grey)),
+                Text(
+                  '시작: ${widget.roomStartDate}',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: Colors.grey,
+                  ),
+                ),
+                Text(
+                  '종료: ${widget.roomEndDate}',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: Colors.grey,
+                  ),
+                ),
               ],
             ),
           ),
