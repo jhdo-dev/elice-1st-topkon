@@ -150,7 +150,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
 
 /* 나중에 시간나면 할일
 1. 앱바 오른쪽에 드로워메뉴 추가해서 채팅방 유저목록 불러온 후 카드or리스트타일로 표시하기;
-
+2. 같은유저의 연속된 채팅은 이름표시하지 않음;
 
 
 
