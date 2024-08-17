@@ -33,4 +33,31 @@ class LocalDatasource {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }
+
+  static const String _reservedRoomsKey = 'reserved_rooms';
+
+  // 예약된 방 ID를 저장하는 메서드
+  static Future<void> saveReservedRoom(int roomId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final reservedRooms = prefs.getStringList(_reservedRoomsKey) ?? [];
+    if (!reservedRooms.contains(roomId.toString())) {
+      reservedRooms.add(roomId.toString());
+      await prefs.setStringList(_reservedRoomsKey, reservedRooms);
+    }
+  }
+
+  // 예약된 방 ID를 삭제하는 메서드
+  static Future<void> removeReservedRoom(int roomId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final reservedRooms = prefs.getStringList(_reservedRoomsKey) ?? [];
+    reservedRooms.remove(roomId.toString());
+    await prefs.setStringList(_reservedRoomsKey, reservedRooms);
+  }
+
+  // 예약된 방 목록을 불러오는 메서드
+  static Future<List<int>> getReservedRooms() async {
+    final prefs = await SharedPreferences.getInstance();
+    final reservedRooms = prefs.getStringList(_reservedRoomsKey) ?? [];
+    return reservedRooms.map((roomId) => int.parse(roomId)).toList();
+  }
 }

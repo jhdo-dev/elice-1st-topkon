@@ -10,12 +10,13 @@ class CreateRoomEvent extends RoomEvent {
   final String startTime;
   final String endTime;
 
-  CreateRoomEvent(
-      {required this.topicId,
-      required this.roomName,
-      required this.playerId,
-      required this.startTime,
-      required this.endTime});
+  CreateRoomEvent({
+    required this.topicId,
+    required this.roomName,
+    required this.playerId,
+    required this.startTime,
+    required this.endTime,
+  });
 
   @override
   List<Object> get props => [topicId, roomName, playerId, startTime, endTime];

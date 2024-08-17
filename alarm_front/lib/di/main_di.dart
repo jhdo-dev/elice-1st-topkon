@@ -1,14 +1,18 @@
 import 'package:alarm_front/di/bottom_nav_di.dart';
 import 'package:alarm_front/di/login_di.dart';
+import 'package:alarm_front/di/notification_di.dart';
 import 'package:alarm_front/di/room_di.dart';
 import 'package:alarm_front/di/topic_di.dart';
 import 'package:alarm_front/di/user_di.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class MainDi {
-  static Future<List<RepositoryProvider>> getRepositoryProvider() async {
+  static Future<List<RepositoryProvider>> getRepositoryProvider({
+    required FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
+  }) async {
     final dio = Dio();
     final googleSignIn = GoogleSignIn();
 
@@ -20,12 +24,16 @@ class MainDi {
         await RoomDi.getRepositoryProvider(dio: dio);
     List<RepositoryProvider> loginRepositoryProvider =
         await LoginDi.getRepositoryProvider(googleSignIn: googleSignIn);
+    List<RepositoryProvider> notificationRepositoryProvider =
+        await NotificationDi.getRepositoryProvider(
+            flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin);
 
     return [
       ...topicRepositoryProvider,
       ...userRepositoryProvider,
       ...roomRepositoryProvider,
       ...loginRepositoryProvider,
+      ...notificationRepositoryProvider,
     ];
   }
 
@@ -36,6 +44,7 @@ class MainDi {
       ...UserDi.getBlocProvider(),
       LoginDi.getBlocProvider(),
       ...RoomDi.getBlocProvider(),
+      NotificationDi.getBlocProvider(),
     ];
   }
 }

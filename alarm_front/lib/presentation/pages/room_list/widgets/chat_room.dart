@@ -1,16 +1,19 @@
 import 'package:alarm_front/config/colors.dart';
-import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
+import 'package:alarm_front/data/datasources/local_datasource.dart';
+import 'package:alarm_front/domain/entities/notification_schedule.dart';
+import 'package:alarm_front/presentation/bloc/notification/notification_bloc.dart';
+import 'package:alarm_front/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatRoom extends StatefulWidget {
   final String subjectName;
   final String roomName;
   final String roomStartDate;
   final String roomEndDate;
+  final int id;
 
   ChatRoom({
     super.key,
@@ -18,6 +21,7 @@ class ChatRoom extends StatefulWidget {
     required this.roomName,
     required this.roomStartDate,
     required this.roomEndDate,
+    required this.id,
   });
 
   @override
@@ -25,16 +29,80 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  bool isRoomActive = true;
+  bool isRoomActive = false;
+  bool isReserve = false;
 
-  Future<void> _saveReservation() async {
-    final prefs = await SharedPreferences.getInstance();
-    // 예약 정보를 저장합니다. 예: 방 이름과 시작일, 종료일
-    await prefs.setString('roomName', widget.roomName);
-    await prefs.setString('roomStartDate', widget.roomStartDate);
-    await prefs.setString('roomEndDate', widget.roomEndDate);
-    // 필요에 따라 다른 정보를 저장할 수 있습니다.
-    print('예약 정보가 저장되었습니다.');
+  @override
+  void initState() {
+    super.initState();
+    _checkRoomStatus();
+    _checkReservationStatus();
+  }
+
+  void _checkRoomStatus() {
+    DateTime scheduleDate = DateTime.parse(widget.roomStartDate);
+    setState(() {
+      isRoomActive = DateTime.now().isAfter(scheduleDate);
+    });
+  }
+
+  void _checkReservationStatus() async {
+    List<int> reservedRooms = await LocalDatasource.getReservedRooms();
+    setState(() {
+      isReserve = reservedRooms.contains(widget.id);
+    });
+  }
+
+  void _handleCancelReservation() {
+    DateTime scheduleDate = DateTime.parse(widget.roomStartDate);
+
+    if (DateTime.now().isBefore(scheduleDate)) {
+      context.read<NotificationBloc>().add(CancelNotificationEvent(widget.id));
+      LocalDatasource.removeReservedRoom(widget.id);
+      setState(() {
+        isReserve = false;
+      });
+      showCustomSnackbar(context, "예약된 알림이 취소되었습니다.");
+    } else {
+      setState(() {
+        isRoomActive = true;
+      });
+      showCustomSnackbar(context, "시작 시간이 지났습니다. 취소할 수 없습니다.");
+    }
+  }
+
+  void _handleReserve() {
+    DateTime scheduleDate = DateTime.parse(widget.roomStartDate);
+
+    if (DateTime.now().isBefore(scheduleDate)) {
+      final notificationSchedule = NotificationSchedule(
+        id: widget.id,
+        title: "${widget.subjectName} | ${widget.roomName}",
+        body: "참여 시간이 되었습니다.",
+        scheduleDate: scheduleDate,
+      );
+
+      context
+          .read<NotificationBloc>()
+          .add(ScheduleNotificationEvent(notificationSchedule));
+      LocalDatasource.saveReservedRoom(widget.id);
+      setState(() {
+        isReserve = true;
+      });
+      showCustomSnackbar(context, "예약되었습니다.");
+    } else {
+      showCustomSnackbar(context, "시작 시간이 이미 지났습니다. 예약할 수 없습니다.");
+    }
+  }
+
+  void _handleJoinRoom() {
+    DateTime endDate = DateTime.parse(widget.roomEndDate);
+
+    if (DateTime.now().isBefore(endDate)) {
+      context.pushNamed("roomChat");
+    } else {
+      showCustomSnackbar(context, "종료 시간이 지나 참여할 수 없습니다.");
+    }
   }
 
   @override
@@ -57,24 +125,18 @@ class _ChatRoomState extends State<ChatRoom> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Column(
-            children: [
-              ClipOval(
-                child: Container(
-                  decoration: BoxDecoration(color: Colors.grey.shade900),
-                  child: SizedBox(
-                    width: 70,
-                    height: 70,
-                    child: ClipRect(
-                      child: Image.asset(
-                        'assets/images/chat_room_default_profile.png',
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
+          ClipOval(
+            child: Container(
+              decoration: BoxDecoration(color: Colors.grey.shade900),
+              child: SizedBox(
+                width: 70,
+                height: 70,
+                child: Image.asset(
+                  'assets/images/chat_room_default_profile.png',
+                  fit: BoxFit.fill,
                 ),
               ),
-            ],
+            ),
           ),
           const SizedBox(width: 14.0),
           Container(
@@ -125,50 +187,30 @@ class _ChatRoomState extends State<ChatRoom> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               isRoomActive
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
+                  ? ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.sendMsgBurbleColor,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: _handleJoinRoom,
+                      child: const Text('참여'),
+                    )
+                  : isReserve
+                      ? ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.sendMsgBurbleColor,
-                            foregroundColor: Colors.white,
-                          ),
-                          onPressed: () {
-                            context.pushNamed("roomChat");
-                          },
-                          child: const Text(
-                            '참여',
-                          ),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            // backgroundColor: Colors.red,
                             foregroundColor: Colors.red,
                           ),
-                          onPressed: () {
-                            context
-                                .read<ReloadRoomBloc>()
-                                .add(ReloadRoomEvent(28));
-                          },
+                          onPressed: _handleCancelReservation,
+                          child: const Text('취소'),
+                        )
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(),
+                          onPressed: _handleReserve,
                           child: const Text(
-                            '취소',
+                            '예약',
+                            style: TextStyle(fontSize: 12),
                           ),
                         ),
-                      ],
-                    )
-                  : ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          // fixedSize: const Size(60, 40),
-                          // backgroundBuilder: Colors.blue,
-                          ),
-                      onPressed: () {},
-                      child: const Text(
-                        '예약',
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
             ],
           ),
         ],
