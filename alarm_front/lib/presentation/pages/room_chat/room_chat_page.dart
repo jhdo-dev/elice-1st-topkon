@@ -1,4 +1,5 @@
 import 'package:alarm_front/config/colors.dart';
+import 'package:alarm_front/config/constants.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'widgets/message_widget.dart';
@@ -16,8 +17,13 @@ class RoomChatPage extends StatefulWidget {
 class _RoomChatPageState extends State<RoomChatPage> {
   late IO.Socket socket;
   TextEditingController _controller = TextEditingController();
+
+  final String roomId = 'room1'; // 임시 방 ID
+  late final String myPlayerId; // 임시 플레이어 ID (일단 임시로 socket.id 할당)
+
   List<String> messages = [];
-  List<bool> isMe = [];
+  List<String> playerId = [];
+  List<bool> myTurn = [];
 
   @override
   void initState() {
@@ -26,115 +32,131 @@ class _RoomChatPageState extends State<RoomChatPage> {
   }
 
   void connectToServer() {
-    socket = IO.io(
-        'https://surrounding-lisha-elicecontents-4e3f02e0.koyeb.app/',
-        <String, dynamic>{
-          'transports': ['websocket'],
-          'autoConnect': true,
-        });
+    socket = IO.io(Constants.chatUrl, <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': true,
+    });
 
     socket.connect();
 
     socket.on('connect', (_) {
-      print('connected');
+      print('=================connected: ${socket.id}');
+      myPlayerId = socket.id!;
+      // 서버에 방 참여 이벤트 전송
+      socket.emit('join', {'roomId': roomId, 'playerId': myPlayerId});
     });
 
-    socket.on('message', (data) {
+    // 서버로부터 채팅 메시지를 받았을 때
+    socket.on('msg', (data) {
       setState(() {
-        messages.insert(0, data);
-        isMe.insert(0, false);
-      });
-    });
-
-    socket.on('message_received', (data) {
-      setState(() {
-        messages.insert(0, data['message']);
-        isMe.insert(0, true);
+        messages.insert(0, data['msg']);
+        playerId.insert(0, data['playerId']);
+        if (myTurn.isEmpty) {
+          myTurn.add(false);
+        } else {
+          myTurn.insert(0, playerId[1] == playerId[0]);
+        }
       });
     });
 
     socket.on('disconnect', (_) {
-      print('disconnect');
+      print('disconnected');
+      socket.emit('exit', {roomId: roomId});
     });
+
+    socket.onConnectError((err) => print('Connect error: $err'));
+    socket.onError((err) => print('Error: $err'));
   }
 
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
       FocusScope.of(context).unfocus();
-      socket.emit('message', _controller.text);
+      socket.emit('msg', {
+        'roomId': roomId,
+        'msg': _controller.text,
+        'playerId': myPlayerId,
+      });
       _controller.clear();
     }
   }
 
   @override
   void dispose() {
-    print('bye');
+    socket.emit('exit', {'roomId': roomId});
     socket.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus(); // 빈공간 터치시 입력창 내려감
-        },
-        child: Scaffold(
-            backgroundColor: AppColors.backgroundColor,
-            appBar: const AppbarWidget(
-              title: 'ROOM CHAT',
-              isBackIcon: true,
+      onTap: () {
+        FocusScope.of(context).unfocus(); // 빈공간 터치시 입력창 내려감
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        appBar: const AppbarWidget(
+          title: 'ROOM CHAT',
+          isBackIcon: true,
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                reverse: true,
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  return MessageWidget(myPlayerId, playerId[index],
+                      messages[index], myTurn[index]);
+                },
+              ),
             ),
-            // 중앙 채팅화면(+말풍선)과 하단 입력창
-            body: Container(
-              child: Column(
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 20.h),
+              child: Row(
                 children: [
-                  // 중앙 채팅화면(+말풍선)
                   Expanded(
-                    child: ListView.builder(
-                      reverse: true,
-                      itemCount: messages.length,
-                      // 채팅 메시지 출력
-                      itemBuilder: (context, index) {
-                        return MessageWidget(messages[index], isMe[index]);
-                      },
+                    child: TextField(
+                      minLines: 1,
+                      maxLines: 4,
+                      controller: _controller,
+                      style: TextStyles.mediumText,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColors.bottomNavColor.withOpacity(0.5),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColors.bottomNavColor.withOpacity(0.5),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  // 하단 채팅 입력창
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 20.w, horizontal: 20.h),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: TextField(
-                          minLines: 1,
-                          maxLines: 4,
-                          controller: _controller,
-                          // 폰트 색상
-                          style: TextStyles.mediumText,
-                          // 테두리 색상
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: AppColors.bottomNavColor
-                                        .withOpacity(0.5))),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: AppColors.bottomNavColor
-                                        .withOpacity(0.5))),
-                          ),
-                        )),
-                        SizedBox(width: 15.w),
-                        ElevatedButton(
-                          onPressed: _sendMessage,
-                          child: const Text('Send'),
-                        ),
-                      ],
-                    ),
+                  SizedBox(width: 15.w),
+                  ElevatedButton(
+                    onPressed: _sendMessage,
+                    child: Icon(Icons.send),
                   ),
                 ],
               ),
-            )));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
+
+/* 나중에 시간나면 할일
+1. 앱바 오른쪽에 드로워메뉴 추가해서 채팅방 유저목록 불러온 후 카드or리스트타일로 표시하기;
+2. 같은유저의 연속된 채팅은 이름표시하지 않음; (완료)
+
+
+
+*/
+
+
