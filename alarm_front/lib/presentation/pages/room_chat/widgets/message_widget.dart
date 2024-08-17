@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageWidget extends StatelessWidget {
-  // 나중에 final String/bool로 바꾸기
-  var message;
-  var isMe; // 말풍선이 사용자(me) 또는 상대방 두가지 상태를 가짐
+  final String myPlayerId;
+  final String playerId;
+  final String message;
 
-  MessageWidget(this.message, this.isMe, {super.key});
+// 말풍선이 사용자(me) 또는 상대방 두가지 상태를 가짐
+  late final bool isMe = myPlayerId == playerId;
+
+  MessageWidget(this.myPlayerId, this.playerId, this.message, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class MessageWidget extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
             child: Text(
-              isMe ? 'me' : 'other',
+              playerId,
               style: TextStyles.mediumText,
             ),
           ),
