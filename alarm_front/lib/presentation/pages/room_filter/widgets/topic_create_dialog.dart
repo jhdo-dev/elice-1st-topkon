@@ -1,7 +1,7 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/config/text_styles.dart';
 import 'package:alarm_front/presentation/bloc/topic/topic_bloc.dart';
-import 'package:alarm_front/presentation/widgets/snackbar.dart';
+import 'package:alarm_front/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

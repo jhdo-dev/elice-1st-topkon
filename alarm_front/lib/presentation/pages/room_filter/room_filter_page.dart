@@ -2,7 +2,7 @@ import 'package:alarm_front/presentation/bloc/topic/topic_bloc.dart';
 import 'package:alarm_front/presentation/pages/room_filter/widgets/filter_box.dart';
 import 'package:alarm_front/presentation/pages/room_filter/widgets/topic_create_dialog.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
-import 'package:alarm_front/presentation/widgets/snackbar.dart';
+import 'package:alarm_front/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

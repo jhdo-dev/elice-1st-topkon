@@ -1,8 +1,6 @@
-import 'package:alarm_front/di/topic_di.dart';
 import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:alarm_front/presentation/pages/room_list/widgets/chat_room.dart';
-import 'package:alarm_front/presentation/pages/room_list/widgets/chat_room_tile.dart';
-import 'package:alarm_front/presentation/widgets/snackbar.dart';
+import 'package:alarm_front/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,13 +13,6 @@ class RoomListPage extends StatefulWidget {
 
 class _RoomListPageState extends State<RoomListPage> {
   // 예시로 채팅방 목록 데이터를 생성
-  final List<ChatRoom> chatRooms = [
-    ChatRoom(
-        subjectName: 'Flutter 스터디',
-        roomName: '스터디하실 분 모집합니다!',
-        roomStartDate: '2024-08-01 09:24',
-        roomEndDate: '2024-08-24 18:48'),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +32,13 @@ class _RoomListPageState extends State<RoomListPage> {
           return ListView.builder(
             itemCount: state.rooms.length,
             itemBuilder: (context, index) {
+              final room = state.rooms[index];
               return ChatRoom(
-                subjectName: state.rooms[index].topicName,
-                roomName: state.rooms[index].roomName,
-                roomStartDate: state.rooms[index].getFormattedStartTime(),
-                roomEndDate: state.rooms[index].getFormattedEndTime(),
+                subjectName: room.topicName,
+                roomName: room.roomName,
+                roomStartDate: room.getFormattedStartTime(),
+                roomEndDate: room.getFormattedEndTime(),
+                id: room.id,
               );
             },
           );

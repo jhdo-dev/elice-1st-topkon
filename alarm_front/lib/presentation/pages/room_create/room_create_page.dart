@@ -4,7 +4,7 @@ import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:alarm_front/presentation/bloc/topic/topic_bloc.dart';
 import 'package:alarm_front/presentation/bloc/user/user_bloc.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
-import 'package:alarm_front/presentation/widgets/snackbar.dart';
+import 'package:alarm_front/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,6 +59,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
               }
 
               if (state is CreateRoomSuccess) {
+                context.read<LoadRoomBloc>().add(LoadRoomEvent());
                 showCustomSnackbar(context, "방이 생성되었습니다.");
                 context.pop();
               }

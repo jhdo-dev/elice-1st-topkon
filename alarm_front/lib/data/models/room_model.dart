@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:alarm_front/domain/entities/room.dart';
 import 'package:equatable/equatable.dart';
 
