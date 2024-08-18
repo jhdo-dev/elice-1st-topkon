@@ -22,7 +22,7 @@ export class Message {
   @Column()
   msg: string;
 
-  @Column()
+  @Column({ default: false })
   myTurn: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
