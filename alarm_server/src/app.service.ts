@@ -67,11 +67,6 @@ export class AppService {
       limit,
     );
 
-    console.log(topicId);
-    console.log(cursorId);
-    console.log(limit);
-    console.log(res);
-
     if (!res) {
       return {
         rooms: [],

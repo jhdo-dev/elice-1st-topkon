@@ -1,11 +1,12 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/config/constants.dart';
+import 'package:alarm_front/config/text_styles.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
-import 'widgets/message_widget.dart';
-import 'package:alarm_front/config/text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+import 'widgets/message_widget.dart';
 
 class RoomChatPage extends StatefulWidget {
   const RoomChatPage({super.key});
