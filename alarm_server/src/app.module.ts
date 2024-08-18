@@ -6,6 +6,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ChatsModule } from './chats.module';
+import { Message } from './dto/message.entity';
 import { Player } from './dto/player.entity';
 import { Room } from './dto/room.entity';
 import { Topic } from './dto/topic.entity';
@@ -30,7 +31,7 @@ config();
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [Room, Topic, Player],
+        entities: [Room, Topic, Player, Message],
         synchronize: true,
         namingStrategy: new SnakeNamingStrategy(),
         timezone: 'UTC',

@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import {
-  MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
@@ -9,6 +9,9 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { Repository } from 'typeorm';
+import { Message } from './dto/message.entity';
+import { Player } from './dto/player.entity';
 
 @WebSocketGateway(3001, {
   namespace: 'chat',
@@ -21,7 +24,12 @@ export class ChatsGateway
   clientPlayerId: { [socketId: string]: string } = {};
   roomPlayerIds: { [key: string]: string[] } = {};
 
-  constructor() {}
+  constructor(
+    @InjectRepository(Message)
+    private readonly messageRepository: Repository<Message>,
+    @InjectRepository(Player)
+    private readonly playerRepository: Repository<Player>,
+  ) {}
 
   @WebSocketServer() server: Server;
   private logger: Logger = new Logger('ChatsGateway');
@@ -42,7 +50,7 @@ export class ChatsGateway
     }
   }
 
-  handleConnection(client: Socket, ...args: any[]) {
+  handleConnection(client: Socket) {
     this.logger.log(`Client Connected : ${client.id}`);
 
     if (this.connectedClients[client.id]) {
@@ -54,7 +62,10 @@ export class ChatsGateway
   }
 
   @SubscribeMessage('join')
-  handleJoin(client: Socket, data: { roomId: string; playerId: string }): void {
+  async handleJoin(
+    client: Socket,
+    data: { roomId: string; playerId: string },
+  ): Promise<void> {
     const room = data.roomId;
     const playerId = data.playerId;
 
@@ -70,6 +81,15 @@ export class ChatsGateway
     if (!this.roomPlayerIds[room]) {
       this.roomPlayerIds[room] = [];
     }
+
+    // 이전 메시지 기록 불러오기
+    const previousMessages = await this.messageRepository.find({
+      where: { roomId: room },
+      order: { createdAt: 'ASC' }, // 메시지 생성 순서대로 정렬
+    });
+
+    // 클라이언트에게 이전 메시지 기록 전송
+    client.emit('previousMessages', previousMessages);
   }
 
   @SubscribeMessage('exit')
@@ -91,12 +111,40 @@ export class ChatsGateway
   }
 
   @SubscribeMessage('msg')
-  handleChatMessage(
+  async handleChatMessage(
     client: Socket,
-    data: { roomId: string; msg: string; playerId: string },
-  ): void {
+    data: {
+      roomId: string;
+      msg: string;
+      playerId: string;
+    },
+  ): Promise<void> {
+    // playerId를 통해 Player 엔터티에서 displayName을 조회
+    const player = await this.playerRepository.findOne({
+      where: { uuid: data.playerId },
+    });
+
+    if (!player) {
+      this.logger.error(`Player with ID ${data.playerId} not found`);
+      return;
+    }
+
+    const displayName = player.displayName;
+
+    // 메시지를 DB에 저장
+    const newMessage = this.messageRepository.create({
+      roomId: data.roomId,
+      playerId: data.playerId,
+      displayName: displayName, // Player의 displayName 사용
+      msg: data.msg,
+    });
+
+    await this.messageRepository.save(newMessage);
+
+    // 방에 있는 모든 클라이언트에게 메시지 전송
     this.server.to(data.roomId).emit('msg', {
-      playerId: this.clientPlayerId[client.id],
+      playerId: data.playerId,
+      displayName: displayName, // Player의 displayName 전송
       msg: data.msg,
       roomId: data.roomId,
     });
