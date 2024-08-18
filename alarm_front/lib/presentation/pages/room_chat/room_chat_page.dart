@@ -1,44 +1,52 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/config/constants.dart';
 import 'package:alarm_front/config/text_styles.dart';
+import 'package:alarm_front/presentation/bloc/user/user_bloc.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import 'widgets/message_widget.dart';
 
 class RoomChatPage extends StatefulWidget {
-  const RoomChatPage({super.key});
+  const RoomChatPage({super.key, required this.roomId});
+
+  final String roomId;
 
   @override
   State<RoomChatPage> createState() => _RoomChatPageState();
 }
 
-/**할일
- * 1순위: room id, player id 연동하기
- * 2. 상태관리 공부하기
- * 3. bloc 공부하기
- * 4. DB에 채팅기록 연동
- */
 class _RoomChatPageState extends State<RoomChatPage> {
   late IO.Socket socket;
   TextEditingController _controller = TextEditingController();
 
-  final String roomId = 'room1'; // 임시 방 ID
-  late final String myPlayerId; // 임시 플레이어 ID (일단 임시로 socket.id 할당)
+  late final String myPlayerId;
+  late final String displayName; // 사용자의 displayName
 
   List<String> messages = [];
   List<String> playerId = [];
-  List<bool> myTurn = []; // 연속된 대화일때 true
+  List<String> displayNames = []; // displayNames 리스트 추가
+  List<bool> myTurn = [];
 
   @override
   void initState() {
     super.initState();
-    connectToServer();
+
+    final userBloc = context.read<UserBloc>();
+
+    if (userBloc.state is GetUserSuccess) {
+      final user = (userBloc.state as GetUserSuccess).user;
+      myPlayerId = user.uuid!;
+      displayName = user.displayName!; // !!!닉네임 설정안하면 오류생김!!!
+
+      connectToServer(); // 서버 연결
+    }
   }
 
-  void connectToServer() {
+  void connectToServer() async {
     socket = IO.io(Constants.chatUrl, <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': true,
@@ -48,9 +56,23 @@ class _RoomChatPageState extends State<RoomChatPage> {
 
     socket.on('connect', (_) {
       print('=================connected: ${socket.id}');
-      myPlayerId = socket.id!;
-      // 서버에 방 참여 이벤트 전송
-      socket.emit('join', {'roomId': roomId, 'playerId': myPlayerId});
+      // 서버에 방 참여 이벤트 전송, playerId만 포함
+      socket.emit('join', {
+        'roomId': widget.roomId,
+        'playerId': myPlayerId,
+      });
+    });
+
+    // 서버로부터 이전 메시지 기록을 받을 때
+    socket.on('previousMessages', (data) {
+      setState(() {
+        for (var msgData in data) {
+          messages.add(msgData['msg']);
+          playerId.add(msgData['playerId']);
+          displayNames.add(msgData['displayName']); // displayName 저장
+          myTurn.add(msgData['playerId'] == myPlayerId);
+        }
+      });
     });
 
     // 서버로부터 채팅 메시지를 받았을 때
@@ -58,6 +80,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
       setState(() {
         messages.insert(0, data['msg']);
         playerId.insert(0, data['playerId']);
+        displayNames.insert(0, data['displayName']); // displayName 저장
+
         if (myTurn.isEmpty) {
           myTurn.add(false);
         } else {
@@ -68,7 +92,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
 
     socket.on('disconnect', (_) {
       print('disconnected');
-      socket.emit('exit', {roomId: roomId});
+      socket.emit('exit', {'roomId': widget.roomId});
     });
 
     socket.onConnectError((err) => print('Connect error: $err'));
@@ -79,9 +103,10 @@ class _RoomChatPageState extends State<RoomChatPage> {
     if (_controller.text.isNotEmpty) {
       FocusScope.of(context).unfocus();
       socket.emit('msg', {
-        'roomId': roomId,
+        'roomId': widget.roomId,
         'msg': _controller.text,
         'playerId': myPlayerId,
+        // 서버에서 displayName을 가져와 전송하기 때문에 여기서는 필요 없음
       });
       _controller.clear();
     }
@@ -89,7 +114,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
 
   @override
   void dispose() {
-    socket.emit('exit', {'roomId': roomId});
+    socket.emit('exit', {'roomId': widget.roomId});
     socket.dispose();
     _controller.dispose();
     super.dispose();
@@ -114,8 +139,13 @@ class _RoomChatPageState extends State<RoomChatPage> {
                 reverse: true,
                 itemCount: messages.length,
                 itemBuilder: (context, index) {
-                  return MessageWidget(myPlayerId, playerId[index],
-                      messages[index], myTurn[index]);
+                  return MessageWidget(
+                    myPlayerId,
+                    playerId[index],
+                    messages[index],
+                    myTurn[index],
+                    displayName: displayNames[index], // displayName을 전달
+                  );
                 },
               ),
             ),
