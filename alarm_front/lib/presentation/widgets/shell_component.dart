@@ -1,6 +1,5 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/presentation/bloc/bottom_nav/bottom_nav_bloc.dart';
-import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:alarm_front/presentation/widgets/app_bar.dart';
 import 'package:alarm_front/presentation/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +20,6 @@ class ShellComponent extends StatefulWidget {
 }
 
 class _ShellComponentState extends State<ShellComponent> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<LoadRoomBloc>().add(LoadRoomEvent());
-  }
-
   @override
   Widget build(BuildContext context) {
     final selectedIndex = context.watch<BottomNavBloc>().state.selectedIndex;

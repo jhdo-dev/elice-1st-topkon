@@ -1,5 +1,5 @@
-import 'package:dartz/dartz.dart';
 import 'package:alarm_front/domain/entities/room.dart';
+import 'package:dartz/dartz.dart';
 
 abstract class RoomRepo {
   Future<Either<String, Unit>> createRoom({
@@ -9,5 +9,5 @@ abstract class RoomRepo {
     required String startTime,
     required String endTime,
   });
-  Future<Either<String, List<Room>>> getRoom(int? topicId);
+  Future<Either<String, List<Room>>> getRoom(int? topicId, int? offset);
 }

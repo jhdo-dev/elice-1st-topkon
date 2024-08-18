@@ -47,9 +47,6 @@ class TopicDi {
           loadTopicBloc: BlocProvider.of<LoadTopicBloc>(context),
         ),
       ),
-      BlocProvider<SelectTopicBloc>(
-        create: (context) => SelectTopicBloc(),
-      ),
       BlocProvider<FilterBloc>(
         create: (context) => FilterBloc(),
       )

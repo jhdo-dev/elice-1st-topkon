@@ -45,9 +45,3 @@ final class DeleteTopicError extends TopicState {
 
   DeleteTopicError(this.message);
 }
-
-final class SelectTopicIndex extends TopicState {
-  final int selectedTopic;
-
-  SelectTopicIndex({this.selectedTopic = -1});
-}

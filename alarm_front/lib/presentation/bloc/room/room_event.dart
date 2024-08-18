@@ -24,16 +24,9 @@ class CreateRoomEvent extends RoomEvent {
 
 final class LoadRoomEvent extends RoomEvent {
   final int? topicId;
+  final int? offset;
 
-  LoadRoomEvent({this.topicId});
+  LoadRoomEvent({this.topicId, this.offset});
   @override
-  List<Object?> get props => [topicId];
-}
-
-final class ReloadRoomEvent extends RoomEvent {
-  final int topicId;
-
-  ReloadRoomEvent(this.topicId);
-  @override
-  List<Object> get props => [topicId];
+  List<Object?> get props => [topicId, offset];
 }

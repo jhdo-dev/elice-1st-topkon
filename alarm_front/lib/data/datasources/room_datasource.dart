@@ -1,7 +1,7 @@
 import 'package:alarm_front/config/constants.dart';
+import 'package:alarm_front/data/models/room_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:alarm_front/data/models/room_model.dart';
 
 class RoomDatasource {
   final Dio dio;
@@ -34,12 +34,13 @@ class RoomDatasource {
     }
   }
 
-  Future<Either<String, List<RoomModel>>> getRoom(int? topicId) async {
+  Future<Either<String, List<RoomModel>>> getRoom(
+      int? topicId, int? offset) async {
     try {
       final response = await dio.post("${Constants.baseUrl}/room/list", data: {
-        "limit": 10, // 추후 수정
-        "cursorId": "", // 추후 수정
-        "topicId": topicId,
+        "limit": 10,
+        "offset": offset,
+        "topicId": topicId == -1 ? null : topicId,
       });
 
       if (response.statusCode == 200 || response.statusCode == 201) {

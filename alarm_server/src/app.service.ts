@@ -58,30 +58,18 @@ export class AppService {
 
   async getRoomList(
     topicId: number | undefined,
-    cursorId: string | undefined,
+    offset: number,
     limit: number,
   ): Promise<any> {
     const res: Room[] | undefined = await this.roomRepository.getRooms(
       topicId,
-      cursorId,
+      offset,
       limit,
     );
 
-    if (!res) {
-      return {
-        rooms: [],
-        cursorId: undefined,
-      };
-    }
-
-    let nextCursorId: string | undefined = undefined;
-    if (res.length === limit) {
-      nextCursorId = res[res.length - 1].id.toString();
-    }
-
     return {
       rooms: res,
-      cursorId: nextCursorId,
+      offset: offset + limit,
     };
   }
 
