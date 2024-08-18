@@ -30,7 +30,8 @@ class NotificationDatasource {
       notificationSchedule.body,
       scheduledDate,
       notificationDetails,
-      androidAllowWhileIdle: true,
+      // androidAllowWhileIdle: true,
+      matchDateTimeComponents: DateTimeComponents.time,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );
