@@ -29,7 +29,9 @@ class _RoomChatPageState extends State<RoomChatPage> {
   List<String> messages = [];
   List<String> playerId = [];
   List<String> displayNames = []; // displayNames 리스트 추가
-  List<bool> myTurn = [];
+
+  bool myTurn = false;
+  List<bool> myTurnList = [];
 
   @override
   void initState() {
@@ -70,7 +72,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
           messages.add(msgData['msg']);
           playerId.add(msgData['playerId']);
           displayNames.add(msgData['displayName']); // displayName 저장
-          myTurn.add(msgData['playerId'] == myPlayerId);
+          myTurnList.add(msgData['myTurn']);
         }
       });
     });
@@ -81,11 +83,10 @@ class _RoomChatPageState extends State<RoomChatPage> {
         messages.insert(0, data['msg']);
         playerId.insert(0, data['playerId']);
         displayNames.insert(0, data['displayName']); // displayName 저장
+        myTurnList.insert(0, data['myTurn']);
 
-        if (myTurn.isEmpty) {
-          myTurn.add(false);
-        } else {
-          myTurn.insert(0, playerId[1] == playerId[0]);
+        if (data['playerId'] != myPlayerId) {
+          myTurn = false;
         }
       });
     });
@@ -106,8 +107,10 @@ class _RoomChatPageState extends State<RoomChatPage> {
         'roomId': widget.roomId,
         'msg': _controller.text,
         'playerId': myPlayerId,
+        'myTurn': myTurn,
         // 서버에서 displayName을 가져와 전송하기 때문에 여기서는 필요 없음
       });
+      myTurn = true;
       _controller.clear();
     }
   }
@@ -143,7 +146,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
                     myPlayerId,
                     playerId[index],
                     messages[index],
-                    myTurn[index],
+                    myTurnList[index],
                     displayName: displayNames[index], // displayName을 전달
                   );
                 },

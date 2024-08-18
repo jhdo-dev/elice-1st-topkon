@@ -22,6 +22,9 @@ export class Message {
   @Column()
   msg: string;
 
+  @Column()
+  myTurn: boolean;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 }
