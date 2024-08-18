@@ -25,8 +25,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           (user) async {
         emit(GetUserSuccess(user: user));
 
-        print(" id :::  ${user.displayName}");
-
         await LocalDatasource.saveUserInfo(user);
       });
     });
