@@ -85,7 +85,7 @@ export class ChatsGateway
     // 이전 메시지 기록 불러오기
     const previousMessages = await this.messageRepository.find({
       where: { roomId: room },
-      order: { createdAt: 'ASC' }, // 메시지 생성 순서대로 정렬
+      order: { createdAt: 'DESC' }, // 메시지 생성 순서대로 정렬
     });
 
     // 클라이언트에게 이전 메시지 기록 전송
