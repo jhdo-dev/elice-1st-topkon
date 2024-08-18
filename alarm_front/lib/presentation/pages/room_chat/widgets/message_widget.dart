@@ -7,13 +7,14 @@ class MessageWidget extends StatelessWidget {
   final String myPlayerId;
   final String playerId;
   final String message;
-  final bool myTurn; // 연속된 대화일때 true
+  final bool myTurn;
+  final String displayName; // displayName 추가
 
-// 말풍선이 사용자(me) 또는 상대방 두가지 상태를 가짐
+  // 말풍선이 사용자(me) 또는 상대방 두가지 상태를 가짐
   late final bool isMe = myPlayerId == playerId;
 
   MessageWidget(this.myPlayerId, this.playerId, this.message, this.myTurn,
-      {super.key});
+      {required this.displayName, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +50,11 @@ class MessageWidget extends StatelessWidget {
                 ),
               ]
             : [
-                // 유저이름 스타일
+                // displayName 스타일
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
                   child: Text(
-                    playerId,
+                    displayName, // playerId 대신 displayName을 사용
                     style: TextStyles.mediumText,
                   ),
                 ),

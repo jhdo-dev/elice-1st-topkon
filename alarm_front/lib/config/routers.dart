@@ -56,13 +56,17 @@ final appRoutes = [
 
   //? 룸 채팅 화면
   GoRoute(
-    path: "/roomChat",
-    name: "roomChat",
-    pageBuilder: (context, state) => NoTransitionPage(
-      key: state.pageKey,
-      child: const RoomChatPage(),
-    ),
-  ),
+      path: "/roomChat",
+      name: "roomChat",
+      pageBuilder: (context, state) {
+        final Map<String, dynamic> extraData =
+            state.extra as Map<String, dynamic>;
+        final String roomId = extraData['roomId'] as String;
+        return NoTransitionPage(
+          key: state.pageKey,
+          child: RoomChatPage(roomId: roomId),
+        );
+      }),
 
   //? 룸 필터 화면
   GoRoute(
