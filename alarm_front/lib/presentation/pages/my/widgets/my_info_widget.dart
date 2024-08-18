@@ -45,7 +45,6 @@ class _MyInfoWidgetState extends State<MyInfoWidget> {
       child: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           if (state is GetUserSuccess) {
-            print(state.user);
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
               child: Row(

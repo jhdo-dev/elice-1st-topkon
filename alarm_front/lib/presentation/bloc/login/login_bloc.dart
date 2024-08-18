@@ -19,7 +19,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       final Either<String, User> result =
           await loginUseCases.googleLoginUsecase();
-      print(result);
+
       result.fold(
         (failure) => emit(LoginFailure(message: failure)),
         (user) => emit(LoginSuccess(user: user)),

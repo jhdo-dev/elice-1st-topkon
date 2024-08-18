@@ -17,7 +17,6 @@ void main() async {
   tz.initializeTimeZones();
 
   final user = await LocalDatasource.getUserInfo();
-  print(user);
 
   final bool saveLocal = user != null;
 
