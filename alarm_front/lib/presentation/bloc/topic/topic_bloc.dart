@@ -90,13 +90,3 @@ class DeleteTopicBloc extends Bloc<TopicEvent, TopicState> {
     );
   }
 }
-
-class SelectTopicBloc extends Bloc<TopicEvent, TopicState> {
-  SelectTopicBloc() : super(SelectTopicIndex()) {
-    on<SelectTopicEvent>(
-      (event, emit) async {
-        emit(SelectTopicIndex(selectedTopic: event.selectedIndex));
-      },
-    );
-  }
-}

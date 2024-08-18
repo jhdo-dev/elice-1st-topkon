@@ -8,7 +8,7 @@ class GetRoomUsecase {
     required this.repo,
   });
 
-  Future<Either<String, List<Room>>> call(int? topicId) async {
-    return await repo.getRoom(topicId);
+  Future<Either<String, List<Room>>> call(int? topicId, int? offset) async {
+    return await repo.getRoom(topicId, offset);
   }
 }

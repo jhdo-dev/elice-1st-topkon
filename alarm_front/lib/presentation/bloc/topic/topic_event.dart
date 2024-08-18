@@ -27,12 +27,3 @@ class DeleteTopicsEvent extends TopicEvent {
   @override
   List<Object> get props => [topicId];
 }
-
-class SelectTopicEvent extends TopicEvent {
-  final int selectedIndex;
-
-  SelectTopicEvent(this.selectedIndex);
-
-  @override
-  List<Object> get props => [selectedIndex];
-}

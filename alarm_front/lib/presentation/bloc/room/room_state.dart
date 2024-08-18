@@ -29,18 +29,3 @@ final class GetRoomError extends RoomState {
 
   GetRoomError(this.message);
 }
-
-final class ReloadRoomInitial extends RoomState {}
-
-final class ReloadRoomLoading extends RoomState {}
-
-final class ReloadRoomLoaded extends RoomState {
-  final List<Room> rooms;
-  ReloadRoomLoaded(this.rooms);
-}
-
-final class ReloadRoomError extends RoomState {
-  final String message;
-
-  ReloadRoomError(this.message);
-}

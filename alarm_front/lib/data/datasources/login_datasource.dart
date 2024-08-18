@@ -24,6 +24,7 @@ class GoogleLoginDatasource extends LoginDatasource {
           photoUrl: data.photoUrl,
           loginType: "google",
         );
+
         return Right(user);
       } else {
         return Left('구글 로그인이 취소되었습니다.');

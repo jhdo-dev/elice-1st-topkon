@@ -34,11 +34,6 @@ class RoomDi {
         create: (context) =>
             LoadRoomBloc(roomUsecases: RepositoryProvider.of(context)),
       ),
-      BlocProvider<ReloadRoomBloc>(
-        create: (context) => ReloadRoomBloc(
-            roomUsecases: RepositoryProvider.of(context),
-            loadRoomBloc: BlocProvider.of<LoadRoomBloc>(context)),
-      )
     ];
   }
 }

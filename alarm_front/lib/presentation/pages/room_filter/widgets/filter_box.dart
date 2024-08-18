@@ -1,7 +1,6 @@
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/config/text_styles.dart';
 import 'package:alarm_front/presentation/bloc/filter/filter_bloc.dart';
-import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:alarm_front/presentation/bloc/topic/topic_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,10 +26,8 @@ class FilterBox extends StatelessWidget {
           onTap: () {
             if (state.selectedIndex == id) {
               context.read<FilterBloc>().add(SelectTopic(selectedId: -1));
-              context.read<LoadRoomBloc>().add(LoadRoomEvent());
             } else {
               context.read<FilterBloc>().add(SelectTopic(selectedId: id));
-              context.read<LoadRoomBloc>().add(LoadRoomEvent(topicId: id));
             }
           },
           child: AnimatedContainer(

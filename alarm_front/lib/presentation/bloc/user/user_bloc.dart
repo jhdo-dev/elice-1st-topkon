@@ -1,9 +1,9 @@
 import 'package:alarm_front/data/datasources/local_datasource.dart';
 import 'package:alarm_front/domain/entities/user.dart';
 import 'package:alarm_front/domain/usecases/user/user_usecases.dart';
-import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'user_event.dart';
@@ -24,6 +24,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       result.fold((failure) => emit(GetUserError(message: failure)),
           (user) async {
         emit(GetUserSuccess(user: user));
+
+        print(" id :::  ${user.displayName}");
 
         await LocalDatasource.saveUserInfo(user);
       });

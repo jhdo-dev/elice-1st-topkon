@@ -20,7 +20,7 @@ export class RoomRepository extends Repository<Room> {
 
   async getRooms(
     topicId: number | undefined,
-    cursorId: string | undefined,
+    offset: number,
     limit: number,
   ): Promise<any> {
     let query = `
@@ -34,11 +34,7 @@ export class RoomRepository extends Repository<Room> {
       query += ` AND room.topic_id = ${topicId}`;
     }
 
-    if (cursorId) {
-      query += ` AND room.id < ${cursorId}`;
-    }
-
-    query += ` ORDER BY room.created_at DESC LIMIT ${limit}`;
+    query += ` ORDER BY room.created_at DESC LIMIT ${limit} OFFSET ${offset}`;
 
     return await this.query(query);
   }

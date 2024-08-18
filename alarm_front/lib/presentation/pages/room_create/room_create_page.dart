@@ -59,11 +59,8 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
               }
 
               if (state is CreateRoomSuccess) {
-                context.read<LoadRoomBloc>().add(LoadRoomEvent());
                 showCustomSnackbar(context, "방이 생성되었습니다.");
-                context
-                    .read<LoadRoomBloc>()
-                    .add(LoadRoomEvent(topicId: selectedTopic!));
+
                 context.pop();
               }
             },

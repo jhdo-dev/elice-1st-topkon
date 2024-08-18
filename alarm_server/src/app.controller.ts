@@ -69,10 +69,10 @@ export class AppController {
   @Post('/room/list')
   async getRoomList(@Body() body): Promise<any> {
     const limit: number = body.limit;
-    const cursorId: string | undefined = body.cursorId;
+    const offset: number = body.offset || 0;
     const topicId: number | undefined = body.topicId;
 
-    return await this.appService.getRoomList(topicId, cursorId, limit);
+    return await this.appService.getRoomList(topicId, offset, limit);
   }
   //! limit(int), cursorId(string), topicId(int)
 
