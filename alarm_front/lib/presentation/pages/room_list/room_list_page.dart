@@ -1,4 +1,5 @@
 import 'package:alarm_front/config/colors.dart';
+import 'package:alarm_front/config/text_styles.dart';
 import 'package:alarm_front/domain/entities/room.dart';
 import 'package:alarm_front/presentation/bloc/filter/filter_bloc.dart';
 import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
@@ -86,9 +87,17 @@ class _RoomListPageState extends State<RoomListPage> {
         strokeWidth: 3.0,
         displacement: 40,
         onRefresh: _refresh,
+
         child: PagedListView<int, Room>(
           pagingController: _pagingController,
           builderDelegate: PagedChildBuilderDelegate<Room>(
+            noItemsFoundIndicatorBuilder: (context) => Center(
+              child: Text(
+                '생성된 방이 없습니다',
+                style:
+                    TextStyles.mediumText.copyWith(color: AppColors.hintColor),
+              ),
+            ),
             itemBuilder: (context, item, index) => ChatRoom(
               subjectName: item.topicName,
               roomName: item.roomName,

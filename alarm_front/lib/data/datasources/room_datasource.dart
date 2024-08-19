@@ -69,7 +69,7 @@ class RoomDatasource {
         final roomList = response.data as List<dynamic>;
         final List<RoomModel> rooms =
             roomList.map((item) => RoomModel.fromJson(item)).toList();
-        print('rooms ------> $rooms');
+
         return Right(rooms);
       } else {
         return Left('${response.statusCode} :: 방 정보를 가져오는 데 실패했습니다.');
