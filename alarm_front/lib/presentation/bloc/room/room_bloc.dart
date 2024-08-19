@@ -63,13 +63,23 @@ class LoadRoomsByIdsBloc extends Bloc<RoomEvent, RoomState> {
       : super(GetRoomsByIdsInitial()) {
     on<LoadRoomsByIdsEvent>(
       (event, emit) async {
+        if (event.roomIds.isEmpty) {
+          emit(GetRoomsByIdsLoaded([]));
+          return;
+        }
         emit(GetRoomsByIdsLoading());
 
         final Either<String, List<Room>> result =
             await roomUsecases.getRoomsByIdsUsecase(event.roomIds);
         print("get rooms by ids -> $result");
         result.fold(
-          (failure) => emit(GetRoomsByIdsError(failure)),
+          (failure) {
+            if (event.roomIds.isNotEmpty) {
+              emit(GetRoomsByIdsError(failure));
+            } else {
+              emit(GetRoomsByIdsLoaded([]));
+            }
+          },
           (rooms) => emit(GetRoomsByIdsLoaded(rooms)),
         );
       },
