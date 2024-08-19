@@ -71,7 +71,7 @@ class LoadRoomsByIdsBloc extends Bloc<RoomEvent, RoomState> {
 
         final Either<String, List<Room>> result =
             await roomUsecases.getRoomsByIdsUsecase(event.roomIds);
-        print("get rooms by ids -> $result");
+
         result.fold(
           (failure) {
             if (event.roomIds.isNotEmpty) {
