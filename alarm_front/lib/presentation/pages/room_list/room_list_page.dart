@@ -95,7 +95,7 @@ class _RoomListPageState extends State<RoomListPage> {
               child: Text(
                 '생성된 방이 없습니다',
                 style:
-                    TextStyles.mediumText.copyWith(color: AppColors.hintColor),
+                    TextStyles.largeText.copyWith(color: AppColors.hintColor),
               ),
             ),
             itemBuilder: (context, item, index) => ChatRoom(

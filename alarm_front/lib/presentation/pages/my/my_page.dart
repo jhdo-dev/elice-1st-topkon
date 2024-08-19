@@ -1,3 +1,5 @@
+import 'package:alarm_front/config/colors.dart';
+import 'package:alarm_front/config/text_styles.dart';
 import 'package:alarm_front/data/datasources/local_datasource.dart';
 import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:alarm_front/presentation/pages/my/widgets/my_info_widget.dart';
@@ -54,14 +56,9 @@ class _MyPageState extends State<MyPage> {
               if (state.rooms.isEmpty) {
                 return Expanded(
                   child: Center(
-                    child: Text(
-                      '예약한 방이 없습니다.',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[600],
-                      ),
-                    ),
+                    child: Text('예약한 방이 없습니다.',
+                        style: TextStyles.largeText
+                            .copyWith(color: AppColors.hintColor)),
                   ),
                 );
               }
