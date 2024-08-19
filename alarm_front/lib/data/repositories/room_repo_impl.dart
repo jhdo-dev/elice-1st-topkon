@@ -38,4 +38,13 @@ class RoomRepoImpl extends RoomRepo {
       (topics) => Right(topics.map((model) => model.toEntity()).toList()),
     );
   }
+
+  @override
+  Future<Either<String, List<Room>>> getRoomsByIds(List<int> roomIds) async {
+    final result = await datasource.getRoomsByIds(roomIds);
+    return result.fold(
+      (error) => Left(error),
+      (topics) => Right(topics.map((model) => model.toEntity()).toList()),
+    );
+  }
 }

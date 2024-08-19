@@ -1,16 +1,71 @@
+import 'package:alarm_front/data/datasources/local_datasource.dart';
+import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:alarm_front/presentation/pages/my/widgets/my_info_widget.dart';
+import 'package:alarm_front/utils/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MyPage extends StatelessWidget {
+import '../room_list/widgets/chat_room.dart';
+
+class MyPage extends StatefulWidget {
   const MyPage({super.key});
+
+  @override
+  State<MyPage> createState() => _MyPageState();
+}
+
+class _MyPageState extends State<MyPage> {
+  @override
+  void initState() {
+    super.initState();
+    _loadReservedRooms();
+  }
+
+  // 비동기 메서드
+  Future<void> _loadReservedRooms() async {
+    final reservedRooms = await LocalDatasource.getReservedRooms();
+    context.read<LoadRoomsByIdsBloc>().add(LoadRoomsByIdsEvent(reservedRooms));
+    print('reservedRoom ------> $reservedRooms');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         MyInfoWidget(),
-
-        //TODO : 예약한 방 리스트
+        const SizedBox(height: 16),
+        BlocConsumer<LoadRoomsByIdsBloc, RoomState>(
+          listener: (context, state) {
+            if (state is GetRoomsByIdsError) {
+              showCustomSnackbar(context, "방 목록을 가져오는데 실패하였습니다.");
+              print('error message ------> ${state.message}');
+            }
+          },
+          builder: (context, state) {
+            if (state is GetRoomsByIdsLoading) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (state is GetRoomsByIdsLoaded) {
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: state.rooms.length,
+                  itemBuilder: (context, index) {
+                    final room = state.rooms[index];
+                    // print('roomID------> ${room.id}');
+                    return ChatRoom(
+                      subjectName: room.topicName,
+                      roomName: room.roomName,
+                      roomStartDate: room.getFormattedStartTime(),
+                      roomEndDate: room.getFormattedEndTime(),
+                      id: room.id,
+                    );
+                  },
+                ),
+              );
+            }
+            return SizedBox();
+          },
+        ),
       ],
     );
   }
