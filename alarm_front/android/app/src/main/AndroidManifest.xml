@@ -8,7 +8,7 @@
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <application
-        android:label="TOPIC ON"
+        android:label="토픽ON"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
