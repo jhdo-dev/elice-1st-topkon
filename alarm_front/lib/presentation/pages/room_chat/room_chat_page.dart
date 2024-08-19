@@ -11,9 +11,16 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'widgets/message_widget.dart';
 
 class RoomChatPage extends StatefulWidget {
-  const RoomChatPage({super.key, required this.roomId});
+  const RoomChatPage({
+    super.key,
+    required this.roomId,
+    required this.topicName,
+    required this.roomName,
+  });
 
   final String roomId;
+  final String topicName;
+  final String roomName;
 
   @override
   State<RoomChatPage> createState() => _RoomChatPageState();
@@ -33,6 +40,9 @@ class _RoomChatPageState extends State<RoomChatPage> {
   bool myTurn = false;
   List<bool> myTurnList = [];
 
+  List<String> msgDate = [];
+  List<String> msgTime = [];
+
   @override
   void initState() {
     super.initState();
@@ -42,7 +52,9 @@ class _RoomChatPageState extends State<RoomChatPage> {
     if (userBloc.state is GetUserSuccess) {
       final user = (userBloc.state as GetUserSuccess).user;
       myPlayerId = user.uuid!;
-      displayName = user.displayName!; // !!!닉네임 설정안하면 오류생김!!!
+
+      // !!!닉네임 설정안하면 오류생김!!!
+      displayName = user.displayName!;
 
       connectToServer(); // 서버 연결
     }
@@ -73,6 +85,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
           playerId.add(msgData['playerId']);
           displayNames.add(msgData['displayName']); // displayName 저장
           myTurnList.add(msgData['myTurn']);
+          msgDate.add(msgData['msgDate']);
+          msgTime.add(msgData['msgTime']);
         }
       });
     });
@@ -84,6 +98,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
         playerId.insert(0, data['playerId']);
         displayNames.insert(0, data['displayName']); // displayName 저장
         myTurnList.insert(0, data['myTurn']);
+        msgDate.insert(0, data['msgDate']);
+        msgTime.insert(0, data['msgTime']);
 
         if (data['playerId'] != myPlayerId) {
           myTurn = false;
@@ -102,12 +118,17 @@ class _RoomChatPageState extends State<RoomChatPage> {
 
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
+      DateTime dt = DateTime.now();
+
       FocusScope.of(context).unfocus();
       socket.emit('msg', {
         'roomId': widget.roomId,
         'msg': _controller.text,
         'playerId': myPlayerId,
         'myTurn': myTurn,
+        'msgDate': '${dt.year}년 ${dt.month}월 ${dt.day}일',
+        'msgTime':
+            '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}',
         // 서버에서 displayName을 가져와 전송하기 때문에 여기서는 필요 없음
       });
       myTurn = true;
@@ -131,60 +152,65 @@ class _RoomChatPageState extends State<RoomChatPage> {
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        appBar: const AppbarWidget(
-          title: 'ROOM CHAT',
+        appBar: AppbarWidget(
+          title: '[${widget.topicName}] ${widget.roomName}',
           isBackIcon: true,
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                reverse: true,
-                itemCount: messages.length,
-                itemBuilder: (context, index) {
-                  return MessageWidget(
-                    myPlayerId,
-                    playerId[index],
-                    messages[index],
-                    myTurnList[index],
-                    displayName: displayNames[index], // displayName을 전달
-                  );
-                },
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  reverse: true,
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    return MessageWidget(
+                      myPlayerId,
+                      playerId[index],
+                      messages[index],
+                      myTurnList[index],
+                      displayName: displayNames[index], // displayName을 전달
+                      msgDate: msgDate[index],
+                      msgTime: msgTime[index],
+                    );
+                  },
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 20.h),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      minLines: 1,
-                      maxLines: 4,
-                      controller: _controller,
-                      style: TextStyles.mediumText,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.bottomNavColor.withOpacity(0.5),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        minLines: 1,
+                        maxLines: 4,
+                        controller: _controller,
+                        style: TextStyles.mediumText,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.bottomNavColor.withOpacity(0.5),
+                            ),
                           ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.bottomNavColor.withOpacity(0.5),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.bottomNavColor.withOpacity(0.5),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 15.w),
-                  ElevatedButton(
-                    onPressed: _sendMessage,
-                    child: Icon(Icons.send),
-                  ),
-                ],
+                    SizedBox(width: 15.w),
+                    ElevatedButton(
+                      onPressed: _sendMessage,
+                      child: Icon(Icons.send),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

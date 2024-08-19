@@ -118,6 +118,8 @@ export class ChatsGateway
       msg: string;
       playerId: string;
       myTurn: boolean;
+      msgDate: string,
+      msgTime: string;
     },
   ): Promise<void> {
     // playerId를 통해 Player 엔터티에서 displayName을 조회
@@ -139,6 +141,8 @@ export class ChatsGateway
       displayName: displayName, // Player의 displayName 사용
       msg: data.msg,
       myTurn: data.myTurn,
+      msgDate: data.msgDate,
+      msgTime: data.msgTime,
     });
 
     await this.messageRepository.save(newMessage);
@@ -150,6 +154,8 @@ export class ChatsGateway
       msg: data.msg,
       roomId: data.roomId,
       myTurn: data.myTurn,
+      msgDate: data.msgDate,
+      msgTime: data.msgTime,
     });
   }
 }

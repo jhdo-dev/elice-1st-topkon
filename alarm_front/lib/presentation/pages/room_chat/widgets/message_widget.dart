@@ -9,22 +9,28 @@ class MessageWidget extends StatelessWidget {
   final String message;
   final bool myTurn;
   final String displayName; // displayName 추가
+  final String msgDate;
+  final String msgTime;
 
   // 말풍선이 사용자(me) 또는 상대방 두가지 상태를 가짐
   late final bool isMe = myPlayerId == playerId;
 
   MessageWidget(this.myPlayerId, this.playerId, this.message, this.myTurn,
-      {required this.displayName, super.key});
+      {required this.displayName,
+      required this.msgDate,
+      required this.msgTime,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
       padding: isMe
           ? EdgeInsets.fromLTRB(100.w, 5.w, 15.w, 5.w)
           : EdgeInsets.fromLTRB(15.w, 5.w, 100.w, 5.w),
       child: Column(
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
         children: myTurn
             ? [
                 // 연속된 말풍선 스타일
@@ -48,6 +54,12 @@ class MessageWidget extends StatelessWidget {
                     style: TextStyles.mediumText,
                   ),
                 ),
+                SizedBox(height: 2),
+
+                Text(
+                  msgTime,
+                  style: TextStyles.smallText,
+                )
               ]
             : [
                 // displayName 스타일
@@ -80,6 +92,11 @@ class MessageWidget extends StatelessWidget {
                     message,
                     style: TextStyles.mediumText,
                   ),
+                ),
+                SizedBox(height: 2),
+                Text(
+                  msgTime,
+                  style: TextStyles.smallText,
                 ),
               ],
       ),
