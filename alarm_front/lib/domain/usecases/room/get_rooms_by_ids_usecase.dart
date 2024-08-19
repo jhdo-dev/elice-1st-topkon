@@ -9,6 +9,10 @@ class GetRoomsByIdsUsecase {
   });
 
   Future<Either<String, List<Room>>> call(List<int> roomIds) async {
+    if (roomIds.isEmpty) {
+      // 빈 리스트인 경우 즉시 빈 결과를 반환
+      return Right([]);
+    }
     return await repo.getRoomsByIds(roomIds);
   }
 }
