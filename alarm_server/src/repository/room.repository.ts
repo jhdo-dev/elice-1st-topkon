@@ -12,9 +12,13 @@ export class RoomRepository extends Repository<Room> {
     return await this.save(room);
   }
 
-  async getRoomsByIds(ids: number[]): Promise<Room[]> {
+  async getRoomsByIds(ids: number[]): Promise<any[]> {
     return await this.query(
-      `SELECT * FROM room WHERE id IN (${ids.join(',')}) AND end_time > NOW()`,
+      `SELECT room.*, topic.name AS topic_name 
+       FROM room 
+       JOIN topic ON room.topic_id = topic.id 
+       WHERE room.id IN (${ids.join(',')}) 
+       AND room.end_time > NOW()`,
     );
   }
 
