@@ -30,3 +30,11 @@ final class LoadRoomEvent extends RoomEvent {
   @override
   List<Object?> get props => [topicId, offset];
 }
+
+final class LoadRoomsByIdsEvent extends RoomEvent {
+  final List<int> roomIds;
+
+  LoadRoomsByIdsEvent(this.roomIds);
+  @override
+  List<Object?> get props => [roomIds];
+}

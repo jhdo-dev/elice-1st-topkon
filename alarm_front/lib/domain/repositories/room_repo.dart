@@ -10,4 +10,5 @@ abstract class RoomRepo {
     required String endTime,
   });
   Future<Either<String, List<Room>>> getRoom(int? topicId, int? offset);
+  Future<Either<String, List<Room>>> getRoomsByIds(List<int> roomIds);
 }

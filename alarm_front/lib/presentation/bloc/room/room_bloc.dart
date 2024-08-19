@@ -55,3 +55,24 @@ class LoadRoomBloc extends Bloc<RoomEvent, RoomState> {
     );
   }
 }
+
+class LoadRoomsByIdsBloc extends Bloc<RoomEvent, RoomState> {
+  final RoomUsecases roomUsecases;
+
+  LoadRoomsByIdsBloc({required this.roomUsecases})
+      : super(GetRoomsByIdsInitial()) {
+    on<LoadRoomsByIdsEvent>(
+      (event, emit) async {
+        emit(GetRoomsByIdsLoading());
+
+        final Either<String, List<Room>> result =
+            await roomUsecases.getRoomsByIdsUsecase(event.roomIds);
+        print("get rooms by ids -> $result");
+        result.fold(
+          (failure) => emit(GetRoomsByIdsError(failure)),
+          (rooms) => emit(GetRoomsByIdsLoaded(rooms)),
+        );
+      },
+    );
+  }
+}

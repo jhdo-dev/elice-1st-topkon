@@ -2,6 +2,7 @@ import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/data/datasources/local_datasource.dart';
 import 'package:alarm_front/domain/entities/notification_schedule.dart';
 import 'package:alarm_front/presentation/bloc/notification/notification_bloc.dart';
+import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:alarm_front/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,12 +57,17 @@ class _ChatRoomState extends State<ChatRoom> {
     }
   }
 
-  void _handleCancelReservation() {
+  void _handleCancelReservation() async {
     DateTime scheduleDate = DateTime.parse(widget.roomStartDate);
 
     if (DateTime.now().isBefore(scheduleDate)) {
       context.read<NotificationBloc>().add(CancelNotificationEvent(widget.id));
       LocalDatasource.removeReservedRoom(widget.id);
+      LocalDatasource.getReservedRooms();
+      final reservedRooms = await LocalDatasource.getReservedRooms();
+      context
+          .read<LoadRoomsByIdsBloc>()
+          .add(LoadRoomsByIdsEvent(reservedRooms));
       setState(() {
         isReserve = false;
       });
