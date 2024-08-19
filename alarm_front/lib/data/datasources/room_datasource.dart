@@ -57,4 +57,25 @@ class RoomDatasource {
       return Left('${e.toString()}');
     }
   }
+
+  Future<Either<String, List<RoomModel>>> getRoomsByIds(
+      List<int> roomIds) async {
+    try {
+      final response = await dio.post("${Constants.baseUrl}/room/ids", data: {
+        "roomIds": roomIds,
+      });
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final roomList = response.data as List<dynamic>;
+        final List<RoomModel> rooms =
+            roomList.map((item) => RoomModel.fromJson(item)).toList();
+        print('rooms ------> $rooms');
+        return Right(rooms);
+      } else {
+        return Left('${response.statusCode} :: 방 정보를 가져오는 데 실패했습니다.');
+      }
+    } catch (e) {
+      return Left('${e.toString()}');
+    }
+  }
 }

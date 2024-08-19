@@ -2,6 +2,7 @@ import 'package:alarm_front/data/datasources/room_datasource.dart';
 import 'package:alarm_front/data/repositories/room_repo_impl.dart';
 import 'package:alarm_front/domain/usecases/room/create_room_usecase.dart';
 import 'package:alarm_front/domain/usecases/room/get_room_usecase.dart';
+import 'package:alarm_front/domain/usecases/room/get_rooms_by_ids_usecase.dart';
 import 'package:alarm_front/domain/usecases/room/room_usecases.dart';
 import 'package:alarm_front/presentation/bloc/room/room_bloc.dart';
 import 'package:dio/dio.dart';
@@ -15,6 +16,7 @@ class RoomDi {
     final roomUsecase = RoomUsecases(
       createRoomUsecase: CreateRoomUsecase(repo: roomRepository),
       getRoomUsecase: GetRoomUsecase(repo: roomRepository),
+      getRoomsByIdsUsecase: GetRoomsByIdsUsecase(repo: roomRepository),
     );
 
     return [
@@ -33,6 +35,10 @@ class RoomDi {
       BlocProvider<LoadRoomBloc>(
         create: (context) =>
             LoadRoomBloc(roomUsecases: RepositoryProvider.of(context)),
+      ),
+      BlocProvider<LoadRoomsByIdsBloc>(
+        create: (context) =>
+            LoadRoomsByIdsBloc(roomUsecases: RepositoryProvider.of(context)),
       ),
     ];
   }
