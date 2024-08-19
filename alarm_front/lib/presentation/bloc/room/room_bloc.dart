@@ -46,7 +46,7 @@ class LoadRoomBloc extends Bloc<RoomEvent, RoomState> {
 
         final Either<String, List<Room>> result =
             await roomUsecases.getRoomUsecase(event.topicId, event.offset);
-        print("get room -> $result");
+
         result.fold(
           (failure) => emit(GetRoomError(failure)),
           (rooms) => emit(GetRoomLoaded(rooms)),

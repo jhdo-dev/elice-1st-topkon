@@ -41,6 +41,7 @@ class LoginPage extends StatelessWidget {
                   }
 
                   if (state is GetUserError) {
+                    print(state.message);
                     showCustomSnackbar(
                       context,
                       "잠시 후에 다시 시도해 주세요.",
