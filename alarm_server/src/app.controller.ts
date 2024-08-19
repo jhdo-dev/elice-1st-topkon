@@ -59,9 +59,9 @@ export class AppController {
   }
 
   @Patch('/player/update')
-  async updatePlayerDisplayName(@Body() body): Promise<Player> {
-    const { uuid, displayName } = body;
-    return await this.appService.updatePlayerDisplayName(uuid, displayName);
+  async updatePlayer(@Body() body): Promise<Player> {
+    const { uuid, displayName, email } = body;
+    return await this.appService.updatePlayer(uuid, displayName, email);
   }
 
   //! uuid (string)

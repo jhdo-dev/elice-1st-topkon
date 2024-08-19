@@ -19,8 +19,6 @@ class _RoomListPageState extends State<RoomListPage> {
   final PagingController<int, Room> _pagingController =
       PagingController(firstPageKey: 0);
 
-  int selectedIndex = -1;
-
   @override
   void initState() {
     super.initState();
@@ -31,7 +29,10 @@ class _RoomListPageState extends State<RoomListPage> {
 
   void _fetchPage(int pageKey) {
     context.read<LoadRoomBloc>().add(
-          LoadRoomEvent(offset: pageKey, topicId: selectedIndex),
+          LoadRoomEvent(
+            offset: pageKey,
+            topicId: BlocProvider.of<FilterBloc>(context).state.selectedIndex,
+          ),
         );
   }
 
@@ -68,10 +69,7 @@ class _RoomListPageState extends State<RoomListPage> {
         ),
         BlocListener<FilterBloc, FilterState>(
           listener: (context, state) {
-            setState(() {
-              selectedIndex = state.selectedIndex;
-              _pagingController.refresh();
-            });
+            _pagingController.refresh();
           },
         ),
         BlocListener<CreateRoomBloc, RoomState>(

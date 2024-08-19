@@ -42,13 +42,11 @@ class LoadRoomBloc extends Bloc<RoomEvent, RoomState> {
   LoadRoomBloc({required this.roomUsecases}) : super(GetRoomInitial()) {
     on<LoadRoomEvent>(
       (event, emit) async {
-        //! 로딩이 보이게 일부로 딜레이 걸어놈
-        await Future.delayed(Duration(milliseconds: 500));
         emit(GetRoomLoading());
 
         final Either<String, List<Room>> result =
             await roomUsecases.getRoomUsecase(event.topicId, event.offset);
-
+        print("get room -> $result");
         result.fold(
           (failure) => emit(GetRoomError(failure)),
           (rooms) => emit(GetRoomLoaded(rooms)),
