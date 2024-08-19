@@ -104,7 +104,11 @@ class _ChatRoomState extends State<ChatRoom> {
     if (DateTime.now().isBefore(endDate)) {
       context.pushNamed(
         "roomChat",
-        extra: {'roomId': widget.id.toString()},
+        extra: {
+          'roomId': widget.id.toString(),
+          'topicName': widget.subjectName.toString(),
+          'roomName': widget.roomName.toString()
+        },
       );
     } else {
       showCustomSnackbar(context, "종료 시간이 지나 참여할 수 없습니다.");
