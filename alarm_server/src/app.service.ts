@@ -54,7 +54,7 @@ export class AppService {
     await this.topicRepository.deleteTopic(topicId);
   }
 
-  async getRoomListByIds(ids: number[]): Promise<Room[]> {
+  async getRoomListByIds(ids: number[]): Promise<any[]> {
     return await this.roomRepository.getRoomsByIds(ids);
   }
 
