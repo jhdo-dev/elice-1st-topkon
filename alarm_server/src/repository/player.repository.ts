@@ -23,15 +23,24 @@ export class PlayerRepository extends Repository<Player> {
     return await this.save(player);
   }
 
-  async updatePlayerDisplayName(
+  async updatePlayerDetails(
     uuid: string,
-    displayName: string,
+    displayName: string | null,
+    email: string | null,
   ): Promise<Player> {
     const player = await this.getPlayerByUuid(uuid);
     if (!player) {
       throw new NotFoundException('Player not found');
     }
-    player.displayName = displayName;
+
+    if (displayName != null && displayName.trim() !== '') {
+      player.displayName = displayName;
+    }
+
+    if (email != null && email.trim() !== '') {
+      player.email = email;
+    }
+
     return await this.save(player);
   }
 }

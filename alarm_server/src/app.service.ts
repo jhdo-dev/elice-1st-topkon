@@ -26,13 +26,15 @@ export class AppService {
     return player;
   }
 
-  async updatePlayerDisplayName(
+  async updatePlayer(
     uuid: string,
-    displayName: string,
+    displayName: string | null,
+    email: string | null,
   ): Promise<Player> {
-    return await this.playerRepository.updatePlayerDisplayName(
+    return await this.playerRepository.updatePlayerDetails(
       uuid,
       displayName,
+      email,
     );
   }
 
