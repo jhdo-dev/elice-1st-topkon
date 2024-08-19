@@ -4,6 +4,7 @@ import 'package:alarm_front/presentation/pages/my/widgets/my_info_widget.dart';
 import 'package:alarm_front/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../room_list/widgets/chat_room.dart';
 
 class MyPage extends StatefulWidget {
@@ -28,7 +29,6 @@ class _MyPageState extends State<MyPage> {
           .read<LoadRoomsByIdsBloc>()
           .add(LoadRoomsByIdsEvent(reservedRooms));
     }
-    print('reservedRoom ------> $reservedRooms');
   }
 
   @override
@@ -43,7 +43,6 @@ class _MyPageState extends State<MyPage> {
               if (context.read<LoadRoomsByIdsBloc>().state
                   is! GetRoomsByIdsInitial) {
                 showCustomSnackbar(context, "방 목록을 가져오는데 실패하였습니다.");
-                print('error message ------> ${state.message}');
               }
             }
           },
@@ -71,7 +70,7 @@ class _MyPageState extends State<MyPage> {
                   itemCount: state.rooms.length,
                   itemBuilder: (context, index) {
                     final room = state.rooms[index];
-                    // print('roomID------> ${room.id}');
+
                     return ChatRoom(
                       subjectName: room.topicName,
                       roomName: room.roomName,
