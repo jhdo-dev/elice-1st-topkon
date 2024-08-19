@@ -48,9 +48,12 @@ class _ChatRoomState extends State<ChatRoom> {
 
   void _checkReservationStatus() async {
     List<int> reservedRooms = await LocalDatasource.getReservedRooms();
-    setState(() {
-      isReserve = reservedRooms.contains(widget.id);
-    });
+
+    if (mounted) {
+      setState(() {
+        isReserve = reservedRooms.contains(widget.id);
+      });
+    }
   }
 
   void _handleCancelReservation() {
