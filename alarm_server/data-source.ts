@@ -1,13 +1,13 @@
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
 import { DataSource } from 'typeorm';
-import { SnakeNamingStrategy } from "typeorm-naming-strategies";
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 config();
 const configService = new ConfigService();
 
 export default new DataSource({
-  type: 'postgres',
+  type: 'mysql',
   host: configService.get('DB_HOST'),
   port: configService.get<number>('DB_PORT'),
   username: configService.get('DB_USERNAME'),
