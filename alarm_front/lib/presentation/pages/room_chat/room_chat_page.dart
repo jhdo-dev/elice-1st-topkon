@@ -40,8 +40,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
   bool myTurn = false;
   List<bool> myTurnList = [];
 
-  List<String> msgDate = [];
-  List<String> msgTime = [];
+  // List<String> msgDate = [];
+  // List<String> msgTime = [];
 
   @override
   void initState() {
@@ -85,8 +85,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
           playerId.add(msgData['playerId']);
           displayNames.add(msgData['displayName']); // displayName 저장
           myTurnList.add(msgData['myTurn']);
-          msgDate.add(msgData['msgDate']);
-          msgTime.add(msgData['msgTime']);
+          // msgDate.add(msgData['msgDate']);
+          // msgTime.add(msgData['msgTime']);
         }
       });
     });
@@ -98,8 +98,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
         playerId.insert(0, data['playerId']);
         displayNames.insert(0, data['displayName']); // displayName 저장
         myTurnList.insert(0, data['myTurn']);
-        msgDate.insert(0, data['msgDate']);
-        msgTime.insert(0, data['msgTime']);
+        // msgDate.insert(0, data['msgDate']);
+        // msgTime.insert(0, data['msgTime']);
 
         if (data['playerId'] != myPlayerId) {
           myTurn = false;
@@ -126,7 +126,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
         'msg': _controller.text,
         'playerId': myPlayerId,
         'myTurn': myTurn,
-        'msgDate': '${dt.year}년 ${dt.month}월 ${dt.day}일',
+        'msgDate':
+            '${dt.year.toString()}년 ${dt.month.toString()}월 ${dt.day.toString()}일',
         'msgTime':
             '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}',
         // 서버에서 displayName을 가져와 전송하기 때문에 여기서는 필요 없음
@@ -171,8 +172,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
                       messages[index],
                       myTurnList[index],
                       displayName: displayNames[index], // displayName을 전달
-                      msgDate: msgDate[index],
-                      msgTime: msgTime[index],
+                      // msgDate: msgDate[index],
+                      // msgTime: msgTime[index],
                     );
                   },
                 ),

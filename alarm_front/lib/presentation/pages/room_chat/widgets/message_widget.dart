@@ -9,16 +9,16 @@ class MessageWidget extends StatelessWidget {
   final String message;
   final bool myTurn;
   final String displayName; // displayName 추가
-  final String msgDate;
-  final String msgTime;
+  // final String msgDate;
+  // final String msgTime;
 
   // 말풍선이 사용자(me) 또는 상대방 두가지 상태를 가짐
   late final bool isMe = myPlayerId == playerId;
 
   MessageWidget(this.myPlayerId, this.playerId, this.message, this.myTurn,
       {required this.displayName,
-      required this.msgDate,
-      required this.msgTime,
+      // required this.msgDate,
+      // required this.msgTime,
       super.key});
 
   @override
@@ -56,10 +56,10 @@ class MessageWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 2),
 
-                Text(
-                  msgTime,
-                  style: TextStyles.smallText,
-                )
+                // Text(
+                //   msgTime,
+                //   style: TextStyles.smallText,
+                // )
               ]
             : [
                 // displayName 스타일
@@ -94,10 +94,10 @@ class MessageWidget extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 2),
-                Text(
-                  msgTime,
-                  style: TextStyles.smallText,
-                ),
+                // Text(
+                //   msgTime,
+                //   style: TextStyles.smallText,
+                // ),
               ],
       ),
     );
