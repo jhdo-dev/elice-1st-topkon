@@ -102,13 +102,6 @@ class _RoomChatPageState extends State<RoomChatPage> {
         msgTime.insert(0, data['msgTime']);
       });
 
-      myTurn = (msgTime[0] == msgTime[1]);
-
-      if ((msgTime.length >= 2) && (msgTime[0] == msgTime[1])) {
-        print(msgTime[0] == msgTime[1]);
-      } else {
-        myTurn = false;
-      }
       if (data['playerId'] != myPlayerId) {
         myTurn = false;
       }
@@ -126,6 +119,12 @@ class _RoomChatPageState extends State<RoomChatPage> {
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
       DateTime dt = DateTime.now();
+      String timeString =
+          '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
+
+      if (msgTime.length >= 2) {
+        myTurn = msgTime[0] == timeString;
+      }
 
       FocusScope.of(context).unfocus();
       socket.emit('msg', {
@@ -135,8 +134,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
         'myTurn': myTurn,
         'msgDate':
             '${dt.year.toString()}년 ${dt.month.toString()}월 ${dt.day.toString()}일',
-        'msgTime':
-            '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}',
+        'msgTime': timeString,
         // 서버에서 displayName을 가져와 전송하기 때문에 여기서는 필요 없음
       });
       myTurn = true;

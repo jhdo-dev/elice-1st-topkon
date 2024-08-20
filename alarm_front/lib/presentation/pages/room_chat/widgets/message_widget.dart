@@ -52,7 +52,7 @@ class MessageWidget extends StatelessWidget {
                       ? EdgeInsets.only(right: 10.w)
                       : EdgeInsets.only(left: 10.w),
                   child: Text(
-                    message + msgTime + myTurn.toString(),
+                    message,
                     style: TextStyles.largeText,
                   ),
                 ),
@@ -102,7 +102,7 @@ class MessageWidget extends StatelessWidget {
                       ? EdgeInsets.only(right: 10.w)
                       : EdgeInsets.only(left: 10.w),
                   child: Text(
-                    message + msgTime + myTurn.toString(),
+                    message,
                     style: TextStyles.largeText,
                   ),
                 ),
