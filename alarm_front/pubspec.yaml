@@ -26,6 +26,16 @@ dependencies:
   permission_handler: ^11.3.1
   infinite_scroll_pagination: ^4.0.0
   flutter_dotenv: ^5.1.0
+  flutter_native_splash: ^2.4.1
+
+flutter_native_splash:
+  background_image: assets/images/topk_background.png  # 로고와 그라데이션이 포함된 배경 이미지
+  color: "#ffffff"  # 필요시 백업 색상 (이미지가 로드되지 않을 경우)
+  android: true
+  ios: true
+  fullscreen: true  # 전체 화면 설정
+
+
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/data/datasources/local_datasource.dart';
 import 'package:alarm_front/domain/entities/notification_schedule.dart';
@@ -123,6 +125,9 @@ class _ChatRoomState extends State<ChatRoom> {
 
   @override
   Widget build(BuildContext context) {
+    final randomProfileNum = Random().nextInt(6) + 1;
+    Color randomColor = getRandomProfileColor();
+
     return Container(
       padding: const EdgeInsets.all(14.0),
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14.0),
@@ -143,13 +148,12 @@ class _ChatRoomState extends State<ChatRoom> {
         children: [
           ClipOval(
             child: Container(
-              decoration: BoxDecoration(color: Colors.grey.shade900),
+              decoration: BoxDecoration(color: randomColor),
               child: SizedBox(
                 width: 70,
                 height: 70,
                 child: Image.asset(
-                  'assets/images/chat_room_default_profile.png',
-                  fit: BoxFit.fill,
+                  'assets/images/chat_room_default_profile_$randomProfileNum.png',
                 ),
               ),
             ),
@@ -233,4 +237,10 @@ class _ChatRoomState extends State<ChatRoom> {
       ),
     );
   }
+}
+
+Color getRandomProfileColor() {
+  final random = Random();
+  int index = random.nextInt(AppColors.profileRandomColors.length);
+  return AppColors.profileRandomColors[index];
 }
