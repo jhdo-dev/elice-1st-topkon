@@ -8,7 +8,7 @@ class TextStyles {
   static final _font2 = GoogleFonts.play();
 
   static TextStyle get smallText =>
-      _font1.copyWith(fontSize: 10.sp, color: Colors.white);
+      _font1.copyWith(fontSize: 12.sp, color: Colors.white);
   static TextStyle get mediumText =>
       _font1.copyWith(fontSize: 14.sp, color: Colors.white);
   static TextStyle get largeText =>
