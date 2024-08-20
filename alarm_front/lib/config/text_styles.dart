@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 class TextStyles {
   static final _font1 = GoogleFonts.notoSans();
   static final _font2 = GoogleFonts.play();
+  static final _font3 = TextStyle(fontFamily: 'Pretendard');
 
   static TextStyle get smallText =>
       _font1.copyWith(fontSize: 12.sp, color: Colors.white);
@@ -57,4 +58,9 @@ class TextStyles {
           ),
         ],
       );
+
+  static TextStyle get loginButton => _font3.copyWith(
+      fontSize: 16.sp,
+      color: AppColors.backgroundColor,
+      fontWeight: FontWeight.bold);
 }
