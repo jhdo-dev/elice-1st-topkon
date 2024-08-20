@@ -224,12 +224,11 @@ class _ChatRoomState extends State<ChatRoom> {
                           child: const Text('취소'),
                         )
                       : ElevatedButton(
-                          style: ElevatedButton.styleFrom(),
-                          onPressed: _handleReserve,
-                          child: const Text(
-                            '예약',
-                            style: TextStyle(fontSize: 12),
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: AppColors.focusPurpleColor,
                           ),
+                          onPressed: _handleReserve,
+                          child: const Text('예약'),
                         ),
             ],
           ),
