@@ -4,7 +4,7 @@ flutter_native_splash:
   
   android_12:
     color: "#6601e4"
-    image: "assets/images/topk_logo.png"
+    image: "assets/images/topk_logo_android_ver.png"
   
   fullscreen: true
   android: true

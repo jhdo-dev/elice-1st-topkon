@@ -34,7 +34,7 @@ class FilterBox extends StatelessWidget {
             duration: Duration(milliseconds: 200),
             decoration: BoxDecoration(
               color: state.selectedIndex == id
-                  ? AppColors.focusColor
+                  ? AppColors.focusPurpleColor
                   : AppColors.cardColor,
               borderRadius: BorderRadius.circular(20.w),
               boxShadow: [
@@ -50,9 +50,42 @@ class FilterBox extends StatelessWidget {
                 Center(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15.w),
-                    child: Text(
-                      topicName,
-                      style: TextStyles.mediumTitle,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          topicName,
+                          style: TextStyles.mediumTitle,
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Container(
+                          width: 30.w,
+                          height: 25.h,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(14),
+                            color: AppColors.appbarColor,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 2,
+                                color: Colors.black.withOpacity(0.3),
+                                offset: Offset(0, 2.h),
+                              )
+                            ],
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            topicCount,
+                            style: TextStyles.mediumText.copyWith(
+                              color: AppColors.focusPurpleColor,
+                              height: 1,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -87,32 +120,6 @@ class FilterBox extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  left: 0,
-                  child: Container(
-                    width: 25.w,
-                    height: 25.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.sendMsgBurbleColor,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 2,
-                          color: Colors.black.withOpacity(0.3),
-                          offset: Offset(0, 2.h),
-                        )
-                      ],
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      topicCount,
-                      style: TextStyles.smallText.copyWith(
-                        height: 1,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                )
               ],
             ),
           ),
