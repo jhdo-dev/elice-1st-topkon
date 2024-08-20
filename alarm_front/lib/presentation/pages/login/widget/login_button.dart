@@ -56,10 +56,7 @@ class LoginButton extends StatelessWidget {
               ),
               Text(
                 text,
-                style: TextStyles.smallTitle.copyWith(
-                  color: AppColors.backgroundColor,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyles.loginButton.copyWith(),
               ),
             ],
           ),
