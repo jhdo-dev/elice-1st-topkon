@@ -154,7 +154,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: AppbarWidget(
-          title: '[${widget.topicName}] ${widget.roomName}',
+          title: widget.roomName,
           isBackIcon: true,
         ),
         body: Padding(
