@@ -74,6 +74,7 @@ class LoginPage extends StatelessWidget {
                       logoSize: 20.w,
                       text: "GOOGLE LOGIN",
                       logo: "assets/icons/google.png",
+                      bgColor: AppColors.googleBgColor,
                       onTap: () {
                         context.read<LoginBloc>().add(GoogleLoginEvent());
                       },
@@ -82,18 +83,21 @@ class LoginPage extends StatelessWidget {
                       logoSize: 21.w,
                       text: "KAKAO LOGIN",
                       logo: "assets/icons/kakao.png",
+                      bgColor: AppColors.kakaoBgColor,
                       color: AppColors.kakaoColor,
                     ),
                     LoginButton(
                       logoSize: 17.w,
                       text: "NAVER LOGIN",
                       logo: "assets/icons/naver.png",
+                      bgColor: AppColors.naverBgColor,
                       color: AppColors.naverColor,
                     ),
                     LoginButton(
                       logoSize: 25.w,
                       text: "APPLE LOGIN",
                       logo: "assets/icons/apple.png",
+                      bgColor: AppColors.appleBgColor,
                     ),
                   ],
                 ),

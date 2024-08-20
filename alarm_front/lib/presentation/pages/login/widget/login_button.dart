@@ -2,6 +2,7 @@ import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/config/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton({
@@ -11,6 +12,7 @@ class LoginButton extends StatelessWidget {
     this.onTap,
     required this.logoSize,
     this.color,
+    this.bgColor,
   });
 
   final String text;
@@ -18,6 +20,7 @@ class LoginButton extends StatelessWidget {
   final VoidCallback? onTap;
   final double logoSize;
   final Color? color;
+  final Color? bgColor;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class LoginButton extends StatelessWidget {
           width: double.maxFinite,
           height: 55.h,
           decoration: BoxDecoration(
-            color: AppColors.cardColor,
+            color: bgColor,
             borderRadius: BorderRadius.circular(5.h),
             boxShadow: [
               BoxShadow(
@@ -54,6 +57,7 @@ class LoginButton extends StatelessWidget {
               Text(
                 text,
                 style: TextStyles.smallTitle.copyWith(
+                  color: AppColors.backgroundColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
