@@ -118,7 +118,7 @@ export class ChatsGateway
       msg: string;
       playerId: string;
       myTurn: boolean;
-      msgDate: string,
+      msgDate: string;
       msgTime: string;
     },
   ): Promise<void> {
