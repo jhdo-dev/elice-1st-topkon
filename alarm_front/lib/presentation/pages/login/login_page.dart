@@ -72,28 +72,32 @@ class LoginPage extends StatelessWidget {
                   children: [
                     LoginButton(
                       logoSize: 20.w,
-                      text: "GOOGLE LOGIN",
+                      text: "구글 로그인",
                       logo: "assets/icons/google.png",
+                      bgColor: AppColors.googleBgColor,
                       onTap: () {
                         context.read<LoginBloc>().add(GoogleLoginEvent());
                       },
                     ),
                     LoginButton(
                       logoSize: 21.w,
-                      text: "KAKAO LOGIN",
+                      text: "카카오 로그인",
                       logo: "assets/icons/kakao.png",
+                      bgColor: AppColors.kakaoBgColor,
                       color: AppColors.kakaoColor,
                     ),
                     LoginButton(
                       logoSize: 17.w,
-                      text: "NAVER LOGIN",
+                      text: "네이버 로그인",
                       logo: "assets/icons/naver.png",
+                      bgColor: AppColors.naverBgColor,
                       color: AppColors.naverColor,
                     ),
                     LoginButton(
                       logoSize: 25.w,
-                      text: "APPLE LOGIN",
+                      text: "애플 로그인",
                       logo: "assets/icons/apple.png",
+                      bgColor: AppColors.appleBgColor,
                     ),
                   ],
                 ),
