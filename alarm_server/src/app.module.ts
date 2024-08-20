@@ -34,7 +34,7 @@ config();
         entities: [Room, Topic, Player, Message],
         synchronize: true,
         namingStrategy: new SnakeNamingStrategy(),
-        timezone: 'UTC',
+        timezone: '+09:00',
       }),
       inject: [ConfigService],
     }),
