@@ -63,11 +63,13 @@ final appRoutes = [
             state.extra as Map<String, dynamic>;
         final String roomId = extraData['roomId'] as String;
         final String roomName = extraData['roomName'] as String;
+        final String subjectName = extraData['subjectName'] as String;
         return NoTransitionPage(
           key: state.pageKey,
           child: RoomChatPage(
             roomId: roomId,
             roomName: roomName,
+            subjectName: subjectName,
           ),
         );
       }),

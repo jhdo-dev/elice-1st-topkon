@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import 'widgets/chat_drawer.dart';
 import 'widgets/message_widget.dart';
 
 class RoomChatPage extends StatefulWidget {
@@ -15,10 +16,12 @@ class RoomChatPage extends StatefulWidget {
     super.key,
     required this.roomId,
     required this.roomName,
+    required this.subjectName,
   });
 
   final String roomId;
   final String roomName;
+  final String subjectName;
 
   @override
   State<RoomChatPage> createState() => _RoomChatPageState();
@@ -149,6 +152,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
     super.dispose();
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -156,11 +161,42 @@ class _RoomChatPageState extends State<RoomChatPage> {
         FocusScope.of(context).unfocus(); // 빈공간 터치시 입력창 내려감
       },
       child: Scaffold(
+        key: _scaffoldKey,
         backgroundColor: AppColors.backgroundColor,
         appBar: AppbarWidget(
           title: widget.roomName,
           isBackIcon: true,
+          actions: [
+            GestureDetector(
+              onTap: () {
+                _scaffoldKey.currentState?.openEndDrawer();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Stack(children: [
+                  Positioned(
+                    top: 0.1.h,
+                    left: 0.1.w,
+                    child: Icon(
+                      Icons.menu,
+                      color: AppColors.appbarColor.withOpacity(0.3),
+                      size: 30.w,
+                    ),
+                  ),
+                  Icon(
+                    Icons.menu,
+                    color: AppColors.appbarColor,
+                    size: 28.w,
+                  )
+                ]),
+              ),
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+          ],
         ),
+        endDrawer: ChatDrawer(widget: widget),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: Column(
@@ -225,9 +261,13 @@ class _RoomChatPageState extends State<RoomChatPage> {
 /* 나중에 시간나면 할일
 1. 앱바 오른쪽에 드로워메뉴 추가해서 채팅방 유저목록 불러온 후 카드or리스트타일로 표시하기;
 2. 같은유저의 연속된 채팅은 이름표시하지 않음; (완료)
-3. 하단구석에 채팅시간 표시
-3-1. 같은 분일때 시간표시 생략
+3. 하단구석에 채팅시간 표시; (완료)
+3-1. 같은 분일때 시간표시 생략; (완료)
+4. 방이름 가져오기; (완료)
+5. 날짜바 넣기;
+6. 보내기버튼 디자인 수정;
+7.닉네임변경시 과거 기록도 일괄변경;
 
-
-
+오류
+1. 방이름, 필터, 닉넴 글자수 제한하기;
 */
