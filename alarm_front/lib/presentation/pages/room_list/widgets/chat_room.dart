@@ -114,7 +114,6 @@ class _ChatRoomState extends State<ChatRoom> {
         "roomChat",
         extra: {
           'roomId': widget.id.toString(),
-          'topicName': widget.subjectName.toString(),
           'roomName': widget.roomName.toString()
         },
       );
