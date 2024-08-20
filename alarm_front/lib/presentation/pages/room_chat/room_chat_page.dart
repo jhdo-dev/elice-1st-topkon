@@ -14,12 +14,10 @@ class RoomChatPage extends StatefulWidget {
   const RoomChatPage({
     super.key,
     required this.roomId,
-    required this.topicName,
     required this.roomName,
   });
 
   final String roomId;
-  final String topicName;
   final String roomName;
 
   @override
