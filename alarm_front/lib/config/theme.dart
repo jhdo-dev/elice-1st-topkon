@@ -9,7 +9,7 @@ final ThemeData appTheme = ThemeData(
     scrolledUnderElevation: 0,
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: AppColors.focusColor,
+    backgroundColor: AppColors.focusPurpleColor,
   ),
   splashColor: AppColors.focusColor.withOpacity(0.1),
   highlightColor: Colors.transparent,
