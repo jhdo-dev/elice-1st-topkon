@@ -1,0 +1,12 @@
+flutter_native_splash:
+  color: "#6601e4"
+  image: "assets/images/topk_logo.png"
+  
+  android_12:
+    color: "#6601e4"
+    image: "assets/images/topk_logo.png"
+  
+  fullscreen: true
+  android: true
+  ios: true
+  web: false
