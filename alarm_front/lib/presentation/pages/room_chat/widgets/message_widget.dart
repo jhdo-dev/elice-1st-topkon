@@ -49,8 +49,8 @@ class MessageWidget extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
                   margin: isMe
-                      ? EdgeInsets.only(right: 10.w)
-                      : EdgeInsets.only(left: 10.w),
+                      ? EdgeInsets.only(right: 14.w)
+                      : EdgeInsets.only(left: 14.w),
                   child: Text(
                     message,
                     style: TextStyles.largeText,
@@ -69,7 +69,7 @@ class MessageWidget extends StatelessWidget {
                         displayName,
                         style: TextStyles.largeText,
                       ),
-                      SizedBox(width: 13),
+                      SizedBox(width: 12),
                       Text(
                         msgTime,
                         style: TextStyle(
@@ -99,8 +99,8 @@ class MessageWidget extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
                   margin: isMe
-                      ? EdgeInsets.only(right: 10.w)
-                      : EdgeInsets.only(left: 10.w),
+                      ? EdgeInsets.only(right: 14.w)
+                      : EdgeInsets.only(left: 14.w),
                   child: Text(
                     message,
                     style: TextStyles.largeText,
