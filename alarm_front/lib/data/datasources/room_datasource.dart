@@ -49,6 +49,7 @@ class RoomDatasource {
         // return Right(rooms);
         final List<RoomModel> rooms =
             roomList.map((item) => RoomModel.fromJson(item)).toList();
+
         return Right(rooms);
       } else {
         return Left('${response.statusCode} :: 방 정보를 가져오는 데 실패했습니다.');

@@ -55,6 +55,7 @@ class _RoomListPageState extends State<RoomListPage> {
           listener: (context, state) {
             if (state is GetRoomLoaded) {
               final newItems = state.rooms;
+
               final isLastPage = newItems.length < _pageSize;
               if (isLastPage) {
                 _pagingController.appendLastPage(newItems);
@@ -98,13 +99,15 @@ class _RoomListPageState extends State<RoomListPage> {
                     TextStyles.largeText.copyWith(color: AppColors.hintColor),
               ),
             ),
-            itemBuilder: (context, item, index) => ChatRoom(
-              subjectName: item.topicName,
-              roomName: item.roomName,
-              roomStartDate: item.getFormattedStartTime(),
-              roomEndDate: item.getFormattedEndTime(),
-              id: item.id,
-            ),
+            itemBuilder: (context, item, index) {
+              return ChatRoom(
+                subjectName: item.topicName,
+                roomName: item.roomName,
+                roomStartDate: item.getFormattedStartTime(),
+                roomEndDate: item.getFormattedEndTime(),
+                id: item.id,
+              );
+            },
           ),
         ),
       ),

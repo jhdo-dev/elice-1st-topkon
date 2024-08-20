@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 
 class Room extends Equatable {
   final int topicId;
@@ -31,19 +32,21 @@ class Room extends Equatable {
     ];
   }
 
-  // 포맷된 시작 시간 반환
   String getFormattedStartTime() {
     return _formatDateTime(startTime);
   }
 
-  // 포맷된 종료 시간 반환
   String getFormattedEndTime() {
     return _formatDateTime(endTime);
   }
 
-  // Private helper 메서드로 날짜 포맷팅 처리
   String _formatDateTime(String dateTimeString) {
     DateTime dateTime = DateTime.parse(dateTimeString);
-    return "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')} ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+
+    DateTime localDateTime = dateTime.toLocal();
+
+    final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm');
+
+    return formatter.format(localDateTime);
   }
 }

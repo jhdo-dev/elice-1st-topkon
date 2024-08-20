@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import * as moment from 'moment-timezone';
 import { DataSource, Repository } from 'typeorm';
 import { Room } from '../dto/room.entity';
 
@@ -45,6 +46,14 @@ export class RoomRepository extends Repository<Room> {
 
     query += ` ORDER BY room.created_at DESC LIMIT ${limit} OFFSET ${offset}`;
 
-    return await this.query(query);
+    const results = await this.query(query);
+
+    // 결과의 시간을 Asia/Seoul로 변환
+    results.forEach((result) => {
+      result.start_time = moment(result.start_time).tz('Asia/Seoul').format();
+      result.end_time = moment(result.end_time).tz('Asia/Seoul').format();
+    });
+
+    return results;
   }
 }
