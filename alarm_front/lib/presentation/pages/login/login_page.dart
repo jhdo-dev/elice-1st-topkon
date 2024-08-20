@@ -14,74 +14,92 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppColors.focusPurpleColor,
         body: Column(
-      children: [
-        Expanded(child: Column()),
-        Expanded(
-            child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 60.w),
-          child: MultiBlocListener(
-            listeners: [
-              BlocListener<LoginBloc, LoginState>(
-                listener: (context, state) {
-                  if (state is LoginSuccess) {
-                    context
-                        .read<UserBloc>()
-                        .add(UserAuthenticated(user: state.user));
-                  }
-                  if (state is LoginFailure) {
-                    showCustomSnackbar(context, "로그인을 다시 해주세요.");
-                  }
-                },
-              ),
-              BlocListener<UserBloc, UserState>(
-                listener: (context, state) async {
-                  if (state is GetUserSuccess) {
-                    context.goNamed("roomList");
-                  }
-
-                  if (state is GetUserError) {
-                    showCustomSnackbar(
-                      context,
-                      "잠시 후에 다시 시도해 주세요.",
-                    );
-                  }
-                },
-              ),
-            ],
-            child: Column(
+          children: [
+            Expanded(
+                child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                LoginButton(
-                  logoSize: 20.w,
-                  text: "GOOGLE LOGIN",
-                  logo: "assets/icons/google.png",
-                  onTap: () {
-                    context.read<LoginBloc>().add(GoogleLoginEvent());
-                  },
+                SizedBox(
+                  height: 80.w,
                 ),
-                LoginButton(
-                  logoSize: 21.w,
-                  text: "KAKAO LOGIN",
-                  logo: "assets/icons/kakao.png",
-                  color: AppColors.kakaoColor,
-                ),
-                LoginButton(
-                  logoSize: 17.w,
-                  text: "NAVER LOGIN",
-                  logo: "assets/icons/naver.png",
-                  color: AppColors.naverColor,
-                ),
-                LoginButton(
-                  logoSize: 25.w,
-                  text: "APPLE LOGIN",
-                  logo: "assets/icons/apple.png",
+                SizedBox(
+                  width: 180.w,
+                  height: 180.w,
+                  child: Container(
+                    child: Center(
+                      child: Image.asset('assets/images/topk_logo.png'),
+                    ),
+                  ),
                 ),
               ],
-            ),
-          ),
-        )),
-      ],
-    ));
+            )),
+            Expanded(
+                child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 60.w),
+              child: MultiBlocListener(
+                listeners: [
+                  BlocListener<LoginBloc, LoginState>(
+                    listener: (context, state) {
+                      if (state is LoginSuccess) {
+                        context
+                            .read<UserBloc>()
+                            .add(UserAuthenticated(user: state.user));
+                      }
+                      if (state is LoginFailure) {
+                        showCustomSnackbar(context, "로그인을 다시 해주세요.");
+                      }
+                    },
+                  ),
+                  BlocListener<UserBloc, UserState>(
+                    listener: (context, state) async {
+                      if (state is GetUserSuccess) {
+                        context.goNamed("roomList");
+                      }
+
+                      if (state is GetUserError) {
+                        showCustomSnackbar(
+                          context,
+                          "잠시 후에 다시 시도해 주세요.",
+                        );
+                      }
+                    },
+                  ),
+                ],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    LoginButton(
+                      logoSize: 20.w,
+                      text: "GOOGLE LOGIN",
+                      logo: "assets/icons/google.png",
+                      onTap: () {
+                        context.read<LoginBloc>().add(GoogleLoginEvent());
+                      },
+                    ),
+                    LoginButton(
+                      logoSize: 21.w,
+                      text: "KAKAO LOGIN",
+                      logo: "assets/icons/kakao.png",
+                      color: AppColors.kakaoColor,
+                    ),
+                    LoginButton(
+                      logoSize: 17.w,
+                      text: "NAVER LOGIN",
+                      logo: "assets/icons/naver.png",
+                      color: AppColors.naverColor,
+                    ),
+                    LoginButton(
+                      logoSize: 25.w,
+                      text: "APPLE LOGIN",
+                      logo: "assets/icons/apple.png",
+                    ),
+                  ],
+                ),
+              ),
+            )),
+          ],
+        ));
   }
 }

@@ -38,8 +38,8 @@ class _ShellComponentState extends State<ShellComponent> {
                     padding: const EdgeInsets.all(8.0),
                     child: Stack(children: [
                       Positioned(
-                        top: 1.0.h,
-                        left: 1.0.w,
+                        top: 0.1.h,
+                        left: 0.1.w,
                         child: Icon(
                           Icons.filter_list_alt,
                           color: AppColors.appbarColor.withOpacity(0.3),
