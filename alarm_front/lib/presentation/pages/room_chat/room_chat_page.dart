@@ -40,8 +40,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
   bool myTurn = false;
   List<bool> myTurnList = [];
 
-  // List<String> msgDate = [];
-  // List<String> msgTime = [];
+  List<String> msgDate = [];
+  List<String> msgTime = [];
 
   @override
   void initState() {
@@ -85,8 +85,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
           playerId.add(msgData['playerId']);
           displayNames.add(msgData['displayName']); // displayName 저장
           myTurnList.add(msgData['myTurn']);
-          // msgDate.add(msgData['msgDate']);
-          // msgTime.add(msgData['msgTime']);
+          msgDate.add(msgData['msgDate']);
+          msgTime.add(msgData['msgTime']);
         }
       });
     });
@@ -98,13 +98,20 @@ class _RoomChatPageState extends State<RoomChatPage> {
         playerId.insert(0, data['playerId']);
         displayNames.insert(0, data['displayName']); // displayName 저장
         myTurnList.insert(0, data['myTurn']);
-        // msgDate.insert(0, data['msgDate']);
-        // msgTime.insert(0, data['msgTime']);
-
-        if (data['playerId'] != myPlayerId) {
-          myTurn = false;
-        }
+        msgDate.insert(0, data['msgDate']);
+        msgTime.insert(0, data['msgTime']);
       });
+
+      myTurn = (msgTime[0] == msgTime[1]);
+
+      if ((msgTime.length >= 2) && (msgTime[0] == msgTime[1])) {
+        print(msgTime[0] == msgTime[1]);
+      } else {
+        myTurn = false;
+      }
+      if (data['playerId'] != myPlayerId) {
+        myTurn = false;
+      }
     });
 
     socket.on('disconnect', (_) {
@@ -133,6 +140,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
         // 서버에서 displayName을 가져와 전송하기 때문에 여기서는 필요 없음
       });
       myTurn = true;
+
       _controller.clear();
     }
   }
@@ -172,8 +180,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
                       messages[index],
                       myTurnList[index],
                       displayName: displayNames[index], // displayName을 전달
-                      // msgDate: msgDate[index],
-                      // msgTime: msgTime[index],
+                      msgDate: msgDate[index],
+                      msgTime: msgTime[index],
                     );
                   },
                 ),
@@ -227,5 +235,3 @@ class _RoomChatPageState extends State<RoomChatPage> {
 
 
 */
-
-
