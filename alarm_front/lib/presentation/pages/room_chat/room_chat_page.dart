@@ -44,6 +44,8 @@ class _RoomChatPageState extends State<RoomChatPage> {
   List<String> msgDate = [];
   List<String> msgTime = [];
 
+  List<String> playerList = [];
+
   @override
   void initState() {
     super.initState();
@@ -75,6 +77,23 @@ class _RoomChatPageState extends State<RoomChatPage> {
       socket.emit('join', {
         'roomId': widget.roomId,
         'playerId': myPlayerId,
+      });
+
+      socket.emit('getUserList', widget.roomId);
+    });
+
+    // 클라이언트에서 받은 userList 데이터를 처리하는 부분
+    socket.on('userList', (data) {
+      setState(() {
+        print('Received userList data: $data');
+
+        // data['userList']가 List인지 확인하고, 아닌 경우 로그를 출력합니다.
+        if (data['userList'] is List) {
+          print('playerList updated: $playerList');
+          playerList = List<String>.from(data['userList']);
+        } else {
+          print('userList 데이터가 비정상적입니다: ${data['userList']}');
+        }
       });
     });
 
@@ -196,7 +215,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
             ),
           ],
         ),
-        endDrawer: ChatDrawer(widget: widget),
+        endDrawer: ChatDrawer(widget: widget, playerList: playerList),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: Column(
@@ -259,14 +278,14 @@ class _RoomChatPageState extends State<RoomChatPage> {
 }
 
 /* 나중에 시간나면 할일
-1. 앱바 오른쪽에 드로워메뉴 추가해서 채팅방 유저목록 불러온 후 카드or리스트타일로 표시하기;
+1. 앱바 오른쪽에 드로워메뉴 추가해서 채팅방 유저목록 불러온 후 카드or리스트타일로 표시하기; (일단 왼료)
 2. 같은유저의 연속된 채팅은 이름표시하지 않음; (완료)
 3. 하단구석에 채팅시간 표시; (완료)
 3-1. 같은 분일때 시간표시 생략; (완료)
 4. 방이름 가져오기; (완료)
 5. 날짜바 넣기;
 6. 보내기버튼 디자인 수정;
-7.닉네임변경시 과거 기록도 일괄변경;
+7.닉네임변경시 과거 기록도 일괄변경; // 연기
 
 오류
 1. 방이름, 필터, 닉넴 글자수 제한하기;
