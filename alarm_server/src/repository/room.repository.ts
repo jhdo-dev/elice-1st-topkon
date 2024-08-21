@@ -19,9 +19,10 @@ export class RoomRepository extends Repository<Room> {
     }
 
     return await this.query(
-      `SELECT room.*, topic.name AS topic_name 
+      `SELECT room.*, topic.name AS topic_name, player.photo_url as player_photoUrl
        FROM room 
        JOIN topic ON room.topic_id = topic.id 
+       JOIN player ON room.player_id = player.id
        WHERE room.id IN (${ids.map(() => '?').join(',')}) 
        AND room.end_time > NOW()`,
       ids,
@@ -34,11 +35,12 @@ export class RoomRepository extends Repository<Room> {
     limit: number,
   ): Promise<any> {
     let query = `
-      SELECT room.*, topic.name as topic_name 
-      FROM room 
-      JOIN topic ON room.topic_id = topic.id
-      WHERE room.end_time > NOW()
-    `;
+    SELECT room.*, topic.name as topic_name, player.photo_url as player_photoUrl
+    FROM room 
+    JOIN topic ON room.topic_id = topic.id
+    JOIN player ON room.player_id = player.id
+    WHERE room.end_time > NOW()
+  `;
 
     if (topicId) {
       query += ` AND room.topic_id = ${topicId}`;
