@@ -82,6 +82,9 @@ export class ChatsGateway
       this.roomPlayerIds[room] = [];
     }
 
+    // 방에 유저 추가
+    this.roomPlayerIds[room].push(playerId);
+
     // 이전 메시지 기록 불러오기
     const previousMessages = await this.messageRepository.find({
       where: { roomId: room },
@@ -95,20 +98,48 @@ export class ChatsGateway
   @SubscribeMessage('exit')
   handleExit(client: Socket, data: { roomId: string }): void {
     const room = data.roomId;
+    const playerId = this.clientPlayerId[client.id];
     // 방에 접속되어 있지 않은 경우는 무시
     if (!client.rooms.has(room)) {
       return;
     }
 
     client.leave(room);
+
+    if (this.roomPlayerIds[room]) {
+      // 방에서 유저 제거
+      this.roomPlayerIds[room] = this.roomPlayerIds[room].filter(
+        (id) => id !== playerId,
+      );
+    }
   }
 
   @SubscribeMessage('getUserList')
-  handleGetUserList(client: Socket, room: string): void {
-    this.server
-      .to(room)
-      .emit('userList', { room, userList: this.roomPlayerIds[room] });
-  }
+  async handleGetUserList(client: Socket, room: string): Promise<void> {
+    console.log('Received getUserList request for room:', room);
+  
+     // 방에 있는 유저들의 displayName을 전송
+     await this.sendUserList(room);
+    }
+  
+    async sendUserList(room: string): Promise<void> {
+      const playerIds = this.roomPlayerIds[room] || [];
+      const displayNames: string[] = [];
+  
+      // 각 playerId에 대해 displayName을 조회
+      for (const playerId of playerIds) {
+        const player = await this.playerRepository.findOne({
+          where: { uuid: playerId },
+        });
+        if (player) {
+          displayNames.push(player.displayName);
+        }
+      }
+  
+      // 유저의 displayName 리스트를 전송
+      this.server.to(room).emit('userList', { room, userList: displayNames });
+    }
+  
 
   @SubscribeMessage('msg')
   async handleChatMessage(

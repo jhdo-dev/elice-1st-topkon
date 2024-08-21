@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatDrawer extends StatelessWidget {
-  const ChatDrawer({
+  ChatDrawer({
     super.key,
     required this.widget,
+    required this.playerList,
   });
 
   final RoomChatPage widget;
+  final List<String> playerList;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +30,9 @@ class ChatDrawer extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      '[${widget.subjectName}]',
+                      '[ ${widget.subjectName} ]',
                       style: const TextStyle(
-                        fontSize: 30,
+                        fontSize: 20,
                         fontWeight: FontWeight.w900,
                         color: Colors.white,
                       ),
@@ -40,7 +42,7 @@ class ChatDrawer extends StatelessWidget {
                     child: Text(
                       widget.roomName,
                       style: const TextStyle(
-                        fontSize: 40,
+                        fontSize: 25,
                         fontWeight: FontWeight.w900,
                         color: Colors.white,
                       ),
@@ -68,9 +70,9 @@ class ChatDrawer extends StatelessWidget {
               child: Container(
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
-                  itemCount: 3,
+                  itemCount: playerList.length,
                   itemBuilder: (context, index) {
-                    return drawerTile(playerList: 'Unknown');
+                    return drawerTile(player: playerList[index]);
                   },
                 ),
               ),
@@ -85,10 +87,10 @@ class ChatDrawer extends StatelessWidget {
 class drawerTile extends StatelessWidget {
   const drawerTile({
     super.key,
-    required this.playerList,
+    required this.player,
   });
 
-  final String playerList;
+  final String player;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +100,7 @@ class drawerTile extends StatelessWidget {
           tileColor: AppColors.cardColor,
           leading: SizedBox(),
           title: Text(
-            playerList,
+            player,
             style: TextStyles.mediumText,
           ),
         ),
