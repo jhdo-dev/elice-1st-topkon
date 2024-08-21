@@ -39,7 +39,7 @@ void main() async {
   );
 
   KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']);
-
+  print(await KakaoSdk.origin);
   runApp(
     //* 리포지토리 연결
     MultiRepositoryProvider(
