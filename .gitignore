@@ -73,3 +73,5 @@
 
 /alarm_front/.env
 /alarm_front/ios/Podfile.lock
+
+/alarm_front/android/gradle.properties
