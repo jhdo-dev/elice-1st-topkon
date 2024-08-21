@@ -31,6 +31,9 @@ export class Message {
   @Column()
   msgTime: string;
 
+  @Column()
+  isDateChanged: boolean;
+
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

@@ -8,8 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-import 'widgets/chat_drawer.dart';
-import 'widgets/message_widget.dart';
+import 'widgets/drawer_widget/chat_drawer.dart';
+import 'widgets/message_widget/message_widget.dart';
 
 class RoomChatPage extends StatefulWidget {
   const RoomChatPage({
@@ -38,13 +38,14 @@ class _RoomChatPageState extends State<RoomChatPage> {
   List<String> playerId = [];
   List<String> displayNames = []; // displayNames 리스트 추가
 
-  bool myTurn = false;
-  List<bool> myTurnList = [];
+  List<bool> myTurn = [];
 
   List<String> msgDate = [];
   List<String> msgTime = [];
 
   List<String> playerList = [];
+
+  List<bool> isDateChanged = [];
 
   @override
   void initState() {
@@ -104,9 +105,10 @@ class _RoomChatPageState extends State<RoomChatPage> {
           messages.add(msgData['msg']);
           playerId.add(msgData['playerId']);
           displayNames.add(msgData['displayName']); // displayName 저장
-          myTurnList.add(msgData['myTurn']);
+          myTurn.add(msgData['myTurn']);
           msgDate.add(msgData['msgDate']);
           msgTime.add(msgData['msgTime']);
+          isDateChanged.add(msgData['isDateChanged']);
         }
       });
     });
@@ -117,14 +119,11 @@ class _RoomChatPageState extends State<RoomChatPage> {
         messages.insert(0, data['msg']);
         playerId.insert(0, data['playerId']);
         displayNames.insert(0, data['displayName']); // displayName 저장
-        myTurnList.insert(0, data['myTurn']);
+        myTurn.insert(0, data['myTurn']);
         msgDate.insert(0, data['msgDate']);
         msgTime.insert(0, data['msgTime']);
+        isDateChanged.insert(0, data['isDateChanged']);
       });
-
-      if (data['playerId'] != myPlayerId) {
-        myTurn = false;
-      }
     });
 
     socket.on('disconnect', (_) {
@@ -141,25 +140,53 @@ class _RoomChatPageState extends State<RoomChatPage> {
       DateTime dt = DateTime.now();
       String timeString =
           '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
-
-      if (msgTime.length >= 2) {
-        myTurn = msgTime[0] == timeString;
-      }
+      String dataString =
+          '${dt.year.toString()}년 ${dt.month.toString()}월 ${dt.day.toString()}일';
 
       FocusScope.of(context).unfocus();
       socket.emit('msg', {
         'roomId': widget.roomId,
         'msg': _controller.text,
         'playerId': myPlayerId,
-        'myTurn': myTurn,
-        'msgDate':
-            '${dt.year.toString()}년 ${dt.month.toString()}월 ${dt.day.toString()}일',
+        'myTurn': _checkMyTurn(timeString),
+        'msgDate': dataString,
         'msgTime': timeString,
+        'isDateChanged': _checkIsDateChanged(dataString),
         // 서버에서 displayName을 가져와 전송하기 때문에 여기서는 필요 없음
       });
-      myTurn = true;
 
       _controller.clear();
+    }
+  }
+
+// myTurn을 위한 함수; 말풍선 UI를 위해 사용;
+  bool _checkMyTurn(String timeString) {
+    if (myTurn.isEmpty) {
+      // 첫 메시지는 무조건 false;
+      return false;
+    } else if (playerId[0] != myPlayerId) {
+      // 이전 메시지가 내가 보낸 것이 아니면 무조건 false;
+      return false;
+    } else if (msgTime[0] != timeString) {
+      // 일분 경과하면 무조건 false;
+      return false;
+    } else {
+      // 첫 메시지가 아니며 내가 보냈고 일분이 안지났다면 true;
+      return true;
+    }
+  }
+
+// isDateChanged를 위한 함수; 날짜 바(DateBar)를 위해 사용;
+  bool _checkIsDateChanged(String dataString) {
+    if (isDateChanged.isEmpty) {
+      // 첫 메시지는 무조건 true;
+      return true;
+    } else if (msgDate[0] != dataString) {
+      // 이전 메시지와 날짜가 다르면 무조건 true;
+      return true;
+    } else {
+      // 첫 메시지가 아니고 이전 메시지와 같은 날짜이면 false;
+      return false;
     }
   }
 
@@ -186,6 +213,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
           title: widget.roomName,
           isBackIcon: true,
           actions: [
+            //왼쪽상단 메뉴
             GestureDetector(
               onTap: () {
                 _scaffoldKey.currentState?.openEndDrawer();
@@ -229,10 +257,11 @@ class _RoomChatPageState extends State<RoomChatPage> {
                       myPlayerId,
                       playerId[index],
                       messages[index],
-                      myTurnList[index],
+                      myTurn[index],
                       displayName: displayNames[index], // displayName을 전달
                       msgDate: msgDate[index],
                       msgTime: msgTime[index],
+                      isDateChanged: isDateChanged[index],
                     );
                   },
                 ),
@@ -283,7 +312,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
 3. 하단구석에 채팅시간 표시; (완료)
 3-1. 같은 분일때 시간표시 생략; (완료)
 4. 방이름 가져오기; (완료)
-5. 날짜바 넣기;
+5. 날짜바 넣기; (완료)
 6. 보내기버튼 디자인 수정;
 7.닉네임변경시 과거 기록도 일괄변경; // 연기
 
