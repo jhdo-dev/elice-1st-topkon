@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:alarm_front/config/colors.dart';
 import 'package:alarm_front/data/datasources/local_datasource.dart';
 import 'package:alarm_front/domain/entities/notification_schedule.dart';
@@ -17,6 +15,7 @@ class ChatRoom extends StatefulWidget {
   final String roomStartDate;
   final String roomEndDate;
   final int id;
+  final String playerPhotoUrl;
 
   ChatRoom({
     super.key,
@@ -25,6 +24,7 @@ class ChatRoom extends StatefulWidget {
     required this.roomStartDate,
     required this.roomEndDate,
     required this.id,
+    required this.playerPhotoUrl,
   });
 
   @override
@@ -149,9 +149,10 @@ class _ChatRoomState extends State<ChatRoom> {
               child: SizedBox(
                 width: 70,
                 height: 70,
-                child: Image.asset(
-                  'assets/images/topk_default_profile.png',
-                ),
+                child: (widget.playerPhotoUrl.isEmpty ||
+                        widget.playerPhotoUrl == "")
+                    ? Image.asset('assets/images/topk_default_profile.png')
+                    : Image.network(widget.playerPhotoUrl),
               ),
             ),
           ),

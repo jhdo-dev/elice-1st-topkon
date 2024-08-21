@@ -51,7 +51,7 @@ class _MyInfoWidgetState extends State<MyInfoWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       (state.user.photoUrl != null && state.user.photoUrl != "")
                           ? ClipOval(
@@ -82,17 +82,19 @@ class _MyInfoWidgetState extends State<MyInfoWidget> {
                         width: 15.w,
                       ),
                       Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           isUpdate
                               ? Container(
                                   width: 140.w,
+                                  height: 35.h,
                                   child: TextField(
                                     controller: _controller,
-                                    style: TextStyles.mediumTitle,
+                                    style: TextStyles.largeTitle,
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.only(
-                                        left: 2.w,
+                                        top: 0,
                                         right: 2.w,
                                         bottom: 2.h,
                                       ),
@@ -100,18 +102,21 @@ class _MyInfoWidgetState extends State<MyInfoWidget> {
                                     ),
                                   ),
                                 )
-                              : Text(
-                                  state.user.displayName ?? "",
-                                  style: TextStyles.mediumTitle,
+                              : Container(
+                                  height: 35.h,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    state.user.displayName ?? "",
+                                    style: TextStyles.largeTitle,
+                                  ),
                                 ),
-                          SizedBox(
-                            height: 7.h,
-                          ),
-                          Text(
-                            state.user.email ?? "",
-                            style: TextStyles.mediumText
-                                .copyWith(color: AppColors.hintColor),
-                          ),
+                          if (state.user.email != null &&
+                              state.user.email != "")
+                            Text(
+                              state.user.email!,
+                              style: TextStyles.smallText
+                                  .copyWith(color: AppColors.hintColor),
+                            ),
                         ],
                       ),
                     ],

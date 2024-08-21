@@ -10,11 +10,13 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.actions = const [],
     this.isBackIcon = false,
+    this.titleSize,
   });
 
   final String title;
   final List<Widget> actions;
   final bool isBackIcon;
+  final double? titleSize;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -27,7 +29,7 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Text(
         title,
-        style: TextStyles.appbar,
+        style: TextStyles.appbar.copyWith(fontSize: titleSize ?? 26.sp),
       ),
       leading: isBackIcon
           ? GestureDetector(

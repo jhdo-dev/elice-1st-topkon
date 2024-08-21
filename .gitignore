@@ -72,3 +72,4 @@
 /alarm_front/ios/Runner/GoogleService-Info.plist
 
 /alarm_front/.env
+/alarm_front/ios/Podfile.lock

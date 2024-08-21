@@ -9,6 +9,7 @@ class Room extends Equatable {
   final int playerId;
   final String startTime;
   final String endTime;
+  final String playerPhotoUrl;
 
   Room({
     required this.topicId,
@@ -18,6 +19,7 @@ class Room extends Equatable {
     required this.playerId,
     required this.startTime,
     required this.endTime,
+    required this.playerPhotoUrl,
   });
 
   @override
@@ -29,6 +31,7 @@ class Room extends Equatable {
       playerId,
       startTime,
       endTime,
+      playerPhotoUrl,
     ];
   }
 
