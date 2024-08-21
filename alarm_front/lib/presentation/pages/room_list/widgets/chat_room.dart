@@ -145,12 +145,12 @@ class _ChatRoomState extends State<ChatRoom> {
         children: [
           ClipOval(
             child: Container(
-              decoration: BoxDecoration(color: AppColors.profileRandomColor5),
+              // decoration: BoxDecoration(color: AppColors.profileRandomColor1),
               child: SizedBox(
                 width: 70,
                 height: 70,
                 child: Image.asset(
-                  'assets/images/chat_room_default_profile_1.png',
+                  'assets/images/topk_default_profile.png',
                 ),
               ),
             ),
@@ -234,9 +234,3 @@ class _ChatRoomState extends State<ChatRoom> {
     );
   }
 }
-
-// Color getRandomProfileColor() {
-//   final random = Random();
-//   int index = random.nextInt(AppColors.profileRandomColors.length);
-//   return AppColors.profileRandomColors[index];
-// }
