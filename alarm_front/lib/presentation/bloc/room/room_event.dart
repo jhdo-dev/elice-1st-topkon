@@ -9,6 +9,7 @@ class CreateRoomEvent extends RoomEvent {
   final int playerId;
   final String startTime;
   final String endTime;
+  final String playerPhotoUrl;
 
   CreateRoomEvent({
     required this.topicId,
@@ -16,6 +17,7 @@ class CreateRoomEvent extends RoomEvent {
     required this.playerId,
     required this.startTime,
     required this.endTime,
+    required this.playerPhotoUrl,
   });
 
   @override

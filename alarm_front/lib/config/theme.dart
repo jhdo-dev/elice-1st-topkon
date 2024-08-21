@@ -2,7 +2,7 @@ import 'package:alarm_front/config/colors.dart';
 import 'package:flutter/material.dart';
 
 final ThemeData appTheme = ThemeData(
-  colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+  colorScheme: ColorScheme.fromSeed(seedColor: AppColors.sendMsgBurbleColor),
   scaffoldBackgroundColor: AppColors.backgroundColor,
   appBarTheme: const AppBarTheme(
     color: AppColors.backgroundColor,
