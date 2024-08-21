@@ -151,6 +151,7 @@ export class ChatsGateway
       myTurn: boolean;
       msgDate: string;
       msgTime: string;
+      isDateChanged: boolean;
     },
   ): Promise<void> {
     // playerId를 통해 Player 엔터티에서 displayName을 조회
@@ -174,6 +175,7 @@ export class ChatsGateway
       myTurn: data.myTurn,
       msgDate: data.msgDate,
       msgTime: data.msgTime,
+      isDateChanged: data.isDateChanged,
     });
 
     await this.messageRepository.save(newMessage);
@@ -187,6 +189,7 @@ export class ChatsGateway
       myTurn: data.myTurn,
       msgDate: data.msgDate,
       msgTime: data.msgTime,
+      isDateChanged: data.isDateChanged,
     });
   }
 }
