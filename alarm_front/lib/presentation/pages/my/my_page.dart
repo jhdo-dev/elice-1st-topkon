@@ -74,6 +74,7 @@ class _MyPageState extends State<MyPage> {
                       roomStartDate: room.getFormattedStartTime(),
                       roomEndDate: room.getFormattedEndTime(),
                       id: room.id,
+                      playerPhotoUrl: room.playerPhotoUrl,
                     );
                   },
                 ),

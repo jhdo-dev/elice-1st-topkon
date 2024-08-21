@@ -13,6 +13,7 @@ class RoomDatasource {
     required int playerId,
     required String startTime,
     required String endTime,
+    required String player_photoUrl,
   }) async {
     try {
       final response =
@@ -22,7 +23,9 @@ class RoomDatasource {
         "playerId": playerId,
         "startTime": startTime,
         "endTime": endTime,
+        "player_photoUrl": player_photoUrl,
       });
+      print('response--------> $response');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(unit);

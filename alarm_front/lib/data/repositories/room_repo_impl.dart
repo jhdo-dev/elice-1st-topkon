@@ -15,6 +15,7 @@ class RoomRepoImpl extends RoomRepo {
     required int playerId,
     required String startTime,
     required String endTime,
+    required String playerPhotoUrl,
   }) async {
     final result = await datasource.createRoom(
       topicId: topicId,
@@ -22,6 +23,7 @@ class RoomRepoImpl extends RoomRepo {
       playerId: playerId,
       startTime: startTime,
       endTime: endTime,
+      player_photoUrl: playerPhotoUrl,
     );
 
     return result.fold(

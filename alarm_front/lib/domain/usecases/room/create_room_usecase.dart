@@ -12,6 +12,7 @@ class CreateRoomUsecase {
     required int playerId,
     required String startTime,
     required String endTime,
+    required String playerPhotoUrl,
   }) async {
     return await await repo.createRoom(
       topicId: topicId,
@@ -19,6 +20,7 @@ class CreateRoomUsecase {
       playerId: playerId,
       startTime: startTime,
       endTime: endTime,
+      playerPhotoUrl: playerPhotoUrl,
     );
   }
 }
