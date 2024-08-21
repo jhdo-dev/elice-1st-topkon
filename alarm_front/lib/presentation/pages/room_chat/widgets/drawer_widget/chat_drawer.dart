@@ -15,6 +15,14 @@ class ChatDrawer extends StatelessWidget {
   final RoomChatPage widget;
   final List<String> playerList;
 
+// 무지성 중복제거; 동일닉네임도 제거해버림;
+  late Set<String> playerSet = playerList.toSet();
+
+  void deduplication() {
+    print('playerList: $playerList');
+    print('set: $playerSet');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -71,9 +79,10 @@ class ChatDrawer extends StatelessWidget {
               child: Container(
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
-                  itemCount: playerList.length,
+                  itemCount: playerSet.length,
                   itemBuilder: (context, index) {
-                    return drawerTile(player: playerList[index]);
+                    deduplication();
+                    return drawerTile(player: playerSet.elementAt(index));
                   },
                 ),
               ),
