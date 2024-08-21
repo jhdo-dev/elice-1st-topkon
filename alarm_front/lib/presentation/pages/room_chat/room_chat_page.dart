@@ -184,6 +184,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
         backgroundColor: AppColors.backgroundColor,
         appBar: AppbarWidget(
           title: widget.roomName,
+          titleSize: 21.sp,
           isBackIcon: true,
           actions: [
             GestureDetector(
