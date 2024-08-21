@@ -33,10 +33,10 @@ class TextStyles {
         fontWeight: FontWeight.w500,
       );
 
-  static TextStyle get appbar => _font2.copyWith(
-        fontSize: 28.sp,
+  static TextStyle get appbar => _font3.copyWith(
+        fontSize: 26.sp,
         color: AppColors.appbarColor,
-        fontWeight: FontWeight.w900,
+        fontWeight: FontWeight.bold,
         shadows: [
           Shadow(
             offset: Offset(1.w, 1.h),
