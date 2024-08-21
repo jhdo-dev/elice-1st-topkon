@@ -9,6 +9,7 @@ class RoomModel extends Equatable {
   final String topic_name;
   final String start_time;
   final String end_time;
+  final String player_photoUrl;
 
   RoomModel({
     required this.id,
@@ -18,6 +19,7 @@ class RoomModel extends Equatable {
     required this.topic_name,
     required this.start_time,
     required this.end_time,
+    required this.player_photoUrl,
   });
 
   @override
@@ -29,6 +31,7 @@ class RoomModel extends Equatable {
       name,
       start_time,
       end_time,
+      player_photoUrl,
     ];
   }
 
@@ -40,6 +43,7 @@ class RoomModel extends Equatable {
       'name': name,
       'start_time': start_time,
       'end_time': end_time,
+      'player_photoUrl': player_photoUrl,
     };
   }
 
@@ -52,6 +56,7 @@ class RoomModel extends Equatable {
       topic_name: map['topic_name'] ?? '',
       start_time: map['start_time'] ?? '',
       end_time: map['end_time'] ?? '',
+      player_photoUrl: map['player_photoUrl'] ?? '',
     );
   }
 
@@ -77,17 +82,20 @@ class RoomModel extends Equatable {
       topic_name: topic_name ?? this.topic_name,
       start_time: start_time ?? this.start_time,
       end_time: end_time ?? this.end_time,
+      player_photoUrl: player_photoUrl ?? this.player_photoUrl,
     );
   }
 
   Room toEntity() {
     return Room(
-        topicId: topic_id,
-        id: id,
-        roomName: name,
-        topicName: topic_name,
-        playerId: player_id,
-        startTime: start_time,
-        endTime: end_time);
+      topicId: topic_id,
+      id: id,
+      roomName: name,
+      topicName: topic_name,
+      playerId: player_id,
+      startTime: start_time,
+      endTime: end_time,
+      playerPhotoUrl: player_photoUrl,
+    );
   }
 }

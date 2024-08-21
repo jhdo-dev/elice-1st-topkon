@@ -106,6 +106,7 @@ class _RoomListPageState extends State<RoomListPage> {
                 roomStartDate: item.getFormattedStartTime(),
                 roomEndDate: item.getFormattedEndTime(),
                 id: item.id,
+                playerPhotoUrl: item.playerPhotoUrl,
               );
             },
           ),
