@@ -86,6 +86,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
                               startTime:
                                   selectedStartDateTime!.toIso8601String(),
                               endTime: selectedEndDateTime!.toIso8601String(),
+                              playerPhotoUrl: state.user.photoUrl!,
                             ),
                           );
                     }
