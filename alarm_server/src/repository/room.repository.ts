@@ -19,9 +19,10 @@ export class RoomRepository extends Repository<Room> {
     }
 
     return await this.query(
-      `SELECT room.*, topic.name AS topic_name 
+      `SELECT room.*, topic.name AS topic_name, player.photo_url as player_photoUrl
        FROM room 
        JOIN topic ON room.topic_id = topic.id 
+       JOIN player ON room.player_id = player.id
        WHERE room.id IN (${ids.map(() => '?').join(',')}) 
        AND room.end_time > NOW()`,
       ids,
