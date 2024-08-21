@@ -25,6 +25,7 @@ class CreateRoomBloc extends Bloc<RoomEvent, RoomState> {
       roomName: event.roomName,
       startTime: event.startTime,
       topicId: event.topicId,
+      playerPhotoUrl: event.playerPhotoUrl,
     );
 
     result.fold(

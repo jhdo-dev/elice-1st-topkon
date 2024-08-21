@@ -85,6 +85,9 @@ class LoginPage extends StatelessWidget {
                       logo: "assets/icons/kakao.png",
                       bgColor: AppColors.kakaoBgColor,
                       color: AppColors.kakaoColor,
+                      onTap: () {
+                        context.read<LoginBloc>().add(KakaoLoginEvent());
+                      },
                     ),
                     LoginButton(
                       logoSize: 17.w,

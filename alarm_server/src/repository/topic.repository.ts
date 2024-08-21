@@ -10,20 +10,30 @@ export class TopicRepository extends Repository<Topic> {
 
   async getTopicList(): Promise<any> {
     return await this.query(`
-        SELECT t.id,
-               t.name,
-               t.created_at,
-               t.updated_at,
-               COALESCE(a.room_count, 0) AS room_count
-        FROM topic t
-                 LEFT JOIN (
-                   SELECT topic_id,
-                          COUNT(id) AS room_count
-                   FROM room
-                   WHERE end_time > NOW()
-                   GROUP BY topic_id
-                 ) a ON t.id = a.topic_id
-        ORDER BY room_count DESC
+        SELECT 
+    t.id,
+    t.name,
+    t.created_at,
+    t.updated_at,
+    COALESCE(a.room_count, 0) AS room_count
+FROM 
+    topic t
+LEFT JOIN 
+    (
+        SELECT 
+            r.topic_id,
+            COUNT(r.id) AS room_count
+        FROM 
+            room r
+        LEFT JOIN 
+            player p ON r.player_id = p.id
+        WHERE 
+            r.end_time > NOW() AND p.id IS NOT NULL
+        GROUP BY 
+            r.topic_id
+    ) a ON t.id = a.topic_id
+ORDER BY 
+    room_count DESC
     `);
   }
 
