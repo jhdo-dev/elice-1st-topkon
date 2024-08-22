@@ -301,22 +301,25 @@ class _RoomChatPageState extends State<RoomChatPage> {
                     suffixIcon: Visibility(
                       visible: _controller.text.isNotEmpty,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 17.w),
+                        padding: EdgeInsets.symmetric(horizontal: 1.w),
                         child: Container(
                           // color: Colors.red,
                           height: 30.h,
                           padding: EdgeInsets.symmetric(vertical: 8.h),
-                          child: IconButton(
-                            onPressed: _sendMessage,
-                            icon: Icon(
-                              Icons.arrow_upward_rounded,
-                              color: AppColors.bottomNavColor,
-                              // size: 28,
-                            ),
-                            style: IconButton.styleFrom(
-                              padding: EdgeInsets.only(bottom: 1.h),
-                              shape: CircleBorder(),
-                              backgroundColor: Colors.green,
+                          child: Transform.rotate(
+                            angle: -0.5,
+                            child: IconButton(
+                              onPressed: _sendMessage,
+                              icon: Icon(
+                                Icons.send,
+                                color: AppColors.bottomNavColor,
+                                size: 16.sp,
+                              ),
+                              style: IconButton.styleFrom(
+                                padding: EdgeInsets.only(bottom: 1.h),
+                                shape: CircleBorder(),
+                                backgroundColor: AppColors.focusPurpleColor,
+                              ),
                             ),
                           ),
                         ),
