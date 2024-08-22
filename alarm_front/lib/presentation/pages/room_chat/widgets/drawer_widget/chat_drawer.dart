@@ -67,7 +67,7 @@ class ChatDrawer extends StatelessWidget {
               color: AppColors.focusColor,
             ),
             Text(
-              '대화상대',
+              '현재 대화상대',
               style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,

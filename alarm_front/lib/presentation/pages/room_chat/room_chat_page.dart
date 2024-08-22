@@ -140,7 +140,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
       DateTime dt = DateTime.now();
       String timeString =
           '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
-      String dataString =
+      String dateString =
           '${dt.year.toString()}년 ${dt.month.toString()}월 ${dt.day.toString()}일';
 
       FocusScope.of(context).unfocus();
@@ -149,9 +149,9 @@ class _RoomChatPageState extends State<RoomChatPage> {
         'msg': _controller.text,
         'playerId': myPlayerId,
         'myTurn': _checkMyTurn(timeString),
-        'msgDate': dataString,
+        'msgDate': dateString,
         'msgTime': timeString,
-        'isDateChanged': _checkIsDateChanged(dataString),
+        'isDateChanged': _checkIsDateChanged(dateString),
         // 서버에서 displayName을 가져와 전송하기 때문에 여기서는 필요 없음
       });
 
@@ -177,11 +177,11 @@ class _RoomChatPageState extends State<RoomChatPage> {
   }
 
 // isDateChanged를 위한 함수; 날짜 바(DateBar)를 위해 사용;
-  bool _checkIsDateChanged(String dataString) {
+  bool _checkIsDateChanged(String dateString) {
     if (isDateChanged.isEmpty) {
       // 첫 메시지는 무조건 true;
       return true;
-    } else if (msgDate[0] != dataString) {
+    } else if (msgDate[0] != dateString) {
       // 이전 메시지와 날짜가 다르면 무조건 true;
       return true;
     } else {
@@ -249,6 +249,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: Column(
             children: [
+              // 중앙 채팅방
               Expanded(
                 child: ListView.builder(
                   reverse: true,
@@ -267,36 +268,61 @@ class _RoomChatPageState extends State<RoomChatPage> {
                   },
                 ),
               ),
+              // 하단 텍스트 필드
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        minLines: 1,
-                        maxLines: 4,
-                        controller: _controller,
-                        style: TextStyles.mediumText,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.bottomNavColor.withOpacity(0.5),
+                child: TextField(
+                  minLines: 1,
+                  maxLines: 4,
+                  controller: _controller,
+                  onChanged: (value) {
+                    setState(() {
+                      value.isNotEmpty;
+                    });
+                  },
+                  style: TextStyles.mediumText,
+                  // 입력창
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
+                    hintText: '메시지를 입력하세요',
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.bottomNavColor.withOpacity(0.5),
+                      ),
+                      borderRadius: BorderRadius.circular(25.r),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.bottomNavColor.withOpacity(0.5),
+                      ),
+                      borderRadius: BorderRadius.circular(25.r),
+                    ),
+                    // 보내기 버튼
+                    suffixIcon: Visibility(
+                      visible: _controller.text.isNotEmpty,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 17.w),
+                        child: Container(
+                          // color: Colors.red,
+                          height: 30.h,
+                          padding: EdgeInsets.symmetric(vertical: 8.h),
+                          child: IconButton(
+                            onPressed: _sendMessage,
+                            icon: Icon(
+                              Icons.arrow_upward_rounded,
+                              color: AppColors.bottomNavColor,
+                              // size: 28,
                             ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.bottomNavColor.withOpacity(0.5),
+                            style: IconButton.styleFrom(
+                              padding: EdgeInsets.only(bottom: 1.h),
+                              shape: CircleBorder(),
+                              backgroundColor: Colors.green,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(width: 15.w),
-                    ElevatedButton(
-                      onPressed: _sendMessage,
-                      child: Icon(Icons.send),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ],
@@ -316,6 +342,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
 4. 방이름 가져오기; (완료)
 5. 날짜바 넣기; (완료)
 6. 보내기버튼 디자인 수정;
+6-2. 보내기 버튼 애니메이션 추가;
 7.닉네임변경시 과거 기록도 일괄변경; // 연기
 
 오류
