@@ -1,12 +1,16 @@
+import 'package:alarm_front/domain/usecases/login/facebook_login_usecase.dart';
 import 'package:alarm_front/domain/usecases/login/google_login_usecase.dart';
 import 'package:alarm_front/domain/usecases/login/kakao_login_usecase.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class LoginUseCases {
   final GoogleLoginUsecase googleLoginUsecase;
   final KakaoLoginUsecase kakaoLoginUsecase;
+  final FacebookLoginUsecase facebookLoginUsecase;
 
   LoginUseCases({
     required this.googleLoginUsecase,
     required this.kakaoLoginUsecase,
+    required this.facebookLoginUsecase,
   });
 }
