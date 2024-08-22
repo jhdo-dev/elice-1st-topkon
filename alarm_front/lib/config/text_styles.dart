@@ -15,22 +15,22 @@ class TextStyles {
   static TextStyle get largeText =>
       _font1.copyWith(fontSize: 16.sp, color: Colors.white);
 
-  static TextStyle get smallTitle => _font1.copyWith(
+  static TextStyle get smallTitle => _font3.copyWith(
         fontSize: 17.sp,
         color: Colors.white,
         fontWeight: FontWeight.w500,
       );
 
-  static TextStyle get mediumTitle => _font1.copyWith(
+  static TextStyle get mediumTitle => _font3.copyWith(
         fontSize: 19.sp,
         color: Colors.white,
         fontWeight: FontWeight.w500,
       );
 
-  static TextStyle get largeTitle => _font1.copyWith(
+  static TextStyle get largeTitle => _font3.copyWith(
         fontSize: 21.sp,
         color: Colors.white,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.bold,
       );
 
   static TextStyle get appbar => _font3.copyWith(

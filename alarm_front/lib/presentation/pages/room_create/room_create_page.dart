@@ -26,7 +26,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
   final ThemeData customDarkTheme = ThemeData(
     brightness: Brightness.dark,
     colorScheme: ColorScheme.dark(
-      primary: AppColors.sendMsgBurbleColor, // 주요 색상
+      primary: AppColors.focusColor, // 주요 색상
       onPrimary: AppColors.appbarColor, // 주요 색상 위의 글자색
       surface: AppColors.cardColor, // 대화상자 배경색
       onSurface: AppColors.appbarColor, // 대화상자 위의 글자색
@@ -124,7 +124,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'ROOM NAME',
+                '방 이름',
                 style: TextStyles.largeTitle,
               ),
               const SizedBox(height: 10),
@@ -149,7 +149,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
               ),
               const SizedBox(height: 30),
               Text(
-                'SELECT TOPIC',
+                '주제 선택',
                 style: TextStyles.largeTitle,
               ),
               const SizedBox(height: 10),
@@ -204,7 +204,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
               Align(
                 alignment: Alignment.center, // 왼쪽 정렬
                 child: Text(
-                  'START DATE',
+                  '시작 일자',
                   style: TextStyles.largeTitle,
                 ),
               ),
@@ -217,7 +217,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
                   child: Container(
                     height: 50.h,
                     decoration: BoxDecoration(
-                      color: AppColors.cardColor,
+                      color: AppColors.focusPurpleColor,
                       borderRadius: BorderRadius.circular(5.h),
                       boxShadow: [
                         BoxShadow(
@@ -245,7 +245,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'END DATE',
+                  '종료 일자',
                   style: TextStyles.largeTitle,
                 ),
               ),
@@ -258,7 +258,7 @@ class _RoomCreatePageState extends State<RoomCreatePage> {
                   child: Container(
                     height: 50.h,
                     decoration: BoxDecoration(
-                      color: AppColors.cardColor,
+                      color: AppColors.countBoxColor.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(5.h),
                       boxShadow: [
                         BoxShadow(

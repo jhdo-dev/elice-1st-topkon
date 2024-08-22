@@ -219,7 +219,12 @@ class _ChatRoomState extends State<ChatRoom> {
                             foregroundColor: Colors.red,
                           ),
                           onPressed: _handleCancelReservation,
-                          child: const Text('취소'),
+                          child: const Text(
+                            '취소',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         )
                       : ElevatedButton(
                           style: ElevatedButton.styleFrom(

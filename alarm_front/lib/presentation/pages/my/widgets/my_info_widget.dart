@@ -152,7 +152,7 @@ class _MyInfoWidgetState extends State<MyInfoWidget> {
                           height: 30.h,
                           decoration: BoxDecoration(
                             color: isUpdate
-                                ? AppColors.focusColor
+                                ? AppColors.focusPurpleColor
                                 : AppColors.bottomNavColor,
                             borderRadius: BorderRadius.circular(10.h),
                           ),
@@ -160,7 +160,9 @@ class _MyInfoWidgetState extends State<MyInfoWidget> {
                           child: Text(
                             isUpdate ? "적용" : "수정",
                             style: TextStyles.smallText.copyWith(
-                              color: Colors.black,
+                              color: isUpdate
+                                  ? AppColors.appbarColor
+                                  : AppColors.backgroundColor,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -180,15 +182,15 @@ class _MyInfoWidgetState extends State<MyInfoWidget> {
                                 width: 70.w,
                                 height: 30.h,
                                 decoration: BoxDecoration(
-                                  color:
-                                      AppColors.countBoxColor.withOpacity(0.6),
+                                  color: AppColors.appbarColor,
                                   borderRadius: BorderRadius.circular(10.h),
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
                                   "취소",
                                   style: TextStyles.smallText.copyWith(
-                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.countBoxColor,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
