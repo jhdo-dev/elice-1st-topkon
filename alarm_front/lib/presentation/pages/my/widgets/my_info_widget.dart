@@ -46,7 +46,7 @@ class _MyInfoWidgetState extends State<MyInfoWidget> {
         builder: (context, state) {
           if (state is GetUserSuccess) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -64,18 +64,14 @@ class _MyInfoWidgetState extends State<MyInfoWidget> {
                                 ),
                               ),
                             )
-                          : Container(
-                              width: 70.w,
-                              height: 70.w,
-                              decoration: BoxDecoration(
-                                color: AppColors.receiveMsgBurbleColor,
-                                shape: BoxShape.circle,
-                              ),
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.person_4_outlined,
-                                color: AppColors.hintColor,
-                                size: 45.w,
+                          : ClipOval(
+                              child: Container(
+                                width: 60.w,
+                                height: 60.h,
+                                child: Image.asset(
+                                  'assets/images/topk_default_profile.png',
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                       SizedBox(
