@@ -63,4 +63,9 @@ class TextStyles {
       fontSize: 16.sp,
       color: AppColors.backgroundColor,
       fontWeight: FontWeight.bold);
+
+  static TextStyle get loginButtonWhite => _font3.copyWith(
+      fontSize: 16.sp,
+      color: AppColors.appbarColor,
+      fontWeight: FontWeight.bold);
 }

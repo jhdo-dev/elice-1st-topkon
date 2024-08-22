@@ -9,3 +9,5 @@ sealed class LoginEvent extends Equatable {
 class GoogleLoginEvent extends LoginEvent {}
 
 class KakaoLoginEvent extends LoginEvent {}
+
+class FacebookLoginEvent extends LoginEvent {}

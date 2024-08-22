@@ -1,5 +1,6 @@
 import 'package:alarm_front/data/models/user_model.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -61,7 +62,7 @@ class KakaoLoginDatasource extends LoginDatasource {
     try {
       await loginMethod();
       final user = await UserApi.instance.me();
-      print(user);
+      // print(user);
       final userModel = UserModel(
         uuid: user.id.toString(),
         displayName: user.kakaoAccount?.profile?.nickname ?? '',
@@ -73,6 +74,43 @@ class KakaoLoginDatasource extends LoginDatasource {
       return Right(userModel);
     } catch (e) {
       return Left('로그인 실패: ${e.toString()}');
+    }
+  }
+}
+
+class FacebookLoginDatasource extends LoginDatasource {
+  final FacebookAuth facebookAuth;
+
+  FacebookLoginDatasource({required this.facebookAuth});
+
+  @override
+  Future<Either<String, UserModel>> logIn() async {
+    try {
+      final LoginResult result = await facebookAuth.login(
+        permissions: ['public_profile', 'email'],
+      );
+
+      if (result.status == LoginStatus.success) {
+        final userData = await facebookAuth.getUserData(
+          fields: "name,email,picture.width(200)",
+        );
+        // print('-----------> $userData');
+
+        final userModel = UserModel(
+          uuid: userData['id'].toString(),
+          displayName: userData['name'] ?? '',
+          email: userData['email'] ?? '',
+          photoUrl: userData['picture']?['data']?['url'] ?? '',
+          loginType: "facebook",
+        );
+
+        return Right(userModel);
+      } else {
+        return Left('페이스북 로그인이 취소되었습니다.');
+      }
+    } catch (e) {
+      print(e.toString());
+      return Left('페이스북 로그인 실패: ${e.toString()}');
     }
   }
 }
