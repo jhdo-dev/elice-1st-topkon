@@ -26,12 +26,23 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       );
     });
 
-    // 카카오 로그인 이벤트 처리
     on<KakaoLoginEvent>((event, emit) async {
       emit(LoginLoading());
 
       final Either<String, User> result =
           await loginUseCases.kakaoLoginUsecase();
+
+      result.fold(
+        (failure) => emit(LoginFailure(message: failure)),
+        (user) => emit(LoginSuccess(user: user)),
+      );
+    });
+
+    on<FacebookLoginEvent>((event, emit) async {
+      emit(LoginLoading());
+
+      final Either<String, User> result =
+          await loginUseCases.facebookLoginUsecase();
 
       result.fold(
         (failure) => emit(LoginFailure(message: failure)),

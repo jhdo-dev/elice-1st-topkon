@@ -1,4 +1,5 @@
 import 'package:alarm_front/config/colors.dart';
+import 'package:alarm_front/config/text_styles.dart';
 import 'package:alarm_front/presentation/bloc/login/login_bloc.dart';
 import 'package:alarm_front/presentation/bloc/user/user_bloc.dart';
 import 'package:alarm_front/presentation/pages/login/widget/login_button.dart';
@@ -59,6 +60,7 @@ class LoginPage extends StatelessWidget {
                       }
 
                       if (state is GetUserError) {
+                        print(state.message);
                         showCustomSnackbar(
                           context,
                           "잠시 후에 다시 시도해 주세요.",
@@ -72,7 +74,8 @@ class LoginPage extends StatelessWidget {
                   children: [
                     LoginButton(
                       logoSize: 20.w,
-                      text: "구글 로그인",
+                      text: "구글로 시작하기",
+                      textStyle: TextStyles.loginButton.copyWith(),
                       logo: "assets/icons/google.png",
                       bgColor: AppColors.googleBgColor,
                       onTap: () {
@@ -81,7 +84,8 @@ class LoginPage extends StatelessWidget {
                     ),
                     LoginButton(
                       logoSize: 21.w,
-                      text: "카카오 로그인",
+                      text: "카카오로 시작하기",
+                      textStyle: TextStyles.loginButton.copyWith(),
                       logo: "assets/icons/kakao.png",
                       bgColor: AppColors.kakaoBgColor,
                       color: AppColors.kakaoColor,
@@ -91,16 +95,21 @@ class LoginPage extends StatelessWidget {
                     ),
                     LoginButton(
                       logoSize: 17.w,
-                      text: "네이버 로그인",
+                      text: "네이버로 시작하기",
+                      textStyle: TextStyles.loginButton.copyWith(),
                       logo: "assets/icons/naver.png",
                       bgColor: AppColors.naverBgColor,
                       color: AppColors.naverColor,
                     ),
                     LoginButton(
-                      logoSize: 25.w,
-                      text: "애플 로그인",
-                      logo: "assets/icons/apple.png",
-                      bgColor: AppColors.appleBgColor,
+                      logoSize: 21.w,
+                      text: "페이스북으로 시작하기",
+                      textStyle: TextStyles.loginButtonWhite.copyWith(),
+                      logo: "assets/icons/facebook.png",
+                      bgColor: AppColors.facebookBgColor,
+                      onTap: () {
+                        context.read<LoginBloc>().add(FacebookLoginEvent());
+                      },
                     ),
                   ],
                 ),
