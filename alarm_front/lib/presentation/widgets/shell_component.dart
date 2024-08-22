@@ -42,13 +42,13 @@ class _ShellComponentState extends State<ShellComponent> {
                         left: 0.1.w,
                         child: Icon(
                           Icons.filter_list_alt,
-                          color: AppColors.appbarColor.withOpacity(0.3),
+                          color: AppColors.backgroundColor.withOpacity(0.3),
                           size: 30.w,
                         ),
                       ),
                       Icon(
                         Icons.filter_list_alt,
-                        color: AppColors.appbarColor,
+                        color: AppColors.focusColor,
                         size: 28.w,
                       )
                     ]),
@@ -73,6 +73,7 @@ class _ShellComponentState extends State<ShellComponent> {
               width: 50.w,
               height: 50.w,
               child: FloatingActionButton(
+                backgroundColor: AppColors.focusPurpleColor.withOpacity(0.9),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.h),
                 ),
