@@ -8,6 +8,7 @@ class LoginButton extends StatelessWidget {
   const LoginButton({
     super.key,
     required this.text,
+    required this.textStyle,
     required this.logo,
     this.onTap,
     required this.logoSize,
@@ -16,6 +17,7 @@ class LoginButton extends StatelessWidget {
   });
 
   final String text;
+  final TextStyle textStyle;
   final String logo;
   final VoidCallback? onTap;
   final double logoSize;
@@ -56,7 +58,7 @@ class LoginButton extends StatelessWidget {
               ),
               Text(
                 text,
-                style: TextStyles.loginButton.copyWith(),
+                style: textStyle,
               ),
             ],
           ),

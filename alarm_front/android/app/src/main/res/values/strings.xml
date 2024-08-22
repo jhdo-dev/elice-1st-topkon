@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TOPIC APP</string>
+    <string name="facebook_app_id">1849700852178617</string>
+    <string name="fb_login_protocol_scheme">fb1849700852178617</string>
+    <string name="facebook_client_token">c256c17137c8c354bfbba0c8383ac092</string>
 </resources>

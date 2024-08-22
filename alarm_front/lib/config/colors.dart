@@ -22,7 +22,7 @@ abstract class AppColors {
   static const naverBgColor = Color(0xFF20C801);
   static const naverColor = Color(0xFBF6F6F6);
   static const googleBgColor = appbarColor;
-  static const appleBgColor = appbarColor;
+  static const facebookBgColor = Color(0xFF0966FF);
 
   static const profileRandomColor1 = Color(0xFFf4d3a3);
   static const profileRandomColor2 = Color(0xFFc3f0b3);
