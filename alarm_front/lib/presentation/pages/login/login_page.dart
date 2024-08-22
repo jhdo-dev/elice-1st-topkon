@@ -73,7 +73,7 @@ class LoginPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     LoginButton(
-                      logoSize: 20.w,
+                      logoSize: 21.w,
                       text: "구글로 시작하기",
                       textStyle: TextStyles.loginButton.copyWith(),
                       logo: "assets/icons/google.png",
@@ -94,7 +94,7 @@ class LoginPage extends StatelessWidget {
                       },
                     ),
                     LoginButton(
-                      logoSize: 17.w,
+                      logoSize: 20.w,
                       text: "네이버로 시작하기",
                       textStyle: TextStyles.loginButton.copyWith(),
                       logo: "assets/icons/naver.png",
