@@ -270,7 +270,7 @@ class _RoomChatPageState extends State<RoomChatPage> {
               ),
               // 하단 텍스트 필드
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
+                padding: EdgeInsets.symmetric(vertical: 30.w, horizontal: 10.w),
                 child: TextField(
                   minLines: 1,
                   maxLines: 4,
