@@ -54,7 +54,7 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     Icon(
                       Icons.arrow_back_ios_new_rounded,
-                      color: AppColors.appbarColor,
+                      color: AppColors.hintColor,
                       size: 27.w,
                     )
                   ],

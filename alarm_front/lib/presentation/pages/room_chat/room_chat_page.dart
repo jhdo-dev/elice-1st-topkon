@@ -227,13 +227,13 @@ class _RoomChatPageState extends State<RoomChatPage> {
                     left: 0.1.w,
                     child: Icon(
                       Icons.menu,
-                      color: AppColors.appbarColor.withOpacity(0.3),
+                      color: AppColors.backgroundColor.withOpacity(0.3),
                       size: 30.w,
                     ),
                   ),
                   Icon(
                     Icons.menu,
-                    color: AppColors.appbarColor,
+                    color: AppColors.focusColor,
                     size: 28.w,
                   )
                 ]),

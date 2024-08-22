@@ -96,7 +96,7 @@ class LoginPage extends StatelessWidget {
                     LoginButton(
                       logoSize: 20.w,
                       text: "네이버로 시작하기",
-                      textStyle: TextStyles.loginButton.copyWith(),
+                      textStyle: TextStyles.loginButtonWhite.copyWith(),
                       logo: "assets/icons/naver.png",
                       bgColor: AppColors.naverBgColor,
                       color: AppColors.naverColor,
