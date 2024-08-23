@@ -3,6 +3,7 @@ import 'package:alarm_front/config/theme.dart';
 import 'package:alarm_front/data/datasources/local_datasource.dart';
 import 'package:alarm_front/di/main_di.dart';
 import 'package:alarm_front/presentation/bloc/user/user_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -15,6 +16,8 @@ import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
 
   await dotenv.load(fileName: ".env");
 
@@ -30,12 +33,12 @@ void main() async {
     routes: appRoutes,
   );
 
-  final FlutterLocalNotificationsPlugin _local =
+  final FlutterLocalNotificationsPlugin local =
       FlutterLocalNotificationsPlugin();
 
   List<RepositoryProvider> repositoryProviders =
       await MainDi.getRepositoryProvider(
-    flutterLocalNotificationsPlugin: _local,
+    flutterLocalNotificationsPlugin: local,
   );
 
   KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']);
@@ -49,7 +52,7 @@ void main() async {
         providers: MainDi.getBlocProvider(),
         child: AlarmApp(
           routers: routers,
-          local: _local,
+          local: local,
         ),
       ),
     ),

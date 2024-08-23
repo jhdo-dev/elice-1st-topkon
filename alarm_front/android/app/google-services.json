@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "291277932469",
+    "project_id": "topic-on-5dbc0",
+    "storage_bucket": "topic-on-5dbc0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291277932469:android:bfbc132e24a89494b0bbfc",
+        "android_client_info": {
+          "package_name": "com.example.alarm_front"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291277932469-ah12a5u6piq87jmjoph3vod914jla13a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alarm_front",
+            "certificate_hash": "bb39ad385909e0827a82f75cf06032ff66887710"
+          }
+        },
+        {
+          "client_id": "291277932469-gp1mc4bc25nga6d8qv7qptduh0clgj4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2RUp4ydpWuqn-TzHZT1JZSGTphotcNyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291277932469-gp1mc4bc25nga6d8qv7qptduh0clgj4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

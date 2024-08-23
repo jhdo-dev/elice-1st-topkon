@@ -30,20 +30,9 @@
 				<key>CFBundleURLSchemes</key>
 				<array>
 					<string>com.googleusercontent.apps.1048901849284-fo0sm5t3aanoaud5dfbhsiqlq77r8sn5</string>
-				</array>
-			</dict>
-			<dict>
-				<key>CFBundleTypeRole</key>
-				<string>Editor</string>
-				<key>CFBundleURLSchemes</key>
-				<array>
 					<string>${dotenv.env['KAKAO_NATIVE_APP_KEY']}</string>
-				</array>
-			</dict>
-			<dict>
-				<key>CFBundleURLSchemes</key>
-				<array>
 					<string>fb1849700852178617</string>
+					<string>com.googleusercontent.apps.291277932469-3m0d2ec0ap1ju7fdmr3tddsndjdkrbe7</string>
 				</array>
 			</dict>
 		</array>
