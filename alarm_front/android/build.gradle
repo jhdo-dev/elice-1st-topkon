@@ -1,3 +1,16 @@
+buildscript {
+    ext.kotlin_version = '1.9.0'  // 최신 Kotlin 버전으로 설정
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:7.3.1' // Android Gradle Plugin 버전이 호환되는지 확인
+        classpath 'com.google.gms:google-services:4.3.15' // Google Services 최신 버전으로 업데이트
+    }
+}
+
+plugins {
+    id 'com.google.gms.google-services' version '4.3.15' apply false
+}
+
 allprojects {
     repositories {
         google()

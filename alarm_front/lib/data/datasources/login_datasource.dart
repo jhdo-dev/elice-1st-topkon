@@ -1,9 +1,10 @@
 import 'package:alarm_front/data/models/user_model.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 abstract class LoginDatasource {
   Future<Either<String, UserModel>> logIn();
@@ -17,14 +18,24 @@ class GoogleLoginDatasource extends LoginDatasource {
   @override
   Future<Either<String, UserModel>> logIn() async {
     try {
-      final data = await googleSignIn.signIn();
+      final googleUser = await googleSignIn.signIn();
 
-      if (data != null) {
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      final data = await FirebaseAuth.instance.signInWithCredential(credential);
+
+      if (data.user != null) {
         final user = UserModel(
-          uuid: data.id,
-          displayName: data.displayName,
-          email: data.email,
-          photoUrl: data.photoUrl,
+          uuid: data.user!.uid,
+          displayName: data.user!.displayName,
+          email: data.user!.email,
+          photoUrl: data.user!.photoURL,
           loginType: "google",
         );
 
@@ -33,6 +44,7 @@ class GoogleLoginDatasource extends LoginDatasource {
         return Left('구글 로그인이 취소되었습니다.');
       }
     } catch (e) {
+      print(e);
       return Left('구글 로그인 실패 ${e.toString()}');
     }
   }

@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1048901849284-fo0sm5t3aanoaud5dfbhsiqlq77r8sn5.apps.googleusercontent.com</string>
+	<string>291277932469-3m0d2ec0ap1ju7fdmr3tddsndjdkrbe7.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1048901849284-fo0sm5t3aanoaud5dfbhsiqlq77r8sn5</string>
+	<string>com.googleusercontent.apps.291277932469-3m0d2ec0ap1ju7fdmr3tddsndjdkrbe7</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>291277932469-ah12a5u6piq87jmjoph3vod914jla13a.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDYLuI64jPE1uu7iAqrfUDbodynqCgPDcA</string>
+	<string>AIzaSyDxYK8SOYWjZKAFV2IL2GV6_tJlkogf4VI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1048901849284</string>
+	<string>291277932469</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.alarmFront</string>
 	<key>PROJECT_ID</key>
-	<string>alice-project-acebf</string>
+	<string>topic-on-5dbc0</string>
 	<key>STORAGE_BUCKET</key>
-	<string>alice-project-acebf.appspot.com</string>
+	<string>topic-on-5dbc0.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1048901849284:ios:12c77eefa46f948268f991</string>
+	<string>1:291277932469:ios:d066b6bdb2d488e5b0bbfc</string>
 </dict>
 </plist>
