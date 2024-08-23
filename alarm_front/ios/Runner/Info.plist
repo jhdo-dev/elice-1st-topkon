@@ -29,7 +29,7 @@
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>${GOOGLE_IOS_KEY}</string>
+					<string>com.googleusercontent.apps.1048901849284-fo0sm5t3aanoaud5dfbhsiqlq77r8sn5</string>
 				</array>
 			</dict>
 			<dict>
