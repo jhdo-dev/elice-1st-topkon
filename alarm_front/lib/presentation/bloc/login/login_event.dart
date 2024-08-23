@@ -11,3 +11,5 @@ class GoogleLoginEvent extends LoginEvent {}
 class KakaoLoginEvent extends LoginEvent {}
 
 class FacebookLoginEvent extends LoginEvent {}
+
+class NaverLoginEvent extends LoginEvent {}

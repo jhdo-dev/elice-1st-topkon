@@ -49,5 +49,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         (user) => emit(LoginSuccess(user: user)),
       );
     });
+
+    on<NaverLoginEvent>((event, emit) async {
+      emit(LoginLoading());
+
+      final Either<String, User> result =
+          await loginUseCases.naverLoginUsecase();
+
+      result.fold(
+        (failure) => emit(LoginFailure(message: failure)),
+        (user) => emit(LoginSuccess(user: user)),
+      );
+    });
   }
 }
