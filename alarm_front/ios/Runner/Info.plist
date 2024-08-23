@@ -73,5 +73,21 @@
 		<string>c256c17137c8c354bfbba0c8383ac092</string>
 		<key>FacebookDisplayName</key>
 		<string>topkOn</string>
+
+		<!-- 추가된 설정 -->
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>fetch</string>
+			<string>remote-notification</string>
+		</array>
+		<key>FirebaseAppDelegateProxyEnabled</key>
+		<false/>
+		<key>NSUserTrackingUsageDescription</key>
+		<string>This identifier will be used to deliver personalized ads to you.</string>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>
 	</dict>
 </plist>

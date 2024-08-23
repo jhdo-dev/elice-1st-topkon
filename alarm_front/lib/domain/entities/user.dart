@@ -7,6 +7,7 @@ class User extends Equatable {
   final String? email;
   final String? photoUrl;
   final String? loginType;
+  final String? fcmToken;
   User({
     this.id,
     this.uuid,
@@ -14,6 +15,7 @@ class User extends Equatable {
     this.email,
     this.photoUrl,
     this.loginType,
+    this.fcmToken,
   });
 
   @override
@@ -25,6 +27,7 @@ class User extends Equatable {
       email,
       photoUrl,
       loginType,
+      fcmToken,
     ];
   }
 }

@@ -9,6 +9,7 @@ class UserModel extends Equatable {
   final String? email;
   final String? photoUrl;
   final String? loginType;
+  final String? fcmToken;
   UserModel({
     this.id,
     this.uuid,
@@ -16,6 +17,7 @@ class UserModel extends Equatable {
     this.email,
     this.photoUrl,
     this.loginType,
+    this.fcmToken,
   });
 
   @override
@@ -27,12 +29,13 @@ class UserModel extends Equatable {
       email,
       photoUrl,
       loginType,
+      fcmToken,
     ];
   }
 
   @override
   String toString() {
-    return 'UserModel(id: $id, uuid: $uuid, displayName: $displayName, email: $email, photoUrl: $photoUrl, loginType: $loginType)';
+    return 'UserModel(id: $id, uuid: $uuid, displayName: $displayName, email: $email, photoUrl: $photoUrl, loginType: $loginType, fcmToken: $fcmToken)';
   }
 
   UserModel copyWith({
@@ -42,6 +45,7 @@ class UserModel extends Equatable {
     ValueGetter<String?>? email,
     ValueGetter<String?>? photoUrl,
     ValueGetter<String?>? loginType,
+    String? fcmToken,
   }) {
     return UserModel(
       id: id != null ? id() : this.id,
@@ -50,6 +54,7 @@ class UserModel extends Equatable {
       email: email != null ? email() : this.email,
       photoUrl: photoUrl != null ? photoUrl() : this.photoUrl,
       loginType: loginType != null ? loginType() : this.loginType,
+      fcmToken: fcmToken != null ? fcmToken : this.fcmToken,
     );
   }
 
@@ -61,6 +66,7 @@ class UserModel extends Equatable {
       email: email,
       photoUrl: photoUrl,
       loginType: loginType,
+      fcmToken: fcmToken,
     );
   }
 
@@ -72,6 +78,7 @@ class UserModel extends Equatable {
       email: user.email,
       photoUrl: user.photoUrl,
       loginType: user.loginType,
+      fcmToken: user.fcmToken,
     );
   }
 
@@ -83,6 +90,7 @@ class UserModel extends Equatable {
       'email': email,
       'photoUrl': photoUrl,
       'loginType': loginType,
+      "fcmToken": fcmToken,
     };
   }
 
@@ -94,6 +102,7 @@ class UserModel extends Equatable {
       email: map['email'],
       photoUrl: map['photoUrl'],
       loginType: map['loginType'],
+      fcmToken: map['fcmToken'],
     );
   }
 }

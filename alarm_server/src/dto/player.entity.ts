@@ -32,4 +32,7 @@ export class Player extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ nullable: true })
+  fcmToken?: string; // FCM 토큰 필드
 }

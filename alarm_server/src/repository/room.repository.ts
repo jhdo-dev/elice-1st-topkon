@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 import { DataSource, Repository } from 'typeorm';
 import { Room } from '../dto/room.entity';
 
@@ -37,8 +37,8 @@ export class RoomRepository extends Repository<Room> {
     let query = `
     SELECT room.*, topic.name as topic_name, player.photo_url as player_photoUrl
     FROM room 
-    JOIN topic ON room.topic_id = topic.id
-    JOIN player ON room.player_id = player.id
+    LEFT JOIN topic ON room.topic_id = topic.id
+    LEFT JOIN player ON room.player_id = player.id
     WHERE room.end_time > NOW()
   `;
 
@@ -49,6 +49,8 @@ export class RoomRepository extends Repository<Room> {
     query += ` ORDER BY room.created_at DESC LIMIT ${limit} OFFSET ${offset}`;
 
     const results = await this.query(query);
+
+    console.log(`results ------>  ${results}`);
 
     // 결과의 시간을 Asia/Seoul로 변환
     results.forEach((result) => {

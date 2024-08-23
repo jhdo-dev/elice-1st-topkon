@@ -3,6 +3,8 @@ import 'package:alarm_front/config/theme.dart';
 import 'package:alarm_front/data/datasources/local_datasource.dart';
 import 'package:alarm_front/di/main_di.dart';
 import 'package:alarm_front/presentation/bloc/user/user_bloc.dart';
+import 'package:alarm_front/utils/fcm.dart'; // 분리된 FCM 파일
+import 'package:alarm_front/utils/notification.dart'; // 분리된 알림 초기화 파일
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +13,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
@@ -34,7 +35,7 @@ void main() async {
   );
 
   final FlutterLocalNotificationsPlugin local =
-      FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin(); // 인스턴스 생성
 
   List<RepositoryProvider> repositoryProviders =
       await MainDi.getRepositoryProvider(
@@ -43,6 +44,7 @@ void main() async {
 
   KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']);
   print(await KakaoSdk.origin);
+
   runApp(
     //* 리포지토리 연결
     MultiRepositoryProvider(
@@ -52,7 +54,7 @@ void main() async {
         providers: MainDi.getBlocProvider(),
         child: AlarmApp(
           routers: routers,
-          local: local,
+          local: local, // 알림 플러그인 전달
         ),
       ),
     ),
@@ -76,28 +78,9 @@ class _AlarmAppState extends State<AlarmApp> {
   @override
   void initState() {
     super.initState();
-    _permissionWithNotification();
-    _initialization();
-  }
-
-  void _permissionWithNotification() async {
-    if (await Permission.notification.isDenied &&
-        !await Permission.notification.isPermanentlyDenied) {
-      await [Permission.notification].request();
-    }
-  }
-
-  void _initialization() async {
-    AndroidInitializationSettings android =
-        const AndroidInitializationSettings("@mipmap/ic_launcher");
-    DarwinInitializationSettings ios = const DarwinInitializationSettings(
-      requestSoundPermission: false,
-      requestBadgePermission: false,
-      requestAlertPermission: false,
-    );
-    InitializationSettings settings =
-        InitializationSettings(android: android, iOS: ios);
-    await widget.local.initialize(settings);
+    permissionWithNotification(); // 알림 권한 요청 함수
+    initialization(widget.local); // 알림 초기화 함수
+    initializeFCM(widget.local); // FCM 초기화 함수 호출
   }
 
   @override
