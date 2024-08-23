@@ -19,6 +19,7 @@ export class PlayerRepository extends Repository<Player> {
     player.email = userModel.email;
     player.photoUrl = userModel.photoUrl;
     player.loginType = userModel.loginType;
+    player.fcmToken = userModel.fcmToken;
 
     return await this.save(player);
   }

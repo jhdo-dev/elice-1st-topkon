@@ -1,5 +1,6 @@
 import 'package:alarm_front/config/constants.dart';
 import 'package:alarm_front/data/models/user_model.dart';
+import 'package:alarm_front/utils/get_fcm_token.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -11,9 +12,14 @@ class UserDatasource {
 
   Future<Either<String, UserModel>> authenticateUser(UserModel user) async {
     try {
+      final fcmToken = await getFcmToken();
+      print("fcmToken :: $fcmToken");
+
+      final userWithToken = user.copyWith(fcmToken: fcmToken);
+
       final response = await dio.post(
         '${Constants.baseUrl}/player',
-        data: user.toJson(),
+        data: userWithToken.toJson(),
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
