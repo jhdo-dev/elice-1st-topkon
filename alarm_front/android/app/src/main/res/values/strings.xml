@@ -4,4 +4,8 @@
     <string name="facebook_app_id">1849700852178617</string>
     <string name="fb_login_protocol_scheme">fb1849700852178617</string>
     <string name="facebook_client_token">c256c17137c8c354bfbba0c8383ac092</string>
+
+    <string name="client_id">whiODgA6zzg8LueHkbpY</string>
+    <string name="client_secret">7losgiFIzp</string>
+    <string name="client_name">TopicApp</string>
 </resources>

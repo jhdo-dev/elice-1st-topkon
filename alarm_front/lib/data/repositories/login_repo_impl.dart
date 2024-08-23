@@ -7,10 +7,12 @@ class LoginRepoImpl extends LoginRepo {
   final GoogleLoginDatasource? googleLoginDatasource;
   final KakaoLoginDatasource? kakaoLoginDatasource;
   final FacebookLoginDatasource? facebookLoginDatasource;
+  final NaverLoginDatasource? naverLoginDatasource;
   LoginRepoImpl({
     this.googleLoginDatasource,
     this.kakaoLoginDatasource,
     this.facebookLoginDatasource,
+    this.naverLoginDatasource,
   });
 
   @override
@@ -43,6 +45,18 @@ class LoginRepoImpl extends LoginRepo {
       return Left("페이스북 로그인에 문제가 있습니다.");
     }
     final result = await facebookLoginDatasource!.logIn();
+    return result.fold(
+      (err) => Left(err),
+      (user) => Right(user.toEntity()),
+    );
+  }
+
+  @override
+  Future<Either<String, User>> logInWithNaver() async {
+    if (naverLoginDatasource == null) {
+      return Left("네이버 로그인에 문제가 있습니다.");
+    }
+    final result = await naverLoginDatasource!.logIn();
     return result.fold(
       (err) => Left(err),
       (user) => Right(user.toEntity()),

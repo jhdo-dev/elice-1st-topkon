@@ -303,7 +303,6 @@ class _RoomChatPageState extends State<RoomChatPage> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 1.w),
                         child: Container(
-                          // color: Colors.red,
                           height: 30.h,
                           padding: EdgeInsets.symmetric(vertical: 8.h),
                           child: Transform.rotate(
