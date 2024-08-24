@@ -120,6 +120,9 @@ class _LoginPageState extends State<LoginPage> {
                           logo: "assets/icons/naver.png",
                           bgColor: AppColors.naverBgColor,
                           color: AppColors.naverColor,
+                          onTap: () {
+                            context.read<LoginBloc>().add(NaverLoginEvent());
+                          },
                         ),
                         LoginButton(
                           logoSize: 21.w,

@@ -136,6 +136,7 @@ class NaverLoginDatasource extends LoginDatasource {
     try {
       // 네이버 로그인 시도
       NaverLoginResult result = await FlutterNaverLogin.logIn();
+      print('네이버로그인 결과: $result');
 
       if (result.status == NaverLoginStatus.loggedIn) {
         // 로그인 성공
