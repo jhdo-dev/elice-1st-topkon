@@ -129,17 +129,7 @@ class FacebookLoginDatasource extends LoginDatasource {
 }
 
 class NaverLoginDatasource extends LoginDatasource {
-  NaverLoginDatasource() {
-    _initializeSdk();
-  }
-
-  Future<void> _initializeSdk() async {
-    await FlutterNaverLogin.initSdk(
-      clientId: 'whiODgA6zzg8LueHkbpY',
-      clientSecret: '7losgiFIzp',
-      clientName: 'TopicApp',
-    );
-  }
+  NaverLoginDatasource();
 
   @override
   Future<Either<String, UserModel>> logIn() async {
