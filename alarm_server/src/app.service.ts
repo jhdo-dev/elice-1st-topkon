@@ -38,6 +38,10 @@ export class AppService {
     );
   }
 
+  async updatePlayerFcmToken(uuid: string, fcmToken: string): Promise<Player> {
+    return await this.playerRepository.updatePlayerFcmToken(uuid, fcmToken);
+  }
+
   async getTopicList(): Promise<any> {
     return await this.topicRepository.getTopicList();
   }

@@ -64,6 +64,23 @@ export class AppController {
     return await this.appService.updatePlayer(uuid, displayName, email);
   }
 
+  @Patch('/player/update-fcm-token')
+  async updatePlayerFcmToken(@Body() body): Promise<any> {
+    const { uuid, fcmToken } = body;
+    try {
+      const player = await this.appService.updatePlayerFcmToken(uuid, fcmToken);
+      return {
+        success: true,
+        player,
+      };
+    } catch (e) {
+      return {
+        success: false,
+        error: e.message,
+      };
+    }
+  }
+
   //! uuid (string)
 
   @Post('/room/list')

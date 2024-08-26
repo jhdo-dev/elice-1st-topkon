@@ -1,9 +1,15 @@
+import 'package:alarm_front/data/datasources/local_datasource.dart';
+import 'package:alarm_front/data/datasources/user_datasource.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void initializeFCM(FlutterLocalNotificationsPlugin local) async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  final dio = Dio();
+  final userDatasource = UserDatasource(dio: dio);
+  final user = await LocalDatasource.getUserInfo();
 
   // 알림 권한 요청
   NotificationSettings settings = await messaging.requestPermission(
@@ -20,9 +26,19 @@ void initializeFCM(FlutterLocalNotificationsPlugin local) async {
     print('User declined or has not accepted permission');
   }
 
-  // FCM 토큰 가져오기
-  String? token = await messaging.getToken();
-  print("FCM Token: $token");
+  if (user != null) {
+    String? fcmToken = await messaging.getToken();
+    if (fcmToken != null) {
+      print('FCM Token: $fcmToken');
+      await userDatasource.updateFcmToken(fcmToken: fcmToken, uuid: user.uuid!);
+    }
+
+    // FCM 토큰이 갱신될 때마다 처리
+    messaging.onTokenRefresh.listen((newToken) async {
+      print('FCM Token refreshed: $newToken');
+      await userDatasource.updateFcmToken(fcmToken: newToken, uuid: user.uuid!);
+    });
+  }
 
   // FCM 백그라운드 메시지 처리 핸들러 설정
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
