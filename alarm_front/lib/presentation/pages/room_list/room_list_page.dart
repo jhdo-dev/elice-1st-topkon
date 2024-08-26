@@ -83,7 +83,7 @@ class _RoomListPageState extends State<RoomListPage> {
         ),
       ],
       child: RefreshIndicator(
-        color: Colors.blue,
+        color: AppColors.focusPurpleColor,
         backgroundColor: AppColors.backgroundColor, // 배경 색상 조정
         strokeWidth: 3.0,
         displacement: 40,
