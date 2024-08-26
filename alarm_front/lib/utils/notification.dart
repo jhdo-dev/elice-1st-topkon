@@ -10,7 +10,7 @@ void permissionWithNotification() async {
 
 void initialization(FlutterLocalNotificationsPlugin local) async {
   AndroidInitializationSettings android =
-      const AndroidInitializationSettings("@mipmap/ic_launcher");
+      const AndroidInitializationSettings("@drawable/android12splash");
   DarwinInitializationSettings ios = const DarwinInitializationSettings(
     requestSoundPermission: true, // 알림 권한 요청을 true로 변경
     requestBadgePermission: true,
