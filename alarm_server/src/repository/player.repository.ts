@@ -44,4 +44,14 @@ export class PlayerRepository extends Repository<Player> {
 
     return await this.save(player);
   }
+
+  async updatePlayerFcmToken(uuid: string, fcmToken: string): Promise<Player> {
+    const player = await this.getPlayerByUuid(uuid);
+    if (!player) {
+      throw new NotFoundException('Player not found');
+    }
+
+    player.fcmToken = fcmToken;
+    return await this.save(player);
+  }
 }

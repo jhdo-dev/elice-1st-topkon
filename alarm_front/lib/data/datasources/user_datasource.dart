@@ -54,4 +54,28 @@ class UserDatasource {
       return Left('회원 수정 실패: $e');
     }
   }
+
+  Future<Either<String, UserModel>> updateFcmToken({
+    required String uuid,
+    required String fcmToken,
+  }) async {
+    try {
+      final response = await dio.patch(
+        '${Constants.baseUrl}/player/update-fcm-token',
+        data: {
+          "uuid": uuid,
+          "fcmToken": fcmToken,
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final userModel = UserModel.fromJson(response.data);
+        return Right(userModel);
+      } else {
+        return Left('FCM 토큰 업데이트 실패: ${response.statusCode}');
+      }
+    } catch (e) {
+      return Left('FCM 토큰 업데이트 실패: $e');
+    }
+  }
 }
